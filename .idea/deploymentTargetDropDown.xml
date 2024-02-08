@@ -2,6 +2,21 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="BookItemWithoutAdditionalDataPreview">
+        <State />
+      </entry>
+      <entry key="BookListPreview">
+        <State />
+      </entry>
+      <entry key="HomeBodyEmptyListPreview">
+        <State />
+      </entry>
+      <entry key="HomeScreenEmptyPreview">
+        <State />
+      </entry>
+      <entry key="HomeScreenPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

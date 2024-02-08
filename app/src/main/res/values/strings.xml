@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">book_madness</string>
+    <string name="app_name">Book Madness</string>
+    <string name="start_date">Start date: %s</string>
+    <string name="finish_date">Finish date: %s</string>
+    <string name="no_books_description">Oops!\nNo books have been added yet\nTap + to add</string>
+    <string name="book_entry_title">Add Book</string>
 </resources>
