@@ -29,7 +29,7 @@ import com.example.book_madness.BookMadnessFloatingActionButton
 import com.example.book_madness.BookMadnessTopAppBar
 import com.example.book_madness.R
 import com.example.book_madness.data.Book
-import com.example.compose.AppTheme
+import com.example.book_madness.ui.theme.AppTheme
 
 @Composable
 fun HomeScreen(
@@ -101,7 +101,9 @@ private fun BookItem(
         Column(
             modifier = Modifier.padding(dimensionResource(id = R.dimen.medium))
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = book.name,
                     style = MaterialTheme.typography.titleLarge

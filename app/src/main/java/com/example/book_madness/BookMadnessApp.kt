@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -31,7 +30,7 @@ fun BookMadnessTopAppBar(
         title = { Text(title) },
         modifier = modifier
             .background(MaterialTheme.colorScheme.outline)
-            .padding(bottom = 2.dp)
+            .padding(bottom = dimensionResource(id = R.dimen.extra_small))
     )
 }
 
