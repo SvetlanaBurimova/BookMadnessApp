@@ -19,5 +19,4 @@ class HomeViewModel(booksRepository: BooksRepository) : ViewModel() {
                 started = WhileSubscribed(),
                 initialValue = HomeUiState()
             )
-
 }
