@@ -17,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -33,9 +35,11 @@ import com.example.book_madness.ui.theme.AppTheme
 
 @Composable
 fun HomeScreen(
-    bookList: List<Book>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel
 ) {
+    val homeUiState by viewModel.homeUiState.collectAsState()
+
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(
@@ -45,7 +49,7 @@ fun HomeScreen(
         floatingActionButton = { BookMadnessFloatingActionButton() }
     ) { innerPadding ->
         HomeBody(
-            bookList = bookList,
+            bookList = homeUiState.bookList,
             modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -153,22 +157,24 @@ private fun ReadingDate(id: Int, date: String) {
 @Composable
 fun HomeScreenPreview() {
     AppTheme {
-        HomeScreen(bookList = listOf(
-            Book(
-                id = 1,
-                name = "Fourth Wing",
-                genre = "Fantasy",
-                rating = "4.5",
-                startDate = "02.11.2023",
-                finishDate = "23.01.2024"
-            ),
-            Book(
-                id = 2,
-                name = "Powerless",
-                genre = "Fantasy",
-                rating = "0",
+        HomeBody(
+            bookList = listOf(
+                Book(
+                    id = 1,
+                    name = "Fourth Wing",
+                    genre = "Fantasy",
+                    rating = "4.5",
+                    startDate = "02.11.2023",
+                    finishDate = "23.01.2024"
+                ),
+                Book(
+                    id = 2,
+                    name = "Powerless",
+                    genre = "Fantasy",
+                    rating = "0",
+                )
             )
-        ))
+        )
     }
 }
 
@@ -176,6 +182,6 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreenEmptyPreview() {
     AppTheme {
-        HomeScreen(bookList = emptyList())
+        HomeBody(bookList = emptyList())
     }
 }
