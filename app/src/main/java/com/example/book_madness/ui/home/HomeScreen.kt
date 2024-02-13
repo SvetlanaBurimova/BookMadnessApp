@@ -30,7 +30,7 @@ import com.example.book_madness.BookMadnessEmptyScreen
 import com.example.book_madness.BookMadnessFloatingActionButton
 import com.example.book_madness.BookMadnessTopAppBar
 import com.example.book_madness.R
-import com.example.book_madness.data.Book
+import com.example.book_madness.data.source.Book
 import com.example.book_madness.ui.theme.AppTheme
 
 @Composable
@@ -58,7 +58,7 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeBody(bookList: List<Book>,modifier: Modifier = Modifier) {
+private fun HomeBody(bookList: List<Book>, modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
