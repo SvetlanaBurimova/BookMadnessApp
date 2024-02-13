@@ -1,4 +1,4 @@
-package com.example.book_madness.data
+package com.example.book_madness.data.source
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

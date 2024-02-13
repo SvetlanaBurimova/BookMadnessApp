@@ -2,7 +2,7 @@ package com.example.book_madness.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.book_madness.data.Book
+import com.example.book_madness.data.source.Book
 import com.example.book_madness.data.BooksRepository
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,11 @@ class HomeViewModel(booksRepository: BooksRepository) : ViewModel() {
         booksRepository.getAllBooksStream().map { HomeUiState(it) }
             .stateIn(
                 scope = viewModelScope,
-                started = WhileSubscribed(),
+                started = WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = HomeUiState()
             )
+
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.book_madness.data
 
+import com.example.book_madness.data.source.Book
 import kotlinx.coroutines.flow.Flow
 
 interface BooksRepository {
