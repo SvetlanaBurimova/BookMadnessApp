@@ -31,12 +31,14 @@ import com.example.book_madness.BookMadnessFloatingActionButton
 import com.example.book_madness.BookMadnessTopAppBar
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.theme.AppTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
 
