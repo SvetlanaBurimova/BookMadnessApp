@@ -20,4 +20,7 @@
     <string name="finish_date">Finish date: %s</string>
     <string name="no_books_description">Oops!\nNo books have been added yet\nTap + to add</string>
     <string name="book_entry_title">Add Book</string>
+    <string name="book_list">Book List</string>
+    <string name="book_stats">Statistics</string>
+    <string name="book_settings">Settings</string>
 </resources>

@@ -25,15 +25,19 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.book_madness.BookMadnessEmptyScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.BookMadnessFloatingActionButton
 import com.example.book_madness.BookMadnessTopAppBar
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.ui.AppViewModelFactoryProvider
+import com.example.book_madness.ui.navigation.BottomNavigationBar
 import com.example.book_madness.ui.theme.AppTheme
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreen(
@@ -48,7 +52,8 @@ fun HomeScreen(
                 title = stringResource(R.string.app_name),
             )
         },
-        floatingActionButton = { BookMadnessFloatingActionButton() }
+        floatingActionButton = { BookMadnessFloatingActionButton() },
+        bottomBar = { BottomNavigationBar() }
     ) { innerPadding ->
         HomeBody(
             bookList = homeUiState.bookList,
@@ -66,7 +71,7 @@ private fun HomeBody(bookList: List<Book>, modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         if (bookList.isEmpty()) {
-            BookMadnessEmptyScreen()
+            HomeEmptyScreen()
         } else {
             BookList(
                 bookList = bookList,
@@ -75,6 +80,23 @@ private fun HomeBody(bookList: List<Book>, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+@Composable
+fun HomeEmptyScreen(
+    modifier: Modifier = Modifier
+) {
+    val composition by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.animation_for_empty_screen)
+    )
+    LottieAnimation(
+        composition = composition
+    )
+    Text(
+        text = stringResource(R.string.no_books_description),
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.titleLarge
+    )
 }
 
 @Composable
