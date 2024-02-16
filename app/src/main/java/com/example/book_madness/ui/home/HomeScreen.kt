@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,7 +19,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +29,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.BookMadnessFloatingActionButton
+import com.example.book_madness.BookMadnessRatingIcon
 import com.example.book_madness.BookMadnessTopAppBar
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
@@ -65,7 +63,10 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeBody(bookList: List<Book>, modifier: Modifier = Modifier) {
+private fun HomeBody(
+    bookList: List<Book>,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -143,9 +144,9 @@ private fun BookItem(
                 )
 
                 if(book.rating != "0") {
-                    RatingIcon(painterResource(id = R.drawable.round_star_24))
+                    BookMadnessRatingIcon(painterResource(id = R.drawable.round_star))
                 } else {
-                    RatingIcon(painterResource(id = R.drawable.round_star_border_24))
+                    BookMadnessRatingIcon(painterResource(id = R.drawable.round_star_border))
                 }
             }
 
@@ -157,16 +158,6 @@ private fun BookItem(
             }
         }
     }
-}
-
-@Composable
-private fun RatingIcon(icon: Painter) {
-    Icon(
-        painter = icon,
-        contentDescription = null,
-        tint = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.size(dimensionResource(id = R.dimen.extra_large))
-    )
 }
 
 @Composable
