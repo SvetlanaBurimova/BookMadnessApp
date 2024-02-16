@@ -2,6 +2,7 @@ package com.example.book_madness
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 
@@ -42,4 +44,14 @@ fun BookMadnessFloatingActionButton(
             contentDescription = stringResource(R.string.book_entry_title)
         )
     }
+}
+
+@Composable
+fun BookMadnessRatingIcon(icon: Painter) {
+    Icon(
+        painter = icon,
+        contentDescription = null,
+        tint = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.size(dimensionResource(id = R.dimen.extra_large))
+    )
 }

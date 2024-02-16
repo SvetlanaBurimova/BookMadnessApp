@@ -28,18 +28,18 @@ fun BottomNavigationBar() {
     val items = listOf(
         BottomNavigationItem(
             title = stringResource(id = R.string.book_list),
-            unselectedIcon = painterResource(id = R.drawable.outline_library_books_24),
-            selectedIcon = painterResource(id = R.drawable.baseline_library_books_24)
+            unselectedIcon = painterResource(id = R.drawable.outline_library_books),
+            selectedIcon = painterResource(id = R.drawable.library_books)
         ),
         BottomNavigationItem(
             title = stringResource(id = R.string.book_stats),
-            unselectedIcon = painterResource(id = R.drawable.outline_pie_chart_24),
-            selectedIcon = painterResource(id = R.drawable.baseline_pie_chart_24)
+            unselectedIcon = painterResource(id = R.drawable.outline_pie_chart),
+            selectedIcon = painterResource(id = R.drawable.pie_chart)
         ),
         BottomNavigationItem(
             title = stringResource(id = R.string.book_settings),
-            unselectedIcon = painterResource(id = R.drawable.outline_settings_24),
-            selectedIcon = painterResource(id = R.drawable.baseline_settings_24)
+            unselectedIcon = painterResource(id = R.drawable.outline_settings),
+            selectedIcon = painterResource(id = R.drawable.settings)
         )
     )
 
