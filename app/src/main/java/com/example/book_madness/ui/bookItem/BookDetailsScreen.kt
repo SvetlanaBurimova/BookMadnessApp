@@ -69,7 +69,10 @@ private fun BookDetailsBody(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.medium))
+            .padding(
+                start = dimensionResource(id = R.dimen.medium),
+                end = dimensionResource(id = R.dimen.medium)
+            )
             .verticalScroll(rememberScrollState())
     ) {
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
@@ -88,7 +91,9 @@ private fun BookDetailsBody(
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true },
             shape = MaterialTheme.shapes.small,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = dimensionResource(id = R.dimen.medium))
         ) {
             Text(stringResource(R.string.delete))
         }
@@ -110,7 +115,11 @@ fun BookDetails(
     book: Book,
     modifier: Modifier = Modifier
 ) {
-    Card{
+    Card(
+        modifier = Modifier.padding(
+            top = dimensionResource(id = R.dimen.medium)
+        )
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
