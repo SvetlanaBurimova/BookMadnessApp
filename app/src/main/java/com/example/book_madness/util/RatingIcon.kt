@@ -1,0 +1,23 @@
+package com.example.book_madness.util
+
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.dimensionResource
+import com.example.book_madness.R
+
+@Composable
+fun BookMadnessRatingIcon(
+    icon: Painter,
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = icon,
+        contentDescription = null,
+        tint = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.size(dimensionResource(id = R.dimen.extra_large))
+    )
+}

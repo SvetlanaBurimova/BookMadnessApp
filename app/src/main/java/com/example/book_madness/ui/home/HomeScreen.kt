@@ -28,14 +28,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.book_madness.BookMadnessFloatingActionButton
-import com.example.book_madness.BookMadnessRatingIcon
-import com.example.book_madness.BookMadnessTopAppBar
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BottomNavigationBar
 import com.example.book_madness.ui.theme.AppTheme
+import com.example.book_madness.util.BookMadnessFloatingActionButton
+import com.example.book_madness.util.BookMadnessRatingIcon
+import com.example.book_madness.util.BookMadnessTopAppBar
 
 @Composable
 fun HomeScreen(

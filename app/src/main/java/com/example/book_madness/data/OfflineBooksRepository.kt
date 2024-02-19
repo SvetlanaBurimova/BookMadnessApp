@@ -4,7 +4,7 @@ import com.example.book_madness.data.source.Book
 import com.example.book_madness.data.source.BookDao
 import kotlinx.coroutines.flow.Flow
 
-class DefaultBooksRepository(private val bookDao: BookDao) : BooksRepository {
+class OfflineBooksRepository(private val bookDao: BookDao) : BooksRepository {
     override fun getAllBooksStream(): Flow<List<Book>> = bookDao.getAllBooks()
 
     override fun getBookByIdStream(id: Int): Flow<Book> = bookDao.getBookById(id)
