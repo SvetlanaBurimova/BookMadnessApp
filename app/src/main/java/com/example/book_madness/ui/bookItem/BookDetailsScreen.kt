@@ -19,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,18 +30,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.book_madness.BookMadnessRatingIcon
-import com.example.book_madness.BookMadnessTopAppBar
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BottomNavigationBar
 import com.example.book_madness.ui.theme.AppTheme
+import com.example.book_madness.util.BookMadnessRatingIcon
+import com.example.book_madness.util.BookMadnessTopAppBar
 
 @Composable
 fun BookDetailsScreen(
     book: Book,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
+    val uiState = viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(

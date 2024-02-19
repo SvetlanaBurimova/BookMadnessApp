@@ -12,6 +12,6 @@ interface AppContainer {
 class AppDataContainer(private val context: Context) : AppContainer {
     // With by lazy { } - initialized and created the first time we access it
     override val booksRepository: BooksRepository by lazy {
-        DefaultBooksRepository(BookDatabase.getDatabase(context).bookDao())
+        OfflineBooksRepository(BookDatabase.getDatabase(context).bookDao())
     }
 }
