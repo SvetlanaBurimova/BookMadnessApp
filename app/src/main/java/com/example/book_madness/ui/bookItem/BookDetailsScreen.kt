@@ -33,15 +33,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.data.toBook
 import com.example.book_madness.ui.AppViewModelFactoryProvider
-import com.example.book_madness.ui.navigation.BottomNavigationBar
+import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessRatingIcon
 import com.example.book_madness.util.BookMadnessTopAppBar
 
 @Composable
 fun BookDetailsScreen(
-    book: Book,
+    bottomNavigationBar: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
@@ -50,13 +51,13 @@ fun BookDetailsScreen(
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(
-                title = stringResource(R.string.app_name),
+                title = stringResource(BookMadnessTitlesResId.BOOK_DETAIL_SCREEN),
             )
         },
-        bottomBar = { BottomNavigationBar() }
+        bottomBar = { bottomNavigationBar() }
     ) { innerPadding ->
         BookDetailsBody(
-            book = book,
+            bookDetailsUiState = uiState.value,
             onEdit = { /* do something */ },
             onDelete = { /* do something */ },
             modifier = Modifier
@@ -67,7 +68,7 @@ fun BookDetailsScreen(
 
 @Composable
 private fun BookDetailsBody(
-    book: Book,
+    bookDetailsUiState: BookDetailsUiState,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
@@ -83,7 +84,7 @@ private fun BookDetailsBody(
     ) {
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
         BookDetails(
-            book = book,
+            book = bookDetailsUiState.bookDetails.toBook(),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -242,7 +243,7 @@ private fun DeleteConfirmationDialog(
 @Composable
 fun BookDetailsScreenPreview() {
     AppTheme {
-        BookDetailsScreen(
+        BookDetails(
             Book(
                 id = 2,
                 name = "Powerless",

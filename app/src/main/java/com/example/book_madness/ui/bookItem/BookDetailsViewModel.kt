@@ -7,13 +7,14 @@ import com.example.book_madness.data.BookDetailsModel
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.toBook
 import com.example.book_madness.data.toBookDetails
+import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-data class BookDetailsUiState(val bookDetails: BookDetailsModel? = null)
+data class BookDetailsUiState(val bookDetails: BookDetailsModel = BookDetailsModel())
 
 class BookDetailsViewModel(
 // This object is a key-value map that lets write and retrieve objects to and from the saved state.
@@ -22,7 +23,7 @@ class BookDetailsViewModel(
     private val booksRepository: BooksRepository,
 ): ViewModel() {
 
-    private val bookId: Int = checkNotNull(savedStateHandle["bookId"])
+    private val bookId: Int = checkNotNull(savedStateHandle[BookMadnessDestinationsArgs.BOOK_ID_ARG])
 
     val uiState: StateFlow<BookDetailsUiState> =
         booksRepository.getBookByIdStream(bookId)
@@ -36,7 +37,7 @@ class BookDetailsViewModel(
             )
 
     suspend fun deleteItem() {
-        booksRepository.deleteBook(uiState.value.bookDetails!!.toBook())
+        booksRepository.deleteBook(uiState.value.bookDetails.toBook())
     }
 
     companion object {
