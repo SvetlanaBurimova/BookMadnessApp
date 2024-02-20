@@ -12,32 +12,36 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.example.book_madness.R
 
 data class BottomNavigationItem(
-    val title: String,
+    val route: String,
+    val titleRes: String,
     val unselectedIcon: Painter,
     val selectedIcon: Painter
 )
 
 @Composable
-fun BottomNavigationBar() {
-
+fun BottomNavigationBar(navController: NavHostController) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
     val items = listOf(
         BottomNavigationItem(
-            title = stringResource(id = R.string.book_list),
+            route = BookMadnessScreenRoutes.HOME_SCREEN,
+            titleRes = stringResource(id = R.string.book_list),
             unselectedIcon = painterResource(id = R.drawable.outline_library_books),
             selectedIcon = painterResource(id = R.drawable.library_books)
         ),
         BottomNavigationItem(
-            title = stringResource(id = R.string.book_stats),
+            route = stringResource(id = R.string.book_stats),
+            titleRes = stringResource(id = R.string.book_stats),
             unselectedIcon = painterResource(id = R.drawable.outline_pie_chart),
             selectedIcon = painterResource(id = R.drawable.pie_chart)
         ),
         BottomNavigationItem(
-            title = stringResource(id = R.string.book_settings),
+            route = stringResource(id = R.string.book_settings),
+            titleRes = stringResource(id = R.string.book_settings),
             unselectedIcon = painterResource(id = R.drawable.outline_settings),
             selectedIcon = painterResource(id = R.drawable.settings)
         )
@@ -49,13 +53,13 @@ fun BottomNavigationBar() {
                selected = selectedTabIndex == index,
                onClick = {
                    selectedTabIndex = index
-//                 navController.navigate(item.title)
+                   navController.navigate(item.route)
                 },
-               label = { Text(text = item.title) },
+               label = { Text(text = item.titleRes) },
                icon = {
                    Icon(
                        painter = if (index == selectedTabIndex) item.selectedIcon else item.unselectedIcon,
-                       contentDescription = item.title
+                       contentDescription = item.titleRes
                    )
                }
             )

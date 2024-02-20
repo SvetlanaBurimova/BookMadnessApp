@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Book_madness"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".BookMadnessActivity"
             android:exported="true"
             android:theme="@style/Theme.Book_madness">
             <intent-filter>

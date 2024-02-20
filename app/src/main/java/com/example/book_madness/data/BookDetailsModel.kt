@@ -1,7 +1,7 @@
 package com.example.book_madness.data
 
 data class BookDetailsModel(
-    val id: Int,
+    val id: Int = 0,
     val name: String = "",
     val genre: String = "",
     val rating: String = "",

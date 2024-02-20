@@ -12,10 +12,11 @@ import com.example.book_madness.R
 
 @Composable
 fun BookMadnessFloatingActionButton(
+    navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     FloatingActionButton(
-        onClick = { /* do something */ },
+        onClick = { navigateToItemEntry() },
         shape = MaterialTheme.shapes.medium
     ) {
         Icon(

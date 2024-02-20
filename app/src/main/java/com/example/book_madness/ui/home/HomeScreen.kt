@@ -31,7 +31,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.ui.AppViewModelFactoryProvider
-import com.example.book_madness.ui.navigation.BottomNavigationBar
+import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessFloatingActionButton
 import com.example.book_madness.util.BookMadnessRatingIcon
@@ -39,6 +39,9 @@ import com.example.book_madness.util.BookMadnessTopAppBar
 
 @Composable
 fun HomeScreen(
+    navigateToItemEntry: () -> Unit,
+    navigateToItemDetails: (Int) -> Unit,
+    bottomNavigationBar: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
@@ -47,14 +50,15 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(
-                title = stringResource(R.string.app_name),
+                title = stringResource(BookMadnessTitlesResId.HOME_SCREEN),
             )
         },
-        floatingActionButton = { BookMadnessFloatingActionButton() },
-        bottomBar = { BottomNavigationBar() }
+        floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry) },
+        bottomBar = { bottomNavigationBar() }
     ) { innerPadding ->
         HomeBody(
             bookList = homeUiState.bookList,
+            onItemClick = navigateToItemDetails,
             modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -65,6 +69,7 @@ fun HomeScreen(
 @Composable
 private fun HomeBody(
     bookList: List<Book>,
+    onItemClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -76,7 +81,7 @@ private fun HomeBody(
         } else {
             BookList(
                 bookList = bookList,
-                onItemClick = { },
+                onItemClick = { onItemClick(it.id) },
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.small))
             )
         }
@@ -188,7 +193,8 @@ fun HomeScreenPreview() {
                     genre = "Fantasy",
                     rating = "0",
                 )
-            )
+            ),
+            onItemClick = { }
         )
     }
 }
@@ -197,6 +203,9 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreenEmptyPreview() {
     AppTheme {
-        HomeBody(bookList = emptyList())
+        HomeBody(
+            bookList = emptyList(),
+            onItemClick = {}
+        )
     }
 }
