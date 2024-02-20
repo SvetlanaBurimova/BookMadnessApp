@@ -6,7 +6,7 @@ import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes.BOOK_DETAI
 
 object BookMadnessScreenRoutes {
     const val HOME_SCREEN = "home"
-    const val BOOK_DETAIL_SCREEN = "itemDetails"
+    const val BOOK_DETAIL_SCREEN = "bookDetails"
 }
 
 object BookMadnessTitlesResId {
@@ -15,7 +15,7 @@ object BookMadnessTitlesResId {
 }
 
 object BookMadnessDestinationsArgs {
-    const val BOOK_ID_ARG = "itemId"
+    const val BOOK_ID_ARG = "bookId"
 }
 
 object BookMadnessDestinations {
