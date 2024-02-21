@@ -29,9 +29,11 @@ import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessTopAppBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookEntryScreen(
+    navigateBack: () -> Unit,
     viewModel: BookEntryViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -45,7 +47,12 @@ fun BookEntryScreen(
         BookEntryBody(
             bookUiState = viewModel.bookUiState,
             onBookValueChange = viewModel::updateUiState,
-            onSaveClick = { },
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.saveBook()
+                    navigateBack()
+                }
+            },
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -103,7 +110,7 @@ fun BookInputForm(
             modifier = modifier
         )
         OutlinedTextField(
-            value = bookDetails.rating,
+            value = bookDetails.rating ?: "",
             onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.book_rating)) },
@@ -112,30 +119,30 @@ fun BookInputForm(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.book_paper_format))
             Checkbox(
-                checked = bookDetails.paper!!,
+                checked = bookDetails.paper,
                 onCheckedChange = { onValueChange(bookDetails.copy(paper = it)) }
             )
         }
         OutlinedTextField(
-            value = bookDetails.startDate!!,
+            value = bookDetails.startDate ?: "",
             onValueChange = { onValueChange(bookDetails.copy(startDate = it)) },
             label = { Text(stringResource(R.string.book_details_start_date)) },
             modifier = modifier
         )
         OutlinedTextField(
-            value = bookDetails.finishDate!!,
+            value = bookDetails.finishDate ?: "",
             onValueChange = { onValueChange(bookDetails.copy(finishDate = it)) },
             label = { Text(stringResource(R.string.book_details_finish_date)) },
             modifier = modifier
         )
         OutlinedTextField(
-            value = bookDetails.author!!,
+            value = bookDetails.author ?: "",
             onValueChange = { onValueChange(bookDetails.copy(author = it)) },
             label = { Text(stringResource(R.string.book_author)) },
             modifier = modifier
         )
         OutlinedTextField(
-            value = bookDetails.notes!!,
+            value = bookDetails.notes ?: "",
             onValueChange = { onValueChange(bookDetails.copy(notes = it)) },
             label = { Text(stringResource(R.string.book_notes)) },
             modifier = modifier
@@ -161,9 +168,7 @@ private fun BookEntryScreenPreview() {
                    rating = "4.5",
                    startDate = "02.11.2023",
                    finishDate = "23.01.2024",
-                   notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
-                           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
-                           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                   notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                )
             ),
             onBookValueChange = { },

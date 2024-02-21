@@ -143,14 +143,18 @@ private fun BookItem(
                     style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = book.rating,
-                    style = MaterialTheme.typography.titleLarge
-                )
 
-                if(book.rating != "0") {
+                if(book.rating != null) {
+                    Text(
+                        text = book.rating,
+                        style = MaterialTheme.typography.titleLarge
+                    )
                     BookMadnessRatingIcon(painterResource(id = R.drawable.round_star))
                 } else {
+                    Text(
+                        text = "0",
+                        style = MaterialTheme.typography.titleLarge
+                    )
                     BookMadnessRatingIcon(painterResource(id = R.drawable.round_star_border))
                 }
             }
@@ -190,8 +194,7 @@ fun HomeScreenPreview() {
                 Book(
                     id = 2,
                     name = "Powerless",
-                    genre = "Fantasy",
-                    rating = "0",
+                    genre = "Fantasy"
                 )
             ),
             onItemClick = { }

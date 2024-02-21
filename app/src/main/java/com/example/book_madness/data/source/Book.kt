@@ -10,8 +10,8 @@ data class Book(
     val id: Int = 0,
     val name: String,
     val genre: String,
-    val rating: String = "0",
-    val paper: Boolean? = null,
+    val rating: String? = null,
+    val paper: Boolean = false,
     @ColumnInfo(name = "start_date")
     val startDate: String? = null,
     @ColumnInfo(name = "finish_date")
