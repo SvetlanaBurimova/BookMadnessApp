@@ -7,11 +7,13 @@ import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes.BOOK_DETAI
 object BookMadnessScreenRoutes {
     const val HOME_SCREEN = "home"
     const val BOOK_DETAIL_SCREEN = "bookDetails"
+    const val BOOK_ADD_SCREEN = "bookEntry"
 }
 
 object BookMadnessTitlesResId {
     val HOME_SCREEN = R.string.book_list
     val BOOK_DETAIL_SCREEN = R.string.book_detail_title
+    val BOOK_ADD_SCREEN = R.string.book_entry_title
 }
 
 object BookMadnessDestinationsArgs {

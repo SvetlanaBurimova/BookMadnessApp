@@ -42,4 +42,7 @@
     <string name="book_details_finish_date">Finish date:</string>
     <string name="book_author">Author:</string>
     <string name="book_notes">Notes:</string>
+    <string name="required_fields">*required fields</string>
+    <string name="book_name_required">Name:*</string>
+    <string name="book_genre_required">Genre:*</string>
 </resources>

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="BookEntryScreenPreview">
+        <State />
+      </entry>
       <entry key="BookListPreview">
         <State />
       </entry>

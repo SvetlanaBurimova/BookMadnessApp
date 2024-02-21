@@ -249,9 +249,8 @@ fun BookDetailsScreenPreview() {
                 name = "Powerless",
                 genre = "Fantasy",
                 rating = "3.5",
-                paper = false,
+                paper = true,
                 startDate = "12.01.2024",
-                finishDate = "10.02.2024",
                 author = "Someone",
                 notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             )

@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.book_madness.ui.bookItem.BookDetailsScreen
+import com.example.book_madness.ui.bookItem.BookEntryScreen
 import com.example.book_madness.ui.home.HomeScreen
 
 @Composable
@@ -22,12 +23,15 @@ fun BookMadnessNavHost(
     ) {
         composable(route = BookMadnessScreenRoutes.HOME_SCREEN) {
             HomeScreen(
-                navigateToItemEntry = { },
+                navigateToItemEntry = { navController.navigate(BookMadnessScreenRoutes.BOOK_ADD_SCREEN) },
                 navigateToItemDetails = {
                     navController.navigate("${BookMadnessScreenRoutes.BOOK_DETAIL_SCREEN}/${it}")
                 },
                 bottomNavigationBar = { BottomNavigationBar(navController) },
             )
+        }
+        composable(route = BookMadnessScreenRoutes.BOOK_ADD_SCREEN) {
+            BookEntryScreen()
         }
         composable(
             route = BookMadnessDestinations.BOOK_DETAIL_ROUTE,
