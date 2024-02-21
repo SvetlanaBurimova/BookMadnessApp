@@ -31,7 +31,9 @@ fun BookMadnessNavHost(
             )
         }
         composable(route = BookMadnessScreenRoutes.BOOK_ADD_SCREEN) {
-            BookEntryScreen()
+            BookEntryScreen(
+                navigateBack = { navController.popBackStack() }
+            )
         }
         composable(
             route = BookMadnessDestinations.BOOK_DETAIL_ROUTE,

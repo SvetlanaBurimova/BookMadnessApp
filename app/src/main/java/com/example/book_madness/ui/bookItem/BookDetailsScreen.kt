@@ -141,7 +141,7 @@ fun BookDetails(
                 Text(text = stringResource(R.string.book_rating))
                 Spacer(modifier = Modifier.weight(1f))
 
-                BookDetailsRatingIcons(book.rating)
+                BookDetailsRatingIcons(book.rating ?: "0")
             }
 
             BookDetailsRow(
