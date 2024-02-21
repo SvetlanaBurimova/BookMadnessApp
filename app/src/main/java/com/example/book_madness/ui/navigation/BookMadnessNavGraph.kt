@@ -42,6 +42,7 @@ fun BookMadnessNavHost(
             })
         ) {
             BookDetailsScreen(
+                navigateBack = { navController.popBackStack() },
                 bottomNavigationBar = { BottomNavigationBar(navController) },
             )
         }

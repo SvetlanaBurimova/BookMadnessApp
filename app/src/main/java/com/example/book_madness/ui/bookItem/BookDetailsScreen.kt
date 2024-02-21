@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -39,14 +40,17 @@ import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessRatingIcon
 import com.example.book_madness.util.BookMadnessTopAppBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookDetailsScreen(
+    navigateBack: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val uiState = viewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -59,7 +63,12 @@ fun BookDetailsScreen(
         BookDetailsBody(
             bookDetailsUiState = uiState.value,
             onEdit = { /* do something */ },
-            onDelete = { /* do something */ },
+            onDelete = {
+                coroutineScope.launch {
+                    viewModel.deleteItem()
+                    navigateBack()
+                }
+            },
             modifier = Modifier
                 .padding(innerPadding)
         )
