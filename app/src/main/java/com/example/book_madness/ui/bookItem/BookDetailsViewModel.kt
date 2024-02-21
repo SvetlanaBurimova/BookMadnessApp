@@ -3,7 +3,7 @@ package com.example.book_madness.ui.bookItem
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.book_madness.data.BookDetailsModel
+import com.example.book_madness.data.BookDetails
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.toBook
 import com.example.book_madness.data.toBookDetails
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-data class BookDetailsUiState(val bookDetails: BookDetailsModel = BookDetailsModel())
+data class BookDetailsUiState(val bookDetails: BookDetails = BookDetails())
 
 class BookDetailsViewModel(
 // This object is a key-value map that lets write and retrieve objects to and from the saved state.

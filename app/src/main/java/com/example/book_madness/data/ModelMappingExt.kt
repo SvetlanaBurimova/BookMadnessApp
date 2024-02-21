@@ -2,7 +2,7 @@ package com.example.book_madness.data
 
 import com.example.book_madness.data.source.Book
 
-fun Book.toBookDetails(): BookDetailsModel = BookDetailsModel(
+fun Book.toBookDetails(): BookDetails = BookDetails(
     id = id,
     name = name,
     genre = genre,
@@ -14,7 +14,7 @@ fun Book.toBookDetails(): BookDetailsModel = BookDetailsModel(
     notes = notes
 )
 
-fun BookDetailsModel.toBook(): Book = Book(
+fun BookDetails.toBook(): Book = Book(
     id = id,
     name = name,
     genre = genre,
