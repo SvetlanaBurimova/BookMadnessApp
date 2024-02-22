@@ -17,6 +17,19 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
     var bookUiState by mutableStateOf(BookUiState())
         private set
 
+    val ratingList = listOf(
+        "5",
+        "4.5",
+        "4",
+        "3.5",
+        "3",
+        "2.5",
+        "2",
+        "1.5",
+        "1",
+        "0.5"
+    )
+
     /**
      * Updates the [bookUiState] with the value provided in the argument. This method also triggers
      * a validation for input values.

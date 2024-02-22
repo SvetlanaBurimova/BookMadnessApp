@@ -1,26 +1,41 @@
 package com.example.book_madness.ui.bookItem
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
@@ -53,6 +68,7 @@ fun BookEntryScreen(
                     navigateBack()
                 }
             },
+            ratingList = viewModel.ratingList,
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -64,6 +80,7 @@ fun BookEntryScreen(
 @Composable
 fun BookEntryBody(
     bookUiState: BookUiState,
+    ratingList: List<String>,
     onBookValueChange: (BookDetails) -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -75,6 +92,7 @@ fun BookEntryBody(
         BookInputForm(
             bookDetails = bookUiState.bookDetails,
             onValueChange = onBookValueChange,
+            ratingList = ratingList,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
@@ -91,31 +109,48 @@ fun BookEntryBody(
 @Composable
 fun BookInputForm(
     bookDetails: BookDetails,
+    ratingList: List<String>,
     modifier: Modifier = Modifier,
     onValueChange: (BookDetails) -> Unit = {},
 ) {
+    var expanded by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
     Column(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium))
     ) {
         OutlinedTextField(
             value = bookDetails.name,
             onValueChange = { onValueChange(bookDetails.copy(name = it)) },
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    imeAction = ImeAction.Next
+                ),
             label = { Text(stringResource(R.string.book_name_required)) },
             modifier = modifier
         )
         OutlinedTextField(
             value = bookDetails.genre,
             onValueChange = { onValueChange(bookDetails.copy(genre = it)) },
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    imeAction = ImeAction.Next
+                ),
+            keyboardActions = KeyboardActions(
+                onNext = { focusManager.clearFocus() }
+            ),
             label = { Text(stringResource(R.string.book_genre_required)) },
             modifier = modifier
         )
-        OutlinedTextField(
-            value = bookDetails.rating ?: "",
-            onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(stringResource(R.string.book_rating)) },
-            modifier = modifier
+
+        RatingField(
+            bookDetails = bookDetails,
+            onValueChange = onValueChange,
+            ratingList = ratingList
         )
+
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.book_paper_format))
             Checkbox(
@@ -138,18 +173,93 @@ fun BookInputForm(
         OutlinedTextField(
             value = bookDetails.author ?: "",
             onValueChange = { onValueChange(bookDetails.copy(author = it)) },
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    imeAction = ImeAction.Next
+                ),
             label = { Text(stringResource(R.string.book_author)) },
             modifier = modifier
         )
         OutlinedTextField(
             value = bookDetails.notes ?: "",
             onValueChange = { onValueChange(bookDetails.copy(notes = it)) },
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    imeAction = ImeAction.Done
+                ),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus() }
+            ),
             label = { Text(stringResource(R.string.book_notes)) },
+            singleLine = false,
             modifier = modifier
         )
         Text(
             text = stringResource(R.string.required_fields),
             modifier = Modifier.padding(start = dimensionResource(id = R.dimen.medium))
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RatingField(
+    bookDetails: BookDetails,
+    ratingList: List<String>,
+    modifier: Modifier = Modifier,
+    onValueChange: (BookDetails) -> Unit = {},
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            modifier = Modifier.menuAnchor(),
+            readOnly = true,
+            value = bookDetails.rating ?: "",
+            onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
+            label = { Text(stringResource(R.string.book_rating))  },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+                focusManager.clearFocus()
+            }
+        ) {
+            ratingList.forEach { selectionOption ->
+                DropdownMenuItem(
+                    text = { Text(selectionOption) },
+                    onClick = {
+                        onValueChange(bookDetails.copy(rating = selectionOption))
+                        expanded = false
+                        focusManager.clearFocus()
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                )
+            }
+        }
+    }
+        Image(
+            painter = painterResource(id = R.drawable.clear),
+            contentDescription = null,
+            modifier = Modifier
+                .size(dimensionResource(id = R.dimen.extra_large))
+                .clickable {
+                    onValueChange(bookDetails.copy(rating = null))
+                    focusManager.clearFocus()
+                }
         )
     }
 }
@@ -172,7 +282,8 @@ private fun BookEntryScreenPreview() {
                )
             ),
             onBookValueChange = { },
-            onSaveClick = { }
+            onSaveClick = { },
+            ratingList = emptyList()
         )
     }
 }
