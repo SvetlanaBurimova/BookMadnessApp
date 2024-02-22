@@ -1,5 +1,7 @@
 package com.example.book_madness.ui.navigation
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -17,9 +19,9 @@ import com.example.book_madness.R
 
 data class BottomNavigationItem(
     val route: String,
-    val titleRes: String,
-    val unselectedIcon: Painter,
-    val selectedIcon: Painter
+    @StringRes val titleRes: Int,
+    @DrawableRes val unselectedIcon: Int,
+    @DrawableRes val selectedIcon: Int
 )
 
 @Composable
@@ -29,21 +31,21 @@ fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         BottomNavigationItem(
             route = BookMadnessScreenRoutes.HOME_SCREEN,
-            titleRes = stringResource(id = R.string.book_list),
-            unselectedIcon = painterResource(id = R.drawable.outline_library_books),
-            selectedIcon = painterResource(id = R.drawable.library_books)
+            titleRes = R.string.book_list,
+            unselectedIcon = R.drawable.outline_library_books,
+            selectedIcon = R.drawable.library_books
         ),
         BottomNavigationItem(
             route = stringResource(id = R.string.book_stats),
-            titleRes = stringResource(id = R.string.book_stats),
-            unselectedIcon = painterResource(id = R.drawable.outline_pie_chart),
-            selectedIcon = painterResource(id = R.drawable.pie_chart)
+            titleRes = R.string.book_stats,
+            unselectedIcon = R.drawable.outline_pie_chart,
+            selectedIcon = R.drawable.pie_chart
         ),
         BottomNavigationItem(
             route = stringResource(id = R.string.book_settings),
-            titleRes = stringResource(id = R.string.book_settings),
-            unselectedIcon = painterResource(id = R.drawable.outline_settings),
-            selectedIcon = painterResource(id = R.drawable.settings)
+            titleRes = R.string.book_settings,
+            unselectedIcon = R.drawable.outline_settings,
+            selectedIcon = R.drawable.settings
         )
     )
 
@@ -55,11 +57,14 @@ fun BottomNavigationBar(navController: NavHostController) {
                    selectedTabIndex = index
                    navController.navigate(item.route)
                 },
-               label = { Text(text = item.titleRes) },
+               label = { Text(text = stringResource(id = item.titleRes)
+               ) },
                icon = {
                    Icon(
-                       painter = if (index == selectedTabIndex) item.selectedIcon else item.unselectedIcon,
-                       contentDescription = item.titleRes
+                       painter =
+                       if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
+                       else painterResource(id = item.unselectedIcon),
+                       contentDescription = stringResource(id = item.titleRes)
                    )
                }
             )
