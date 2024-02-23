@@ -30,6 +30,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -113,7 +114,6 @@ fun BookInputForm(
     modifier: Modifier = Modifier,
     onValueChange: (BookDetails) -> Unit = {},
 ) {
-    var expanded by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -138,19 +138,14 @@ fun BookInputForm(
                     capitalization = KeyboardCapitalization.Sentences,
                     imeAction = ImeAction.Next
                 ),
-            keyboardActions = KeyboardActions(
-                onNext = { focusManager.clearFocus() }
-            ),
             label = { Text(stringResource(R.string.book_genre_required)) },
             modifier = modifier
         )
-
         RatingField(
             bookDetails = bookDetails,
             onValueChange = onValueChange,
             ratingList = ratingList
         )
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.book_paper_format))
             Checkbox(
@@ -217,11 +212,14 @@ private fun RatingField(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier.onFocusChanged {
+            if (it.isFocused) expanded = true
+        }
     ) {
         OutlinedTextField(
             modifier = Modifier.menuAnchor(),
