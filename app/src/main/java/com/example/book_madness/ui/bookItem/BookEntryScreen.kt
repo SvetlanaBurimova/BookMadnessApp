@@ -56,6 +56,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookEntryScreen(
+    modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     viewModel: BookEntryViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
@@ -77,7 +78,7 @@ fun BookEntryScreen(
                 }
             },
             ratingList = viewModel.ratingList,
-            modifier = Modifier
+            modifier = modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
@@ -89,9 +90,9 @@ fun BookEntryScreen(
 fun BookEntryBody(
     bookUiState: BookUiState,
     ratingList: List<String>,
+    modifier: Modifier = Modifier,
     onBookValueChange: (BookDetails) -> Unit,
-    onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onSaveClick: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(dimensionResource(id = R.dimen.medium)),
@@ -294,8 +295,7 @@ fun CustomDatePickerDialog(
     DatePickerDialog(
         onDismissRequest = { },
         confirmButton = {
-            Button(onClick = {
-                onAccept(state.selectedDateMillis) }) {
+            Button(onClick = { onAccept(state.selectedDateMillis) }) {
                 Text("Accept")
             }
         },
