@@ -33,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.dimensionResource
@@ -55,6 +56,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookEntryScreen(
+    modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     viewModel: BookEntryViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
@@ -76,7 +78,7 @@ fun BookEntryScreen(
                 }
             },
             ratingList = viewModel.ratingList,
-            modifier = Modifier
+            modifier = modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
@@ -88,9 +90,9 @@ fun BookEntryScreen(
 fun BookEntryBody(
     bookUiState: BookUiState,
     ratingList: List<String>,
+    modifier: Modifier = Modifier,
     onBookValueChange: (BookDetails) -> Unit,
-    onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onSaveClick: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(dimensionResource(id = R.dimen.medium)),
@@ -150,7 +152,8 @@ fun BookInputForm(
         RatingDropdownMenu(
             bookDetails = bookDetails,
             onValueChange = onValueChange,
-            ratingList = ratingList
+            ratingList = ratingList,
+            focusManager = focusManager
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.book_paper_format))
@@ -165,6 +168,7 @@ fun BookInputForm(
         CustomDatePickerForStartDateField(
             bookDetails = bookDetails,
             onValueChange = onValueChange,
+            focusManager = focusManager,
             modifier = modifier
         )
         OutlinedTextField(
@@ -209,10 +213,10 @@ fun BookInputForm(
 @Composable
 fun CustomDatePickerForStartDateField(
     bookDetails: BookDetails,
+    focusManager: FocusManager,
     modifier: Modifier = Modifier,
     onValueChange: (BookDetails) -> Unit = {}
 ) {
-    val focusManager = LocalFocusManager.current
     val isOpen = remember { mutableStateOf(false)}
 
     Row(
@@ -232,9 +236,8 @@ fun CustomDatePickerForStartDateField(
             }
         )
         ClearIconButton(
-            onClearButtonClick = {
-                onValueChange(bookDetails.copy(startDate = null))
-            }
+            focusManager = focusManager,
+            onClearButtonClick = { onValueChange(bookDetails.copy(startDate = null)) }
         )
     }
 
@@ -263,9 +266,11 @@ fun CustomDatePickerForStartDateField(
 }
 
 @Composable
-fun ClearIconButton(onClearButtonClick: () -> Unit) {
-    val focusManager = LocalFocusManager.current
-
+fun ClearIconButton(
+    focusManager: FocusManager,
+    modifier: Modifier = Modifier,
+    onClearButtonClick: () -> Unit
+) {
     IconButton(
         onClick = {
             onClearButtonClick()
@@ -274,7 +279,7 @@ fun ClearIconButton(onClearButtonClick: () -> Unit) {
     ) {
         Icon(
             painterResource(id = R.drawable.clear), contentDescription = null,
-            modifier = Modifier.size(dimensionResource(id = R.dimen.extra_large))
+            modifier = modifier.size(dimensionResource(id = R.dimen.extra_large)),
         )
     }
 }
@@ -309,11 +314,11 @@ fun CustomDatePickerDialog(
 private fun RatingDropdownMenu(
     bookDetails: BookDetails,
     ratingList: List<String>,
+    focusManager: FocusManager,
     modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit = {},
+    onValueChange: (BookDetails) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -324,7 +329,7 @@ private fun RatingDropdownMenu(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded },
             modifier = Modifier.onFocusChanged {
-                if (it.isFocused) expanded = true 
+                if (it.isFocused) expanded = true
             }
         ) {
             OutlinedTextField(
@@ -332,7 +337,7 @@ private fun RatingDropdownMenu(
                 readOnly = true,
                 value = bookDetails.rating ?: "",
                 onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
-                label = { Text(stringResource(R.string.book_rating))  },
+                label = { Text(stringResource(R.string.book_rating)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
             )
             ExposedDropdownMenu(
@@ -356,6 +361,7 @@ private fun RatingDropdownMenu(
             }
         }
         ClearIconButton(
+            focusManager = focusManager,
             onClearButtonClick = { onValueChange(bookDetails.copy(rating = null)) }
         )
     }
