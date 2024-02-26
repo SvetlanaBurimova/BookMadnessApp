@@ -1,7 +1,5 @@
 package com.example.book_madness.ui.bookItem
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,14 +12,19 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,6 +49,9 @@ import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessTopAppBar
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookEntryScreen(
@@ -141,7 +147,7 @@ fun BookInputForm(
             label = { Text(stringResource(R.string.book_genre_required)) },
             modifier = modifier
         )
-        RatingField(
+        RatingDropdownMenu(
             bookDetails = bookDetails,
             onValueChange = onValueChange,
             ratingList = ratingList
@@ -150,13 +156,15 @@ fun BookInputForm(
             Text(stringResource(R.string.book_paper_format))
             Checkbox(
                 checked = bookDetails.paper,
-                onCheckedChange = { onValueChange(bookDetails.copy(paper = it)) }
+                onCheckedChange = {
+                    onValueChange(bookDetails.copy(paper = it))
+                    focusManager.clearFocus()
+                }
             )
         }
-        OutlinedTextField(
-            value = bookDetails.startDate ?: "",
-            onValueChange = { onValueChange(bookDetails.copy(startDate = it)) },
-            label = { Text(stringResource(R.string.book_details_start_date)) },
+        CustomDatePickerForStartDateField(
+            bookDetails = bookDetails,
+            onValueChange = onValueChange,
             modifier = modifier
         )
         OutlinedTextField(
@@ -198,9 +206,107 @@ fun BookInputForm(
     }
 }
 
+@Composable
+fun CustomDatePickerForStartDateField(
+    bookDetails: BookDetails,
+    modifier: Modifier = Modifier,
+    onValueChange: (BookDetails) -> Unit = {}
+) {
+    val focusManager = LocalFocusManager.current
+    val isOpen = remember { mutableStateOf(false)}
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            readOnly = true,
+            value = bookDetails.startDate ?: "",
+            label = { Text(stringResource(R.string.book_details_start_date)) },
+            onValueChange = {},
+            modifier = Modifier.onFocusChanged {
+                if (it.isFocused) {
+                    isOpen.value = true
+                }
+            }
+        )
+        ClearIconButton(
+            onClearButtonClick = {
+                onValueChange(bookDetails.copy(startDate = null))
+            }
+        )
+    }
+
+    if (isOpen.value) {
+        CustomDatePickerDialog(
+            onAccept = {
+                if (it != null) {
+                    onValueChange(
+                        bookDetails.copy(startDate = Instant
+                            .ofEpochMilli(it)
+                            .atZone(ZoneId.of("UTC"))
+                            .toLocalDate()
+                            .format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
+                        )
+                    )
+                }
+                isOpen.value = false
+                focusManager.clearFocus()
+            },
+            onCancel = {
+                isOpen.value = false
+                focusManager.clearFocus()
+            }
+        )
+    }
+}
+
+@Composable
+fun ClearIconButton(onClearButtonClick: () -> Unit) {
+    val focusManager = LocalFocusManager.current
+
+    IconButton(
+        onClick = {
+            onClearButtonClick()
+            focusManager.clearFocus()
+        }
+    ) {
+        Icon(
+            painterResource(id = R.drawable.clear), contentDescription = null,
+            modifier = Modifier.size(dimensionResource(id = R.dimen.extra_large))
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun RatingField(
+fun CustomDatePickerDialog(
+    onAccept: (Long?) -> Unit,
+    onCancel: () -> Unit
+) {
+    val state = rememberDatePickerState()
+
+    DatePickerDialog(
+        onDismissRequest = { },
+        confirmButton = {
+            Button(onClick = { onAccept(state.selectedDateMillis) }) {
+                Text("Accept")
+            }
+        },
+        dismissButton = {
+            Button(onClick = onCancel) {
+                Text("Cancel")
+            }
+        }
+    ) {
+        DatePicker(state = state)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RatingDropdownMenu(
     bookDetails: BookDetails,
     ratingList: List<String>,
     modifier: Modifier = Modifier,
@@ -213,51 +319,44 @@ private fun RatingField(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
-    ) {
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-        modifier = Modifier.onFocusChanged {
-            if (it.isFocused) expanded = true
-        }
-    ) {
-        OutlinedTextField(
-            modifier = Modifier.menuAnchor(),
-            readOnly = true,
-            value = bookDetails.rating ?: "",
-            onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
-            label = { Text(stringResource(R.string.book_rating))  },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
-        )
-        ExposedDropdownMenu(
+    ) { 
+        ExposedDropdownMenuBox(
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-                focusManager.clearFocus()
+            onExpandedChange = { expanded = !expanded },
+            modifier = Modifier.onFocusChanged {
+                if (it.isFocused) expanded = true 
             }
         ) {
-            ratingList.forEach { selectionOption ->
-                DropdownMenuItem(
-                    text = { Text(selectionOption) },
-                    onClick = {
-                        onValueChange(bookDetails.copy(rating = selectionOption))
-                        expanded = false
-                        focusManager.clearFocus()
-                    },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-                )
-            }
-        }
-    }
-        Image(
-            painter = painterResource(id = R.drawable.clear),
-            contentDescription = null,
-            modifier = Modifier
-                .size(dimensionResource(id = R.dimen.extra_large))
-                .clickable {
-                    onValueChange(bookDetails.copy(rating = null))
+            OutlinedTextField(
+                modifier = Modifier.menuAnchor(),
+                readOnly = true,
+                value = bookDetails.rating ?: "",
+                onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
+                label = { Text(stringResource(R.string.book_rating))  },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = {
+                    expanded = false
                     focusManager.clearFocus()
                 }
+            ) {
+                ratingList.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            onValueChange(bookDetails.copy(rating = selectionOption))
+                            expanded = false
+                            focusManager.clearFocus()
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                    )
+                }
+            }
+        }
+        ClearIconButton(
+            onClearButtonClick = { onValueChange(bookDetails.copy(rating = null)) }
         )
     }
 }
