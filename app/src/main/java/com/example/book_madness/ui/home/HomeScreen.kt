@@ -53,7 +53,7 @@ fun HomeScreen(
                 title = stringResource(BookMadnessTitlesResId.HOME_SCREEN),
             )
         },
-        floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry) },
+        floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry = navigateToItemEntry) },
         bottomBar = { bottomNavigationBar() }
     ) { innerPadding ->
         HomeBody(
@@ -101,7 +101,8 @@ fun HomeEmptyScreen(
     Text(
         text = stringResource(R.string.no_books_description),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifier
     )
 }
 
@@ -137,14 +138,15 @@ private fun BookItem(
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()) {
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text(
                     text = book.name,
                     style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(modifier = Modifier.weight(1f))
 
-                if(book.rating != null) {
+                if (book.rating != null) {
                     Text(
                         text = book.rating,
                         style = MaterialTheme.typography.titleLarge
@@ -159,10 +161,10 @@ private fun BookItem(
                 }
             }
 
-            if(book.startDate != null ) {
+            if (book.startDate != null) {
                 ReadingDate(R.string.start_date, book.startDate)
             }
-            if(book.finishDate != null) {
+            if (book.finishDate != null) {
                 ReadingDate(R.string.finish_date, book.finishDate)
             }
         }
@@ -208,7 +210,7 @@ fun HomeScreenEmptyPreview() {
     AppTheme {
         HomeBody(
             bookList = emptyList(),
-            onItemClick = {}
+            onItemClick = { }
         )
     }
 }

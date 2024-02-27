@@ -18,6 +18,6 @@ fun BookMadnessRatingIcon(
         painter = icon,
         contentDescription = null,
         tint = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.size(dimensionResource(id = R.dimen.extra_large))
+        modifier = modifier.size(dimensionResource(id = R.dimen.extra_large))
     )
 }

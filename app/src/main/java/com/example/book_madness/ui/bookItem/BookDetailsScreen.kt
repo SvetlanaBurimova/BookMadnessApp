@@ -44,9 +44,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BookDetailsScreen(
+    modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val uiState = viewModel.uiState.collectAsState()
@@ -69,7 +69,7 @@ fun BookDetailsScreen(
                     navigateBack()
                 }
             },
-            modifier = Modifier
+            modifier = modifier
                 .padding(innerPadding)
         )
     }
@@ -78,9 +78,9 @@ fun BookDetailsScreen(
 @Composable
 private fun BookDetailsBody(
     bookDetailsUiState: BookDetailsUiState,
+    modifier: Modifier = Modifier,
     onEdit: () -> Unit,
-    onDelete: () -> Unit,
-    modifier: Modifier = Modifier
+    onDelete: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -132,7 +132,7 @@ fun BookDetails(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             top = dimensionResource(id = R.dimen.medium)
         )
     ) {
@@ -146,7 +146,7 @@ fun BookDetails(
                 labelResID = R.string.book_name,
                 itemDetail = book.name
             )
-            Row{
+            Row {
                 Text(text = stringResource(R.string.book_rating))
                 Spacer(modifier = Modifier.weight(1f))
 
@@ -160,7 +160,7 @@ fun BookDetails(
 
             BookDetailsRow(
                 labelResID = R.string.book_paper_format,
-                itemDetail = if (book.paper == true) {
+                itemDetail = if (book.paper) {
                     stringResource(id = R.string.yes)
                 } else stringResource(id = R.string.no)
             )
@@ -192,10 +192,10 @@ fun BookDetails(
 fun BookDetailsRatingIcons(rating: String) {
     var bookRating = rating.toDouble()
 
-    for(star in 1..5) {
-        if(bookRating >= 1.0) {
+    for (star in 1..5) {
+        if (bookRating >= 1.0) {
             BookMadnessRatingIcon(painterResource(id = R.drawable.round_star))
-        } else if(bookRating >= 0.5) {
+        } else if (bookRating >= 0.5) {
             BookMadnessRatingIcon(painterResource(id = R.drawable.round_star_half))
         } else {
             BookMadnessRatingIcon(painterResource(id = R.drawable.round_star_border))
@@ -213,7 +213,8 @@ private fun BookDetailsRow(
     Row(modifier = modifier) {
         Text(
             text = stringResource(labelResID),
-            style = MaterialTheme.typography.bodyLarge)
+            style = MaterialTheme.typography.bodyLarge
+        )
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = itemDetail,
@@ -226,9 +227,9 @@ private fun BookDetailsRow(
 
 @Composable
 private fun DeleteConfirmationDialog(
+    modifier: Modifier = Modifier,
     onDeleteConfirm: () -> Unit,
-    onDeleteCancel: () -> Unit,
-    modifier: Modifier = Modifier
+    onDeleteCancel: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = { /* Do nothing */ },
