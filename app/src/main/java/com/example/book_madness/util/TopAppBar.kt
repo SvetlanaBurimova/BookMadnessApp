@@ -15,7 +15,7 @@ import com.example.book_madness.R
 @Composable
 fun BookMadnessTopAppBar(
     title: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
         title = { Text(title) },

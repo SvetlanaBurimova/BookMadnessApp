@@ -45,4 +45,6 @@
     <string name="required_fields">*required fields</string>
     <string name="book_name_required">Name:*</string>
     <string name="book_genre_required">Genre:*</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -12,8 +12,8 @@ import com.example.book_madness.R
 
 @Composable
 fun BookMadnessFloatingActionButton(
-    navigateToItemEntry: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToItemEntry: () -> Unit
 ) {
     FloatingActionButton(
         onClick = { navigateToItemEntry() },
@@ -21,7 +21,8 @@ fun BookMadnessFloatingActionButton(
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.book_entry_title)
+            contentDescription = stringResource(R.string.book_entry_title),
+            modifier = modifier
         )
     }
 }

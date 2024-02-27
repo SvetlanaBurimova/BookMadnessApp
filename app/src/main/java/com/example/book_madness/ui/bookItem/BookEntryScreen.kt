@@ -1,5 +1,6 @@
 package com.example.book_madness.ui.bookItem
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -120,7 +121,7 @@ fun BookInputForm(
     bookDetails: BookDetails,
     ratingList: List<String>,
     modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit = {},
+    onValueChange: (BookDetails) -> Unit = { }
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -165,26 +166,54 @@ fun BookInputForm(
                 }
             )
         }
-        CustomDatePickerForStartDateField(
-            bookDetails = bookDetails,
-            onValueChange = onValueChange,
+        CustomDatePicker(
+            bookDetails = bookDetails.startDate ?: "",
             focusManager = focusManager,
-            modifier = modifier
+            fieldNameRes = R.string.book_details_start_date,
+            modifier = modifier,
+            onClearButtonClick = { onValueChange(bookDetails.copy(startDate = null)) },
+            onAccept = {
+                if (it != null) {
+                    onValueChange(
+                        bookDetails.copy(
+                            startDate = Instant
+                                .ofEpochMilli(it)
+                                .atZone(ZoneId.of("UTC"))
+                                .toLocalDate()
+                                .format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
+                        )
+                    )
+                }
+            }
         )
-        OutlinedTextField(
-            value = bookDetails.finishDate ?: "",
-            onValueChange = { onValueChange(bookDetails.copy(finishDate = it)) },
-            label = { Text(stringResource(R.string.book_details_finish_date)) },
-            modifier = modifier
+        CustomDatePicker(
+            bookDetails = bookDetails.finishDate ?: "",
+            focusManager = focusManager,
+            fieldNameRes = R.string.book_details_finish_date,
+            modifier = modifier,
+            onClearButtonClick = { onValueChange(bookDetails.copy(finishDate = null)) },
+            onAccept = {
+                if (it != null) {
+                    onValueChange(
+                        bookDetails.copy(
+                            finishDate = Instant
+                                .ofEpochMilli(it)
+                                .atZone(ZoneId.of("UTC"))
+                                .toLocalDate()
+                                .format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
+                        )
+                    )
+                }
+            }
         )
         OutlinedTextField(
             value = bookDetails.author ?: "",
             onValueChange = { onValueChange(bookDetails.copy(author = it)) },
             keyboardOptions =
-                KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Sentences,
-                    imeAction = ImeAction.Next
-                ),
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Next
+            ),
             label = { Text(stringResource(R.string.book_author)) },
             modifier = modifier
         )
@@ -192,10 +221,10 @@ fun BookInputForm(
             value = bookDetails.notes ?: "",
             onValueChange = { onValueChange(bookDetails.copy(notes = it)) },
             keyboardOptions =
-                KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Sentences,
-                    imeAction = ImeAction.Done
-                ),
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(
                 onDone = { focusManager.clearFocus() }
             ),
@@ -211,13 +240,15 @@ fun BookInputForm(
 }
 
 @Composable
-fun CustomDatePickerForStartDateField(
-    bookDetails: BookDetails,
+fun CustomDatePicker(
+    bookDetails: String,
     focusManager: FocusManager,
+    @StringRes fieldNameRes: Int,
     modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit = {}
+    onClearButtonClick: () -> Unit,
+    onAccept: (Long?) -> Unit
 ) {
-    val isOpen = remember { mutableStateOf(false)}
+    val isOpen = remember { mutableStateOf(false) }
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -226,9 +257,9 @@ fun CustomDatePickerForStartDateField(
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = bookDetails.startDate ?: "",
-            label = { Text(stringResource(R.string.book_details_start_date)) },
-            onValueChange = {},
+            value = bookDetails,
+            label = { Text(stringResource(fieldNameRes)) },
+            onValueChange = { /* Do nothing */ },
             modifier = Modifier.onFocusChanged {
                 if (it.isFocused) {
                     isOpen.value = true
@@ -237,23 +268,14 @@ fun CustomDatePickerForStartDateField(
         )
         ClearIconButton(
             focusManager = focusManager,
-            onClearButtonClick = { onValueChange(bookDetails.copy(startDate = null)) }
+            onClearButtonClick = { onClearButtonClick() }
         )
     }
 
     if (isOpen.value) {
         CustomDatePickerDialog(
             onAccept = {
-                if (it != null) {
-                    onValueChange(
-                        bookDetails.copy(startDate = Instant
-                            .ofEpochMilli(it)
-                            .atZone(ZoneId.of("UTC"))
-                            .toLocalDate()
-                            .format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
-                        )
-                    )
-                }
+                onAccept(it)
                 isOpen.value = false
                 focusManager.clearFocus()
             },
@@ -261,25 +283,6 @@ fun CustomDatePickerForStartDateField(
                 isOpen.value = false
                 focusManager.clearFocus()
             }
-        )
-    }
-}
-
-@Composable
-fun ClearIconButton(
-    focusManager: FocusManager,
-    modifier: Modifier = Modifier,
-    onClearButtonClick: () -> Unit
-) {
-    IconButton(
-        onClick = {
-            onClearButtonClick()
-            focusManager.clearFocus()
-        }
-    ) {
-        Icon(
-            painterResource(id = R.drawable.clear), contentDescription = null,
-            modifier = modifier.size(dimensionResource(id = R.dimen.extra_large)),
         )
     }
 }
@@ -293,15 +296,15 @@ fun CustomDatePickerDialog(
     val state = rememberDatePickerState()
 
     DatePickerDialog(
-        onDismissRequest = { },
+        onDismissRequest = { /* Do nothing */ },
         confirmButton = {
             Button(onClick = { onAccept(state.selectedDateMillis) }) {
-                Text("Accept")
+                Text(stringResource(id = R.string.accept))
             }
         },
         dismissButton = {
             Button(onClick = onCancel) {
-                Text("Cancel")
+                Text(stringResource(id = R.string.cancel))
             }
         }
     ) {
@@ -316,7 +319,7 @@ private fun RatingDropdownMenu(
     ratingList: List<String>,
     focusManager: FocusManager,
     modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit = {}
+    onValueChange: (BookDetails) -> Unit = { }
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -324,7 +327,7 @@ private fun RatingDropdownMenu(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
-    ) { 
+    ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded },
@@ -367,22 +370,41 @@ private fun RatingDropdownMenu(
     }
 }
 
+@Composable
+fun ClearIconButton(
+    focusManager: FocusManager,
+    modifier: Modifier = Modifier,
+    onClearButtonClick: () -> Unit
+) {
+    IconButton(
+        onClick = {
+            onClearButtonClick()
+            focusManager.clearFocus()
+        }
+    ) {
+        Icon(
+            painterResource(id = R.drawable.clear), contentDescription = null,
+            modifier = modifier.size(dimensionResource(id = R.dimen.extra_large)),
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun BookEntryScreenPreview() {
     AppTheme {
         BookEntryBody(
             bookUiState = BookUiState(
-               BookDetails(
-                   id = 1,
-                   name = "Fourth Wing",
-                   genre = "Fantasy",
-                   paper = true,
-                   rating = "4.5",
-                   startDate = "02.11.2023",
-                   finishDate = "23.01.2024",
-                   notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-               )
+                BookDetails(
+                    id = 1,
+                    name = "Fourth Wing",
+                    genre = "Fantasy",
+                    paper = true,
+                    rating = "4.5",
+                    startDate = "02.11.2023",
+                    finishDate = "23.01.2024",
+                    notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                )
             ),
             onBookValueChange = { },
             onSaveClick = { },

@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -52,21 +51,24 @@ fun BottomNavigationBar(navController: NavHostController) {
     NavigationBar {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
-               selected = selectedTabIndex == index,
-               onClick = {
-                   selectedTabIndex = index
-                   navController.navigate(item.route)
+                selected = selectedTabIndex == index,
+                onClick = {
+                    selectedTabIndex = index
+                    navController.navigate(item.route)
                 },
-               label = { Text(text = stringResource(id = item.titleRes)
-               ) },
-               icon = {
-                   Icon(
-                       painter =
-                       if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
-                       else painterResource(id = item.unselectedIcon),
-                       contentDescription = stringResource(id = item.titleRes)
-                   )
-               }
+                label = {
+                    Text(
+                        text = stringResource(id = item.titleRes)
+                    )
+                },
+                icon = {
+                    Icon(
+                        painter =
+                        if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
+                        else painterResource(id = item.unselectedIcon),
+                        contentDescription = stringResource(id = item.titleRes)
+                    )
+                }
             )
         }
     }

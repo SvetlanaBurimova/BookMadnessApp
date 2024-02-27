@@ -21,9 +21,9 @@ class BookDetailsViewModel(
 // These values persist after the process is killed by the system and remain available through the same object.
     savedStateHandle: SavedStateHandle,
     private val booksRepository: BooksRepository,
-): ViewModel() {
-
-    private val bookId: Int = checkNotNull(savedStateHandle[BookMadnessDestinationsArgs.BOOK_ID_ARG])
+) : ViewModel() {
+    private val bookId: Int =
+        checkNotNull(savedStateHandle[BookMadnessDestinationsArgs.BOOK_ID_ARG])
 
     val uiState: StateFlow<BookDetailsUiState> =
         booksRepository.getBookByIdStream(bookId)
