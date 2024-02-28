@@ -39,10 +39,10 @@ import com.example.book_madness.util.BookMadnessTopAppBar
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     navigateToItemEntry: () -> Unit,
     navigateToItemDetails: (Int) -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
@@ -51,6 +51,7 @@ fun HomeScreen(
         topBar = {
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.HOME_SCREEN),
+                canNavigateBack = false
             )
         },
         floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry = navigateToItemEntry) },
@@ -69,8 +70,8 @@ fun HomeScreen(
 @Composable
 private fun HomeBody(
     bookList: List<Book>,
-    onItemClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (Int) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -89,12 +90,11 @@ private fun HomeBody(
 }
 
 @Composable
-fun HomeEmptyScreen(
-    modifier: Modifier = Modifier
-) {
+fun HomeEmptyScreen(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.animation_for_empty_screen)
     )
+
     LottieAnimation(
         composition = composition
     )
@@ -109,8 +109,8 @@ fun HomeEmptyScreen(
 @Composable
 private fun BookList(
     bookList: List<Book>,
-    onItemClick: (Book) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (Book) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(items = bookList, key = { it.id }) { item ->
@@ -199,7 +199,7 @@ fun HomeScreenPreview() {
                     genre = "Fantasy"
                 )
             ),
-            onItemClick = { }
+            onItemClick = { /* Do nothing */ }
         )
     }
 }
@@ -210,7 +210,7 @@ fun HomeScreenEmptyPreview() {
     AppTheme {
         HomeBody(
             bookList = emptyList(),
-            onItemClick = { }
+            onItemClick = { /* Do nothing */ }
         )
     }
 }

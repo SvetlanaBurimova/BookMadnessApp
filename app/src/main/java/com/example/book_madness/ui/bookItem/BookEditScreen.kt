@@ -29,6 +29,8 @@ fun BookEditScreen(
         topBar = {
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.BOOK_EDIT_SCREEN),
+                canNavigateBack = true,
+                navigateUp = navigateBack
             )
         }
     ) { innerPadding ->

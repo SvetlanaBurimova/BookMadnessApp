@@ -57,6 +57,8 @@ fun BookDetailsScreen(
         topBar = {
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.BOOK_DETAIL_SCREEN),
+                canNavigateBack = true,
+                navigateUp = navigateBack
             )
         },
         bottomBar = { bottomNavigationBar() }
@@ -82,6 +84,8 @@ private fun BookDetailsBody(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
+    var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -91,7 +95,6 @@ private fun BookDetailsBody(
             )
             .verticalScroll(rememberScrollState())
     ) {
-        var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
         BookDetails(
             book = bookDetailsUiState.bookDetails.toBook(),
             modifier = Modifier.fillMaxWidth()

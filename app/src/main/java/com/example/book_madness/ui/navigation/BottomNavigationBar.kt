@@ -64,8 +64,8 @@ fun BottomNavigationBar(navController: NavHostController) {
                 icon = {
                     Icon(
                         painter =
-                        if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
-                        else painterResource(id = item.unselectedIcon),
+                            if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
+                            else painterResource(id = item.unselectedIcon),
                         contentDescription = stringResource(id = item.titleRes)
                     )
                 }

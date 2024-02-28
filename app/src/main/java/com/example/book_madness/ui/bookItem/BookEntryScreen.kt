@@ -66,7 +66,9 @@ fun BookEntryScreen(
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(
-                title = stringResource(BookMadnessTitlesResId.BOOK_ADD_SCREEN)
+                title = stringResource(BookMadnessTitlesResId.BOOK_ADD_SCREEN),
+                canNavigateBack = true,
+                navigateUp = navigateBack
             )
         }
     ) { innerPadding ->
@@ -118,7 +120,7 @@ fun BookEntryBody(
 fun BookInputForm(
     bookDetails: BookDetails,
     modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit = { }
+    onValueChange: (BookDetails) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -316,7 +318,7 @@ private fun RatingDropdownMenu(
     ratingList: List<String>,
     focusManager: FocusManager,
     modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit = { }
+    onValueChange: (BookDetails) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -336,7 +338,7 @@ private fun RatingDropdownMenu(
                 modifier = Modifier.menuAnchor(),
                 readOnly = true,
                 value = bookDetails.rating ?: "",
-                onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
+                onValueChange = { /* Do nothing */ },
                 label = { Text(stringResource(R.string.book_rating)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
             )
@@ -403,8 +405,8 @@ private fun BookEntryScreenPreview() {
                     notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                 )
             ),
-            onBookValueChange = { },
-            onSaveClick = { }
+            onBookValueChange = { /* Do nothing */ },
+            onSaveClick = { /* Do nothing */ }
         )
     }
 }
