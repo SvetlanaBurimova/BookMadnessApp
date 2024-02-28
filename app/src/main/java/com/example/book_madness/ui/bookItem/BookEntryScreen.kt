@@ -45,7 +45,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
-import com.example.book_madness.data.BookDetails
+import com.example.book_madness.model.BookDetails
+import com.example.book_madness.model.ratingList
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
@@ -78,7 +79,6 @@ fun BookEntryScreen(
                     navigateBack()
                 }
             },
-            ratingList = viewModel.ratingList,
             modifier = modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -90,7 +90,6 @@ fun BookEntryScreen(
 @Composable
 fun BookEntryBody(
     bookUiState: BookUiState,
-    ratingList: List<String>,
     modifier: Modifier = Modifier,
     onBookValueChange: (BookDetails) -> Unit,
     onSaveClick: () -> Unit
@@ -102,7 +101,6 @@ fun BookEntryBody(
         BookInputForm(
             bookDetails = bookUiState.bookDetails,
             onValueChange = onBookValueChange,
-            ratingList = ratingList,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
@@ -119,7 +117,6 @@ fun BookEntryBody(
 @Composable
 fun BookInputForm(
     bookDetails: BookDetails,
-    ratingList: List<String>,
     modifier: Modifier = Modifier,
     onValueChange: (BookDetails) -> Unit = { }
 ) {
@@ -407,8 +404,7 @@ private fun BookEntryScreenPreview() {
                 )
             ),
             onBookValueChange = { },
-            onSaveClick = { },
-            ratingList = emptyList()
+            onSaveClick = { }
         )
     }
 }

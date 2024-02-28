@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.book_madness.BookMadnessApplication
 import com.example.book_madness.ui.bookItem.BookDetailsViewModel
+import com.example.book_madness.ui.bookItem.BookEditViewModel
 import com.example.book_madness.ui.bookItem.BookEntryViewModel
 import com.example.book_madness.ui.home.HomeViewModel
 
@@ -19,6 +20,12 @@ object AppViewModelFactoryProvider {
         }
         initializer {
             BookEntryViewModel(bookMadnessApplication().container.booksRepository)
+        }
+        initializer {
+            BookEditViewModel(
+                this.createSavedStateHandle(),
+                bookMadnessApplication().container.booksRepository
+            )
         }
         initializer {
             BookDetailsViewModel(
