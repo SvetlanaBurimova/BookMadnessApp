@@ -1,4 +1,4 @@
-package com.example.book_madness.data
+package com.example.book_madness.model
 
 data class BookDetails(
     val id: Int = 0,
@@ -10,4 +10,17 @@ data class BookDetails(
     val finishDate: String? = null,
     val author: String? = null,
     val notes: String? = null
+)
+
+val ratingList = listOf(
+    "5",
+    "4.5",
+    "4",
+    "3.5",
+    "3",
+    "2.5",
+    "2",
+    "1.5",
+    "1",
+    "0.5"
 )

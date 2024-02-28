@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
-import com.example.book_madness.data.toBook
+import com.example.book_madness.model.toBook
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
@@ -45,6 +45,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun BookDetailsScreen(
     modifier: Modifier = Modifier,
+    navigateToEditBook: (Int) -> Unit,
     navigateBack: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
     viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
@@ -62,15 +63,14 @@ fun BookDetailsScreen(
     ) { innerPadding ->
         BookDetailsBody(
             bookDetailsUiState = uiState.value,
-            onEdit = { /* do something */ },
+            onEdit = { navigateToEditBook(uiState.value.bookDetails.id) },
             onDelete = {
                 coroutineScope.launch {
                     viewModel.deleteItem()
                     navigateBack()
                 }
             },
-            modifier = modifier
-                .padding(innerPadding)
+            modifier = modifier.padding(innerPadding)
         )
     }
 }

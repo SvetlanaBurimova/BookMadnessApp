@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.book_madness.ui.bookItem.BookDetailsScreen
+import com.example.book_madness.ui.bookItem.BookEditScreen
 import com.example.book_madness.ui.bookItem.BookEntryScreen
 import com.example.book_madness.ui.home.HomeScreen
 
@@ -36,6 +37,16 @@ fun BookMadnessNavHost(
             )
         }
         composable(
+            route = BookMadnessDestinations.BOOK_EDIT_ROUTE,
+            arguments = listOf(navArgument(BookMadnessDestinationsArgs.BOOK_ID_ARG) {
+                type = NavType.IntType
+            })
+        ) {
+            BookEditScreen(
+                navigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(
             route = BookMadnessDestinations.BOOK_DETAIL_ROUTE,
             arguments = listOf(navArgument(BookMadnessDestinationsArgs.BOOK_ID_ARG) {
                 type = NavType.IntType
@@ -43,6 +54,7 @@ fun BookMadnessNavHost(
         ) {
             BookDetailsScreen(
                 navigateBack = { navController.popBackStack() },
+                navigateToEditBook = { navController.navigate("${BookMadnessScreenRoutes.BOOK_EDIT_SCREEN}/$it") },
                 bottomNavigationBar = { BottomNavigationBar(navController) },
             )
         }

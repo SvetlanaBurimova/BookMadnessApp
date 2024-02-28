@@ -3,10 +3,10 @@ package com.example.book_madness.ui.bookItem
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.book_madness.data.BookDetails
+import com.example.book_madness.model.BookDetails
 import com.example.book_madness.data.BooksRepository
-import com.example.book_madness.data.toBook
-import com.example.book_madness.data.toBookDetails
+import com.example.book_madness.model.toBook
+import com.example.book_madness.model.toBookDetails
 import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

@@ -1,6 +1,7 @@
-package com.example.book_madness.data
+package com.example.book_madness.model
 
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.ui.bookItem.BookUiState
 
 fun Book.toBookDetails(): BookDetails = BookDetails(
     id = id,
@@ -24,4 +25,9 @@ fun BookDetails.toBook(): Book = Book(
     finishDate = finishDate,
     author = author,
     notes = notes
+)
+
+fun Book.toBookUiState(isEntryValid: Boolean): BookUiState = BookUiState(
+    bookDetails = this.toBookDetails(),
+    isEntryValid = isEntryValid
 )
