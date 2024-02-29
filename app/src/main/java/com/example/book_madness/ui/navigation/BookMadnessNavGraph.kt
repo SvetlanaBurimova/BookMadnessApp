@@ -15,7 +15,7 @@ import com.example.book_madness.ui.home.HomeScreen
 @Composable
 fun BookMadnessNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
