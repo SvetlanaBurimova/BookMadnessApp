@@ -74,8 +74,7 @@ private fun HomeBody(
     onItemClick: (Int) -> Unit
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (bookList.isEmpty()) {
             HomeEmptyScreen()
@@ -83,7 +82,7 @@ private fun HomeBody(
             BookList(
                 bookList = bookList,
                 onItemClick = { onItemClick(it.id) },
-                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.small))
+                modifier = modifier.padding(horizontal = dimensionResource(id = R.dimen.small))
             )
         }
     }
