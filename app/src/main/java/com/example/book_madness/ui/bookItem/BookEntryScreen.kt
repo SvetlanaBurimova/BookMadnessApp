@@ -67,7 +67,6 @@ fun BookEntryScreen(
         topBar = {
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.BOOK_ADD_SCREEN),
-                canNavigateBack = true,
                 navigateUp = navigateBack
             )
         }
