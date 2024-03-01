@@ -29,6 +29,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.R
+import com.example.book_madness.model.FilterType.*
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
@@ -51,7 +52,14 @@ fun HomeScreen(
         topBar = {
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.HOME_SCREEN),
-                canNavigateBack = false
+                canNavigateBack = false,
+                showFilterIcon = true,
+                onFilterAllBooks = { viewModel.filterBooks(ID) },
+                onFilterAllBooksByName = { viewModel.filterBooks(NAME) },
+                onFilterAllBooksByRating = { viewModel.filterBooks(RATING) },
+                onFilterAllBooksByTBR = { viewModel.filterBooks(TBR) },
+                onFilterAllBooksByYear2023 = { viewModel.filterBooks(YEAR_2023) },
+                onFilterAllBooksByYear2024 = { viewModel.filterBooks(YEAR_2024) }
             )
         },
         floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry = navigateToItemEntry) },
@@ -95,13 +103,13 @@ fun HomeEmptyScreen(modifier: Modifier = Modifier) {
     )
 
     LottieAnimation(
-        composition = composition
+        composition = composition,
+        modifier = modifier.padding(horizontal = dimensionResource(id = R.dimen.extra_large))
     )
     Text(
         text = stringResource(R.string.no_books_description),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.titleLarge,
-        modifier = modifier
+        style = MaterialTheme.typography.titleLarge
     )
 }
 

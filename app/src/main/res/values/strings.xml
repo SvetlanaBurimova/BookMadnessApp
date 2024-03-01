@@ -18,7 +18,7 @@
     <string name="app_name">Book Madness</string>
     <string name="start_date">Start date: %s</string>
     <string name="finish_date">Finish date: %s</string>
-    <string name="no_books_description">Oops!\nNo books have been added yet\nTap + to add</string>
+    <string name="no_books_description">Oops!\nNo books have been found</string>
     <string name="book_entry_title">Add Book</string>
     <string name="book_list">Book List</string>
     <string name="book_stats">Statistics</string>
@@ -47,4 +47,10 @@
     <string name="book_genre_required">Genre:*</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="filter_all_books">All books</string>
+    <string name="filter_books_by_name">By name</string>
+    <string name="filter_books_by_rating">By rating</string>
+    <string name="filter_books_by_year_2023">Year 2023</string>
+    <string name="filter_books_by_year_2024">Year 2024</string>
+    <string name="tbr">TBR</string>
 </resources>
