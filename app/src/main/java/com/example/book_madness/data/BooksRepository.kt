@@ -10,6 +10,8 @@ interface BooksRepository {
 
     fun getAllBooksOrderedByRatingStream(): Flow<List<Book>>
 
+    fun getAllBooksWithRating(rating: String): Flow<List<Book>>
+
     fun getAllBooksWithoutStartAndFinishDateStream(): Flow<List<Book>>
 
     fun getAllFinishedBooksByYearStream(year: String): Flow<List<Book>>

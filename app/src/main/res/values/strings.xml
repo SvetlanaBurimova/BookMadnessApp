@@ -53,4 +53,6 @@
     <string name="filter_books_by_year_2023">Year 2023</string>
     <string name="filter_books_by_year_2024">Year 2024</string>
     <string name="tbr">TBR</string>
+    <string name="completed_category">Completed:</string>
+    <string name="tbr_category">To be read:</string>
 </resources>

@@ -92,11 +92,12 @@ private fun BookDetailsBody(
                 start = dimensionResource(id = R.dimen.medium),
                 end = dimensionResource(id = R.dimen.medium)
             )
-            .verticalScroll(rememberScrollState())
     ) {
         BookDetails(
             book = bookDetailsUiState.bookDetails.toBook(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
         )
         Spacer(modifier = Modifier.weight(1f))
         Button(

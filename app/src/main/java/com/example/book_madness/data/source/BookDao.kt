@@ -19,6 +19,9 @@ interface BookDao {
     @Query("SELECT * from books ORDER BY rating DESC")
     fun getAllBooksOrderedByRating(): Flow<List<Book>>
 
+    @Query("SELECT * from books WHERE rating LIKE :rating")
+    fun getAllBooksWithRating(rating: String): Flow<List<Book>>
+
     @Query("SELECT * from books WHERE start_date is NULL and finish_date is NULL")
     fun getAllBooksWithoutStartAndFinishDate(): Flow<List<Book>>
 

@@ -14,6 +14,9 @@ class OfflineBooksRepository(private val bookDao: BookDao) : BooksRepository {
     override fun getAllBooksOrderedByRatingStream(): Flow<List<Book>> =
         bookDao.getAllBooksOrderedByRating()
 
+    override fun getAllBooksWithRating(rating: String): Flow<List<Book>> =
+        bookDao.getAllBooksWithRating(rating)
+
     override fun getAllBooksWithoutStartAndFinishDateStream(): Flow<List<Book>> =
         bookDao.getAllBooksWithoutStartAndFinishDate()
 
