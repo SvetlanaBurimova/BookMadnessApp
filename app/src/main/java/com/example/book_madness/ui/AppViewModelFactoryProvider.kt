@@ -11,12 +11,16 @@ import com.example.book_madness.ui.bookItem.BookDetailsViewModel
 import com.example.book_madness.ui.bookItem.BookEditViewModel
 import com.example.book_madness.ui.bookItem.BookEntryViewModel
 import com.example.book_madness.ui.home.HomeViewModel
+import com.example.book_madness.ui.stats.StatisticsViewModel
 
 // Provides Factory to create instance of ViewModel for the entire app
 object AppViewModelFactoryProvider {
     val Factory = viewModelFactory {
         initializer {
             HomeViewModel(bookMadnessApplication().container.booksRepository)
+        }
+        initializer {
+            StatisticsViewModel(bookMadnessApplication().container.booksRepository)
         }
         initializer {
             BookEntryViewModel(bookMadnessApplication().container.booksRepository)

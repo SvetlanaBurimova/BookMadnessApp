@@ -63,6 +63,7 @@ fun BookEntryScreen(
     viewModel: BookEntryViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(

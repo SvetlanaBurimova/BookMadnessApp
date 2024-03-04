@@ -11,6 +11,7 @@ import com.example.book_madness.ui.bookItem.BookDetailsScreen
 import com.example.book_madness.ui.bookItem.BookEditScreen
 import com.example.book_madness.ui.bookItem.BookEntryScreen
 import com.example.book_madness.ui.home.HomeScreen
+import com.example.book_madness.ui.stats.StatisticsScreen
 
 @Composable
 fun BookMadnessNavHost(
@@ -28,7 +29,13 @@ fun BookMadnessNavHost(
                 navigateToItemDetails = {
                     navController.navigate("${BookMadnessScreenRoutes.BOOK_DETAIL_SCREEN}/${it}")
                 },
-                bottomNavigationBar = { BottomNavigationBar(navController) },
+                bottomNavigationBar = { BottomNavigationBar(navController) }
+            )
+        }
+        composable(route = BookMadnessScreenRoutes.STATISTICS_SCREEN) {
+            StatisticsScreen(
+                navigateToItemEntry = { navController.navigate(BookMadnessScreenRoutes.BOOK_ADD_SCREEN) },
+                bottomNavigationBar = { BottomNavigationBar(navController) }
             )
         }
         composable(route = BookMadnessScreenRoutes.BOOK_ADD_SCREEN) {

@@ -29,8 +29,13 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.R
-import com.example.book_madness.model.FilterType.*
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.model.FilterType.ID
+import com.example.book_madness.model.FilterType.NAME
+import com.example.book_madness.model.FilterType.RATING
+import com.example.book_madness.model.FilterType.TBR
+import com.example.book_madness.model.FilterType.YEAR_2023
+import com.example.book_madness.model.FilterType.YEAR_2024
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
