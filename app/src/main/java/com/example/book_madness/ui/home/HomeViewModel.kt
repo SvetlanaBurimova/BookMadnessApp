@@ -3,8 +3,8 @@ package com.example.book_madness.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.book_madness.data.BooksRepository
-import com.example.book_madness.model.FilterType
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.model.FilterType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -39,6 +39,10 @@ class HomeViewModel(
         started = WhileSubscribed(TIMEOUT_MILLIS),
         initialValue = HomeUiState()
     )
+
+    suspend fun deleteItem(book: Book) {
+        booksRepository.deleteBook(book)
+    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L

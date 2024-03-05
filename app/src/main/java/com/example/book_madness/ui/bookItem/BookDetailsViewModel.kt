@@ -8,7 +8,7 @@ import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.model.toBook
 import com.example.book_madness.model.toBookDetails
 import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -32,11 +32,11 @@ class BookDetailsViewModel(
                 BookDetailsUiState(bookDetails = it.toBookDetails())
             }.stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                started = WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = BookDetailsUiState()
             )
 
-    suspend fun deleteItem() {
+    suspend fun deleteBook() {
         booksRepository.deleteBook(uiState.value.bookDetails.toBook())
     }
 

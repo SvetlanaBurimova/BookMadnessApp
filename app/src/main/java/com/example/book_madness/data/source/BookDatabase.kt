@@ -18,7 +18,7 @@ abstract class BookDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): BookDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, BookDatabase::class.java, "item_database")
+                Room.databaseBuilder(context, BookDatabase::class.java, "book_database")
                     /**
                      * deletes all data from the tables in database when it
                      * attempts to perform a migration with no defined migration path.

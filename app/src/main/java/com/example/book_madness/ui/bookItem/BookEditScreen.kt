@@ -52,7 +52,7 @@ fun BookEditScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ItemEditScreenPreview() {
+fun BookEditScreenPreview() {
     AppTheme {
         BookEditScreen(navigateBack = { /*Do nothing*/ })
     }
