@@ -1,6 +1,11 @@
 package com.example.book_madness.ui.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,14 +14,27 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DismissDirection
+import androidx.compose.material3.DismissValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -24,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -42,16 +61,19 @@ import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessFloatingActionButton
 import com.example.book_madness.util.BookMadnessRatingIcon
 import com.example.book_madness.util.BookMadnessTopAppBar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navigateToItemEntry: () -> Unit,
-    navigateToItemDetails: (Int) -> Unit,
+    navigateToBookEntry: () -> Unit,
+    navigateToBookDetails: (Int) -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -67,12 +89,17 @@ fun HomeScreen(
                 onFilterAllBooksByYear2024 = { viewModel.filterBooks(YEAR_2024) }
             )
         },
-        floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry = navigateToItemEntry) },
+        floatingActionButton = { BookMadnessFloatingActionButton(navigateToBookEntry = navigateToBookEntry) },
         bottomBar = { bottomNavigationBar() }
     ) { innerPadding ->
         HomeBody(
             bookList = homeUiState.bookList,
-            onItemClick = navigateToItemDetails,
+            onBookClick = navigateToBookDetails,
+            onDelete = {
+                coroutineScope.launch {
+                    viewModel.deleteItem(it)
+                }
+            },
             modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -84,7 +111,8 @@ fun HomeScreen(
 private fun HomeBody(
     bookList: List<Book>,
     modifier: Modifier = Modifier,
-    onItemClick: (Int) -> Unit
+    onBookClick: (Int) -> Unit,
+    onDelete: (Book) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -94,7 +122,8 @@ private fun HomeBody(
         } else {
             BookList(
                 bookList = bookList,
-                onItemClick = { onItemClick(it.id) },
+                onItemClick = { onBookClick(it.id) },
+                onDelete = { onDelete(it) },
                 modifier = modifier.padding(horizontal = dimensionResource(id = R.dimen.small))
             )
         }
@@ -122,17 +151,83 @@ fun HomeEmptyScreen(modifier: Modifier = Modifier) {
 private fun BookList(
     bookList: List<Book>,
     modifier: Modifier = Modifier,
+    onDelete: (Book) -> Unit,
     onItemClick: (Book) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
-        items(items = bookList, key = { it.id }) { item ->
-            BookItem(
-                book = item,
-                modifier = Modifier
-                    .padding(dimensionResource(id = R.dimen.small))
-                    .clickable { onItemClick(item) }
-            )
+        items(items = bookList, key = { it.id }) { book ->
+            SwipeToDeleteContainer(
+                book = book,
+                onDelete = { onDelete(book) }
+            ) {
+                BookItem(
+                    book = book,
+                    modifier = Modifier
+                        .padding(dimensionResource(id = R.dimen.small))
+                        .clickable { onItemClick(book) }
+                )
+            }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SwipeToDeleteContainer(
+    book: Book,
+    onDelete: (Book) -> Unit,
+    animationDuration: Int = 500,
+    content: @Composable (Book) -> Unit
+) {
+    var isRemoved by remember {
+        mutableStateOf(false)
+    }
+    val state = rememberDismissState(
+        confirmValueChange = { value ->
+            if (value == DismissValue.DismissedToStart) {
+                isRemoved = true
+                true
+            } else {
+                false
+            }
+        }
+    )
+
+    LaunchedEffect(key1 = isRemoved) {
+        if(isRemoved) {
+            delay(animationDuration.toLong())
+            onDelete(book)
+        }
+    }
+
+    AnimatedVisibility(
+        visible = !isRemoved,
+        exit = shrinkVertically(
+            animationSpec = tween(durationMillis = animationDuration),
+            shrinkTowards = Alignment.Top
+        ) + fadeOut()
+    ) {
+        SwipeToDismiss(
+            state = state,
+            background = { DeleteBackground() },
+            dismissContent = { content(book) },
+            directions = setOf(DismissDirection.EndToStart)
+        )
+    }
+}
+
+@Composable
+fun DeleteBackground() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.CenterEnd
+    ) {
+        Icon(
+            imageVector = Icons.Default.Delete,
+            contentDescription = null
+        )
     }
 }
 
@@ -211,7 +306,8 @@ fun HomeScreenPreview() {
                     genre = "Fantasy"
                 )
             ),
-            onItemClick = { /* Do nothing */ }
+            onBookClick = { /* Do nothing */ },
+            onDelete = { /* Do nothing */ }
         )
     }
 }
@@ -222,7 +318,8 @@ fun HomeScreenEmptyPreview() {
     AppTheme {
         HomeBody(
             bookList = emptyList(),
-            onItemClick = { /* Do nothing */ }
+            onBookClick = { /* Do nothing */ },
+            onDelete = { /* Do nothing */ }
         )
     }
 }

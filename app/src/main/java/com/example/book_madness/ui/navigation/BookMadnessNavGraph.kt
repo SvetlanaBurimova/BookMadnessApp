@@ -25,8 +25,8 @@ fun BookMadnessNavHost(
     ) {
         composable(route = BookMadnessScreenRoutes.HOME_SCREEN) {
             HomeScreen(
-                navigateToItemEntry = { navController.navigate(BookMadnessScreenRoutes.BOOK_ADD_SCREEN) },
-                navigateToItemDetails = {
+                navigateToBookEntry = { navController.navigate(BookMadnessScreenRoutes.BOOK_ADD_SCREEN) },
+                navigateToBookDetails = {
                     navController.navigate("${BookMadnessScreenRoutes.BOOK_DETAIL_SCREEN}/${it}")
                 },
                 bottomNavigationBar = { BottomNavigationBar(navController) }
@@ -34,7 +34,7 @@ fun BookMadnessNavHost(
         }
         composable(route = BookMadnessScreenRoutes.STATISTICS_SCREEN) {
             StatisticsScreen(
-                navigateToItemEntry = { navController.navigate(BookMadnessScreenRoutes.BOOK_ADD_SCREEN) },
+                navigateToBookEntry = { navController.navigate(BookMadnessScreenRoutes.BOOK_ADD_SCREEN) },
                 bottomNavigationBar = { BottomNavigationBar(navController) }
             )
         }

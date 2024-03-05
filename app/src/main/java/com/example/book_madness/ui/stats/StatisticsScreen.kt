@@ -28,7 +28,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.model.StatisticDetails
 import com.example.book_madness.ui.AppViewModelFactoryProvider
-import com.example.book_madness.ui.home.HomeEmptyScreen
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.util.BookMadnessFloatingActionButton
 import com.example.book_madness.util.BookMadnessTopAppBar
@@ -36,7 +35,7 @@ import com.example.book_madness.util.BookMadnessTopAppBar
 @Composable
 fun StatisticsScreen(
     modifier: Modifier = Modifier,
-    navigateToItemEntry: () -> Unit,
+    navigateToBookEntry: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
     viewModel: StatisticsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
@@ -49,7 +48,7 @@ fun StatisticsScreen(
                 canNavigateBack = false
             )
         },
-        floatingActionButton = { BookMadnessFloatingActionButton(navigateToItemEntry = navigateToItemEntry) },
+        floatingActionButton = { BookMadnessFloatingActionButton(navigateToBookEntry = navigateToBookEntry) },
         bottomBar = { bottomNavigationBar() }
     )
     { innerPadding ->
@@ -69,19 +68,15 @@ private fun StatisticBody(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        if (bookListWithRating.allCompletedBooks == 0) {
-            HomeEmptyScreen()
-        } else {
-            BookImage()
-            BooksAmountByCategory(
-                categoryTitleResId = R.string.tbr_category,
-                booksAmount = bookListWithRating.tbrBooks ?: 0
-            )
-            BooksAmountByCategory(
-                categoryTitleResId = R.string.completed_category,
-                booksAmount = bookListWithRating.allCompletedBooks ?: 0
-            )
-        }
+        BookImage()
+        BooksAmountByCategory(
+            categoryTitleResId = R.string.tbr_category,
+            booksAmount = bookListWithRating.tbrBooks ?: 0
+        )
+        BooksAmountByCategory(
+            categoryTitleResId = R.string.completed_category,
+            booksAmount = bookListWithRating.allCompletedBooks ?: 0
+        )
     }
 }
 

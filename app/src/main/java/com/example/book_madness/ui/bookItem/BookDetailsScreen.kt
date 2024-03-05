@@ -67,7 +67,7 @@ fun BookDetailsScreen(
             onEdit = { navigateToEditBook(uiState.value.bookDetails.id) },
             onDelete = {
                 coroutineScope.launch {
-                    viewModel.deleteItem()
+                    viewModel.deleteBook()
                     navigateBack()
                 }
             },
@@ -147,7 +147,7 @@ fun BookDetails(
         ) {
             BookDetailsRow(
                 labelResID = R.string.book_name,
-                itemDetail = book.name
+                bookDetail = book.name
             )
             Row {
                 Text(text = stringResource(R.string.book_rating))
@@ -158,34 +158,34 @@ fun BookDetails(
 
             BookDetailsRow(
                 labelResID = R.string.book_genre,
-                itemDetail = book.genre
+                bookDetail = book.genre
             )
 
             BookDetailsRow(
                 labelResID = R.string.book_paper_format,
-                itemDetail = if (book.paper) {
+                bookDetail = if (book.paper) {
                     stringResource(id = R.string.yes)
                 } else stringResource(id = R.string.no)
             )
 
             BookDetailsRow(
                 labelResID = R.string.book_details_start_date,
-                itemDetail = book.startDate ?: ""
+                bookDetail = book.startDate ?: ""
             )
 
             BookDetailsRow(
                 labelResID = R.string.book_details_finish_date,
-                itemDetail = book.finishDate ?: ""
+                bookDetail = book.finishDate ?: ""
             )
 
             BookDetailsRow(
                 labelResID = R.string.book_author,
-                itemDetail = book.author ?: ""
+                bookDetail = book.author ?: ""
             )
 
             BookDetailsRow(
                 labelResID = R.string.book_notes,
-                itemDetail = book.notes ?: ""
+                bookDetail = book.notes ?: ""
             )
         }
     }
@@ -210,7 +210,7 @@ fun BookDetailsRatingIcons(rating: String) {
 @Composable
 private fun BookDetailsRow(
     @StringRes labelResID: Int,
-    itemDetail: String,
+    bookDetail: String,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
@@ -220,7 +220,7 @@ private fun BookDetailsRow(
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = itemDetail,
+            text = bookDetail,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Justify,
             modifier = Modifier.padding(start = dimensionResource(id = R.dimen.medium))
