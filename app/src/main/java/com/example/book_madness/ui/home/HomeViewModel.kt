@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.model.FilterType
+import com.example.book_madness.util.WhileUiSubscribed
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -36,15 +36,11 @@ class HomeViewModel(
         }.map { HomeUiState(it) }
     }.stateIn(
         scope = viewModelScope,
-        started = WhileSubscribed(TIMEOUT_MILLIS),
+        started = WhileUiSubscribed,
         initialValue = HomeUiState()
     )
 
     suspend fun deleteItem(book: Book) {
         booksRepository.deleteBook(book)
-    }
-
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
     }
 }

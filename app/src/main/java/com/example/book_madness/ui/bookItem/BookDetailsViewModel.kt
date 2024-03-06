@@ -3,12 +3,12 @@ package com.example.book_madness.ui.bookItem
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.book_madness.model.BookDetails
 import com.example.book_madness.data.BooksRepository
+import com.example.book_madness.model.BookDetails
 import com.example.book_madness.model.toBook
 import com.example.book_madness.model.toBookDetails
 import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import com.example.book_madness.util.WhileUiSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -32,15 +32,11 @@ class BookDetailsViewModel(
                 BookDetailsUiState(bookDetails = it.toBookDetails())
             }.stateIn(
                 scope = viewModelScope,
-                started = WhileSubscribed(TIMEOUT_MILLIS),
+                started = WhileUiSubscribed,
                 initialValue = BookDetailsUiState()
             )
 
     suspend fun deleteBook() {
         booksRepository.deleteBook(uiState.value.bookDetails.toBook())
-    }
-
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
     }
 }
