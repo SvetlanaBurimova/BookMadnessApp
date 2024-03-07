@@ -11,7 +11,7 @@ object BookMadnessScreenRoutes {
     const val BOOK_ADD_SCREEN = "bookEntry"
     const val BOOK_EDIT_SCREEN = "itemEdit"
     const val STATISTICS_SCREEN = "statistics"
-    const val SETTINGS_SCREEN = "settings"
+    const val COUNT_DOWN_TIMER_SCREEN = "timer"
 }
 
 object BookMadnessTitlesResId {
@@ -20,7 +20,7 @@ object BookMadnessTitlesResId {
     val BOOK_ADD_SCREEN = R.string.book_entry_title
     val BOOK_EDIT_SCREEN = R.string.edit_book
     val STATISTICS_SCREEN = R.string.book_stats
-    val SETTINGS_SCREEN = R.string.book_settings
+    val COUNT_DOWN_TIMER_SCREEN = R.string.book_count_down_timer
 }
 
 object BookMadnessDestinationsArgs {

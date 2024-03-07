@@ -133,7 +133,7 @@ private fun HomeBody(
 @Composable
 fun HomeEmptyScreen(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.animation_for_empty_screen)
+        spec = LottieCompositionSpec.RawRes(R.raw.empty_screen_animation)
     )
 
     LottieAnimation(
