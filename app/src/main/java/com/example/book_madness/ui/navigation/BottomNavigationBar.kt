@@ -38,8 +38,8 @@ fun BottomNavigationBar(navController: NavHostController) {
             selectedIcon = R.drawable.pie_chart
         ),
         BottomNavigationItem(
-            route = stringResource(id = R.string.book_settings),
-            titleRes = BookMadnessTitlesResId.SETTINGS_SCREEN,
+            route = stringResource(id = R.string.book_count_down_timer),
+            titleRes = BookMadnessTitlesResId.COUNT_DOWN_TIMER_SCREEN,
             unselectedIcon = R.drawable.outline_settings,
             selectedIcon = R.drawable.settings
         )

@@ -12,6 +12,7 @@ import com.example.book_madness.ui.bookItem.BookEditViewModel
 import com.example.book_madness.ui.bookItem.BookEntryViewModel
 import com.example.book_madness.ui.home.HomeViewModel
 import com.example.book_madness.ui.stats.StatisticsViewModel
+import com.example.book_madness.ui.timer.CountTimerViewModel
 
 // Provides Factory to create instance of ViewModel for the entire app
 object AppViewModelFactoryProvider {
@@ -36,6 +37,9 @@ object AppViewModelFactoryProvider {
                 this.createSavedStateHandle(),
                 bookMadnessApplication().container.booksRepository
             )
+        }
+        initializer {
+            CountTimerViewModel()
         }
     }
 }

@@ -22,7 +22,7 @@
     <string name="book_entry_title">Add Book</string>
     <string name="book_list">Book List</string>
     <string name="book_stats">Statistics</string>
-    <string name="book_settings">Settings</string>
+    <string name="book_count_down_timer">Timer</string>
     <string name="attention">Attention</string>
     <string name="back_button">Back</string>
     <string name="delete">Delete</string>
@@ -55,4 +55,9 @@
     <string name="tbr">TBR</string>
     <string name="completed_category">Completed:</string>
     <string name="tbr_category">To be read:</string>
+    <string name="timer_title">It is reading time!</string>
+    <string name="enjoy">Enjoy =)</string>
+    <string name="timer_description">Click to start or stop countdown</string>
+    <string name="start_button">START</string>
+    <string name="stop_button">STOP</string>
 </resources>

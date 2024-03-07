@@ -12,6 +12,7 @@ import com.example.book_madness.ui.bookItem.BookEditScreen
 import com.example.book_madness.ui.bookItem.BookEntryScreen
 import com.example.book_madness.ui.home.HomeScreen
 import com.example.book_madness.ui.stats.StatisticsScreen
+import com.example.book_madness.ui.timer.CountDownTimerScreen
 
 @Composable
 fun BookMadnessNavHost(
@@ -63,6 +64,11 @@ fun BookMadnessNavHost(
                 navigateBack = { navController.popBackStack() },
                 navigateToEditBook = { navController.navigate("${BookMadnessScreenRoutes.BOOK_EDIT_SCREEN}/$it") },
                 bottomNavigationBar = { BottomNavigationBar(navController) },
+            )
+        }
+        composable(route = BookMadnessScreenRoutes.COUNT_DOWN_TIMER_SCREEN) {
+            CountDownTimerScreen(
+                bottomNavigationBar = { BottomNavigationBar(navController) }
             )
         }
     }
