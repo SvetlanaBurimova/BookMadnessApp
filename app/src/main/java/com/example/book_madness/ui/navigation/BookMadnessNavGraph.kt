@@ -17,11 +17,12 @@ import com.example.book_madness.ui.timer.CountDownTimerScreen
 @Composable
 fun BookMadnessNavHost(
     navController: NavHostController,
+    startDestination: String,
     modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = BookMadnessScreenRoutes.HOME_SCREEN,
+        startDestination = startDestination,
         modifier = modifier
     ) {
         composable(route = BookMadnessScreenRoutes.HOME_SCREEN) {

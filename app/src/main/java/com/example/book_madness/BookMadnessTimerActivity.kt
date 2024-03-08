@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.example.book_madness.model.selectedTabIndex
+import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes
 import com.example.book_madness.ui.theme.AppTheme
 
-class BookMadnessActivity : ComponentActivity() {
+class BookMadnessTimerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -18,7 +20,8 @@ class BookMadnessActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BookMadnessApp()
+                    BookMadnessApp(BookMadnessScreenRoutes.COUNT_DOWN_TIMER_SCREEN)
+                    selectedTabIndex = 2
                 }
             }
         }

@@ -7,11 +7,16 @@ import com.example.book_madness.data.source.BookDatabase
 // Interface will be useful for testing
 interface AppContainer {
     val booksRepository: BooksRepository
+    val reminderRepository: ReminderRepository
 }
 
 class AppDataContainer(private val context: Context) : AppContainer {
     // With by lazy { } - initialized and created the first time we access it
     override val booksRepository: BooksRepository by lazy {
         OfflineBooksRepository(BookDatabase.getDatabase(context).bookDao())
+    }
+
+    override val reminderRepository: ReminderRepository by lazy {
+        WorkManagerRepository(context)
     }
 }

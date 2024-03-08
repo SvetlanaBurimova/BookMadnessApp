@@ -4,10 +4,12 @@ import android.os.CountDownTimer
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.book_madness.model.toFormatTime
+import com.example.book_madness.data.ReminderRepository
+import com.example.book_madness.model.Reminder
+import com.example.book_madness.util.toFormatTime
 import com.example.book_madness.util.TIME_COUNTDOWN
 
-class CountTimerViewModel : ViewModel() {
+class CountTimerViewModel(private val reminderRepository: ReminderRepository) : ViewModel() {
     private var countDownTimer: CountDownTimer? = null
 
     private val _time = mutableStateOf(TIME_COUNTDOWN.toFormatTime())
@@ -71,5 +73,9 @@ class CountTimerViewModel : ViewModel() {
         _time.value = time
         _progress.value = progress
         _celebrate.value = celebrate
+    }
+
+    fun scheduleReminder(reminder: Reminder) {
+        reminderRepository.scheduleReminder(reminder.duration, reminder.unit)
     }
 }
