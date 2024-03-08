@@ -7,6 +7,12 @@ import com.example.book_madness.ui.navigation.BookMadnessNavHost
 
 // Top level composable that represents screens for the application.
 @Composable
-fun BookMadnessApp(navController: NavHostController = rememberNavController()) {
-    BookMadnessNavHost(navController = navController)
+fun BookMadnessApp(
+    startDestination: String,
+    navController: NavHostController = rememberNavController()
+) {
+    BookMadnessNavHost(
+        startDestination = startDestination,
+        navController = navController
+    )
 }

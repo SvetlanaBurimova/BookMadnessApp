@@ -1,6 +1,7 @@
-package com.example.book_madness.model
+package com.example.book_madness.util
 
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.model.BookDetails
 import com.example.book_madness.ui.bookItem.BookUiState
 import java.util.concurrent.TimeUnit
 

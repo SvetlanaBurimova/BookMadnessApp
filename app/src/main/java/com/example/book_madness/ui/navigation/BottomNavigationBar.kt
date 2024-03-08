@@ -1,7 +1,5 @@
 package com.example.book_madness.ui.navigation
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,15 +9,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.book_madness.R
-
-data class BottomNavigationItem(
-    val route: String,
-    @StringRes val titleRes: Int,
-    @DrawableRes val unselectedIcon: Int,
-    @DrawableRes val selectedIcon: Int
-)
-
-var selectedTabIndex = 0
+import com.example.book_madness.model.BottomNavigationItem
+import com.example.book_madness.model.selectedTabIndex
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -38,7 +29,7 @@ fun BottomNavigationBar(navController: NavHostController) {
             selectedIcon = R.drawable.pie_chart
         ),
         BottomNavigationItem(
-            route = stringResource(id = R.string.book_count_down_timer),
+            route = BookMadnessScreenRoutes.COUNT_DOWN_TIMER_SCREEN,
             titleRes = BookMadnessTitlesResId.COUNT_DOWN_TIMER_SCREEN,
             unselectedIcon = R.drawable.outline_settings,
             selectedIcon = R.drawable.settings
@@ -61,8 +52,8 @@ fun BottomNavigationBar(navController: NavHostController) {
                 icon = {
                     Icon(
                         painter =
-                            if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
-                            else painterResource(id = item.unselectedIcon),
+                        if (index == selectedTabIndex) painterResource(id = item.selectedIcon)
+                        else painterResource(id = item.unselectedIcon),
                         contentDescription = stringResource(id = item.titleRes)
                     )
                 }

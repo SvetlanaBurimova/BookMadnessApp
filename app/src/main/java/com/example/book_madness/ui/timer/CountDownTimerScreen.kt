@@ -2,14 +2,17 @@ package com.example.book_madness.ui.timer
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +21,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -36,9 +42,15 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.R
+import com.example.book_madness.model.Reminder
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.util.FIVE_SECONDS
+import com.example.book_madness.util.ONE_DAY
+import com.example.book_madness.util.SEVEN_DAYS
+import com.example.book_madness.util.THIRTY_DAYS
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun CountDownTimerScreen(
@@ -66,10 +78,10 @@ fun CountDownTimerScreen(
             progress = progress,
             isPlaying = isPlaying,
             celebrate = celebrate,
-            modifier = modifier.padding(innerPadding)
-        ) {
-            viewModel.handleCountDownTimer()
-        }
+            modifier = modifier.padding(innerPadding),
+            onScheduleReminder = { viewModel.scheduleReminder(it) },
+            optionSelected = { viewModel.handleCountDownTimer() }
+        )
     }
 }
 
@@ -80,7 +92,8 @@ fun CountDownBody(
     isPlaying: Boolean,
     celebrate: Boolean,
     modifier: Modifier = Modifier,
-    optionSelected: () -> Unit,
+    onScheduleReminder: (Reminder) -> Unit,
+    optionSelected: () -> Unit
 ) {
     Box(modifier = Modifier) {
         if (celebrate)
@@ -111,10 +124,10 @@ fun CountDownBody(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.extra_large))
             )
             CountDownButton(
-                isPlaying = isPlaying
-            ) {
-                optionSelected()
-            }
+                isPlaying = isPlaying,
+                optionSelected = { optionSelected() }
+            )
+            ReminderButton(onScheduleReminder)
         }
     }
 }
@@ -190,9 +203,74 @@ fun CircularProgressIndicatorBackGround(
 }
 
 @Composable
+fun ReminderButton(
+    onScheduleReminder: (Reminder) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var showReminderDialog by rememberSaveable { mutableStateOf(false) }
+
+    Button(
+        onClick = { showReminderDialog = true },
+        modifier = modifier
+            .height(70.dp)
+            .width(200.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.extra_large))
+    ) {
+        Text(
+            text = stringResource(id = R.string.reminder_button),
+            fontSize = 20.sp
+        )
+    }
+
+    if (showReminderDialog) {
+        ReminderDialogContent(
+            onDialogDismiss = { showReminderDialog = false },
+            onScheduleReminder = onScheduleReminder
+        )
+    }
+}
+
+@Composable
+fun ReminderDialogContent(
+    onDialogDismiss: () -> Unit,
+    onScheduleReminder: (Reminder) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val reminders = listOf(
+        Reminder(R.string.five_seconds, FIVE_SECONDS, TimeUnit.SECONDS),
+        Reminder(R.string.one_day, ONE_DAY, TimeUnit.DAYS),
+        Reminder(R.string.one_week, SEVEN_DAYS, TimeUnit.DAYS),
+        Reminder(R.string.one_month, THIRTY_DAYS, TimeUnit.DAYS)
+    )
+
+    AlertDialog(
+        onDismissRequest = { onDialogDismiss() },
+        confirmButton = {},
+        title = { Text(stringResource(R.string.remind_me)) },
+        text = {
+            Column {
+                reminders.forEach {
+                    Text(
+                        text = stringResource(it.durationRes),
+                        modifier = Modifier
+                            .clickable {
+                                onScheduleReminder(it)
+                                onDialogDismiss()
+                            }
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    )
+                }
+            }
+        },
+        modifier = modifier
+    )
+}
+
+@Composable
 fun CountDownButton(
-    modifier: Modifier = Modifier,
     isPlaying: Boolean,
+    modifier: Modifier = Modifier,
     optionSelected: () -> Unit,
 ) {
     Column(
@@ -239,6 +317,7 @@ fun CountDownViewPreview() {
         progress = 0.5f,
         isPlaying = false,
         celebrate = true,
-        optionSelected = {}
+        optionSelected = { },
+        onScheduleReminder = { }
     )
 }

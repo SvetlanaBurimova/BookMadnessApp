@@ -56,8 +56,15 @@
     <string name="completed_category">Completed:</string>
     <string name="tbr_category">To be read:</string>
     <string name="timer_title">It is reading time!</string>
+    <string name="reminder_description">Please take your time, make a cup of tea and enjoy =)</string>
     <string name="enjoy">Enjoy =)</string>
     <string name="timer_description">Click to start or stop countdown</string>
     <string name="start_button">START</string>
     <string name="stop_button">STOP</string>
+    <string name="reminder_button">Set reminder</string>
+    <string name="five_seconds">5 seconds</string>
+    <string name="one_day">1 day</string>
+    <string name="one_week">1 week</string>
+    <string name="one_month">1 month</string>
+    <string name="remind_me">Remind me to read in…</string>
 </resources>

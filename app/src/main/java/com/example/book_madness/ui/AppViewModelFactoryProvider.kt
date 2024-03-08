@@ -39,7 +39,9 @@ object AppViewModelFactoryProvider {
             )
         }
         initializer {
-            CountTimerViewModel()
+            CountTimerViewModel(
+                bookMadnessApplication().container.reminderRepository
+            )
         }
     }
 }

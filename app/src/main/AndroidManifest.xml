@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".BookMadnessApplication"
         android:allowBackup="true"
@@ -14,7 +16,7 @@
         android:theme="@style/Theme.Book_madness"
         tools:targetApi="31">
         <activity
-            android:name=".BookMadnessActivity"
+            android:name=".BookMadnessMainActivity"
             android:exported="true"
             android:theme="@style/Theme.Book_madness">
             <intent-filter>
@@ -23,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity
+            android:name=".BookMadnessTimerActivity">
+        </activity>
+
+    </application>
 </manifest>
