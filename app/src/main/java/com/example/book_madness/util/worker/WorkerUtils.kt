@@ -1,22 +1,17 @@
 package com.example.book_madness.util.worker
 
-import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.example.book_madness.BookMadnessTimerActivity
 import com.example.book_madness.R
 import com.example.book_madness.util.CHANNEL_ID
 import com.example.book_madness.util.NOTIFICATION_CHANNEL_DESCRIPTION
 import com.example.book_madness.util.NOTIFICATION_CHANNEL_NAME
-import com.example.book_madness.util.NOTIFICATION_ID
 import com.example.book_madness.util.NOTIFICATION_TITLE
 import com.example.book_madness.util.REQUEST_CODE
 
@@ -46,22 +41,9 @@ fun bookReminderNotification(
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setVibrate(LongArray(0))
         .setContentIntent(pendingIntent)
-        .setAutoCancel(true)
+        .setAutoCancel(true).build()
 
-    with(NotificationManagerCompat.from(context)) {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            // ActivityCompat#requestPermissions
-            // here to request the missing permissions
-
-            return
-        }
-        notify(NOTIFICATION_ID, builder.build())
-    }
+    notificationManager.notify(1, builder)
 }
 
 fun createPendingIntent(appContext: Context): PendingIntent {
