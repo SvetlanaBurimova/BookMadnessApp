@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.book_madness.data.ReminderRepository
 import com.example.book_madness.model.Reminder
-import com.example.book_madness.util.toFormatTime
 import com.example.book_madness.util.TIME_COUNTDOWN
+import com.example.book_madness.util.toFormatTime
 
 class CountTimerViewModel(private val reminderRepository: ReminderRepository) : ViewModel() {
     private var countDownTimer: CountDownTimer? = null

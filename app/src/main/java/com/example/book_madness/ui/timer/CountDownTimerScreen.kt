@@ -1,5 +1,9 @@
+@file:OptIn(ExperimentalPermissionsApi::class, ExperimentalPermissionsApi::class)
+
 package com.example.book_madness.ui.timer
 
+import android.Manifest
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
@@ -30,6 +34,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -50,6 +55,10 @@ import com.example.book_madness.util.FIVE_SECONDS
 import com.example.book_madness.util.ONE_DAY
 import com.example.book_madness.util.SEVEN_DAYS
 import com.example.book_madness.util.THIRTY_DAYS
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import java.util.concurrent.TimeUnit
 
 @Composable
@@ -93,7 +102,7 @@ fun CountDownBody(
     celebrate: Boolean,
     modifier: Modifier = Modifier,
     onScheduleReminder: (Reminder) -> Unit,
-    optionSelected: () -> Unit
+    optionSelected: () -> Unit,
 ) {
     Box(modifier = Modifier) {
         if (celebrate)
@@ -127,6 +136,7 @@ fun CountDownBody(
                 isPlaying = isPlaying,
                 optionSelected = { optionSelected() }
             )
+
             ReminderButton(onScheduleReminder)
         }
     }
@@ -202,15 +212,38 @@ fun CircularProgressIndicatorBackGround(
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ReminderButton(
     onScheduleReminder: (Reminder) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var showReminderDialog by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+    val permissionState =
+        rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+
 
     Button(
-        onClick = { showReminderDialog = true },
+        onClick = {
+            when (permissionState.status) {
+                is PermissionStatus.Denied -> {
+                    if (!permissionState.status.shouldShowRationale) {
+                        permissionState.launchPermissionRequest()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Looks like you permanently denied permission. Please provide it in Settings",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                is PermissionStatus.Granted -> {
+                    showReminderDialog = true
+                }
+            }
+        },
         modifier = modifier
             .height(70.dp)
             .width(200.dp),
@@ -234,7 +267,7 @@ fun ReminderButton(
 fun ReminderDialogContent(
     onDialogDismiss: () -> Unit,
     onScheduleReminder: (Reminder) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val reminders = listOf(
         Reminder(R.string.five_seconds, FIVE_SECONDS, TimeUnit.SECONDS),

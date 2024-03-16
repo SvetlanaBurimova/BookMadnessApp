@@ -80,4 +80,7 @@ dependencies {
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    //Permission
+    implementation("com.google.accompanist:accompanist-permissions:0.28.0")
 }
