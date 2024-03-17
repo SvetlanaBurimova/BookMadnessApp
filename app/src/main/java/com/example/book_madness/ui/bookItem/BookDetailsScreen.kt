@@ -34,12 +34,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
-import com.example.book_madness.util.toBook
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessRatingIcon
 import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.util.toBook
 import kotlinx.coroutines.launch
 
 @Composable
@@ -57,6 +57,8 @@ fun BookDetailsScreen(
         topBar = {
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.BOOK_DETAIL_SCREEN),
+                showShareButton = true,
+                bookDetailsUiState = uiState.value,
                 navigateUp = navigateBack
             )
         },
@@ -81,7 +83,7 @@ private fun BookDetailsBody(
     bookDetailsUiState: BookDetailsUiState,
     modifier: Modifier = Modifier,
     onEdit: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
 
@@ -100,6 +102,7 @@ private fun BookDetailsBody(
                 .verticalScroll(rememberScrollState())
         )
         Spacer(modifier = Modifier.weight(1f))
+
         Button(
             onClick = onEdit,
             modifier = Modifier.fillMaxWidth(),

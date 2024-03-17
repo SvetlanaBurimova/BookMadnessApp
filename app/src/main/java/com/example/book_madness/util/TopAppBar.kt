@@ -1,5 +1,7 @@
 package com.example.book_madness.util
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -22,10 +25,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat
 import com.example.book_madness.R
+import com.example.book_madness.ui.bookItem.BookDetailsUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +40,8 @@ fun BookMadnessTopAppBar(
     modifier: Modifier = Modifier,
     canNavigateBack: Boolean = true,
     showFilterIcon: Boolean = false,
+    showShareButton: Boolean = false,
+    bookDetailsUiState: BookDetailsUiState = BookDetailsUiState(),
     onFilterAllBooks: () -> Unit = {},
     onFilterAllBooksByName: () -> Unit = {},
     onFilterAllBooksByRating: () -> Unit = {},
@@ -55,7 +63,7 @@ fun BookMadnessTopAppBar(
             }
         },
         actions = {
-            if(showFilterIcon)
+            if (showFilterIcon)
                 FilterBooksMenu(
                     onFilterAllBooks,
                     onFilterAllBooksByName,
@@ -64,11 +72,59 @@ fun BookMadnessTopAppBar(
                     onFilterAllBooksByYear2023,
                     onFilterAllBooksByYear2024
                 )
+            if (showShareButton) {
+                ShareButton(
+                    bookDetailsUiState,
+                    LocalContext.current
+                )
+            }
         },
         modifier = modifier
             .background(MaterialTheme.colorScheme.outline)
             .padding(bottom = dimensionResource(id = R.dimen.extra_small))
     )
+}
+
+@Composable
+fun ShareButton(
+    bookDetailsUiState: BookDetailsUiState,
+    context: Context,
+) {
+    val shareBookName =
+        "Book details: \nName: ${bookDetailsUiState.bookDetails.toBook().name}"
+
+    val shareBookRating =
+        if (bookDetailsUiState.bookDetails.toBook().rating != null) {
+            "\nMy rating for it: ${bookDetailsUiState.bookDetails.toBook().rating}"
+        } else {
+            "\nNo rating yet"
+        }
+
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        putExtra(
+            Intent.EXTRA_TEXT,
+            shareBookName + shareBookRating
+        )
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+
+    TopAppBarDropdownMenu(
+        iconContent = {
+            Icon(
+                imageVector = Icons.Default.Share,
+                contentDescription = null
+            )
+        }
+    ) { closeMenu ->
+        DropdownMenuItem(
+            text = { Text(text = stringResource(id = R.string.share)) },
+            onClick = {
+                ContextCompat.startActivity(context, shareIntent, null)
+                closeMenu()
+            }
+        )
+    }
 }
 
 @Composable
@@ -118,7 +174,7 @@ private fun FilterBooksMenu(
 @Composable
 private fun TopAppBarDropdownMenu(
     iconContent: @Composable () -> Unit,
-    content: @Composable ColumnScope.(() -> Unit) -> Unit
+    content: @Composable ColumnScope.(() -> Unit) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
