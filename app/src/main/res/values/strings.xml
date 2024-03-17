@@ -47,6 +47,7 @@
     <string name="book_genre_required">Genre:*</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="share">Share</string>
     <string name="filter_all_books">All books</string>
     <string name="filter_books_by_name">By name</string>
     <string name="filter_books_by_rating">By rating</string>
