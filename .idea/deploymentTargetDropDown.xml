@@ -2,19 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="CustomPiePreview">
+      <entry key="BookDaoTest">
         <State />
       </entry>
       <entry key="HomeScreenEmptyPreview">
         <State />
       </entry>
       <entry key="HomeScreenPreview">
-        <State />
-      </entry>
-      <entry key="StatisticScreenPreview">
-        <State />
-      </entry>
-      <entry key="Test">
         <State />
       </entry>
       <entry key="app">
