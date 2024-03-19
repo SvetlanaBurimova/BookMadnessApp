@@ -80,7 +80,7 @@ fun HomeScreen(
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.HOME_SCREEN),
                 canNavigateBack = false,
-                showFilterIcon = true,
+                showFilterIcon = homeUiState.bookList.isNotEmpty(),
                 onFilterAllBooks = { viewModel.filterBooks(ID) },
                 onFilterAllBooksByName = { viewModel.filterBooks(NAME) },
                 onFilterAllBooksByRating = { viewModel.filterBooks(RATING) },

@@ -7,6 +7,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.data.source.BookDao
 import com.example.book_madness.data.source.BookDatabase
+import com.example.book_madness.fake.FakeDataSource.book1
+import com.example.book_madness.fake.FakeDataSource.book2
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -22,10 +24,6 @@ class BookDaoTest {
 
     private lateinit var bookDao: BookDao
     private lateinit var bookDatabase: BookDatabase
-    private val book1 =
-        Book(id = 1, name = "The Fourth Wing", genre = "Fantasy", rating = "5.0")
-    private val book2 =
-        Book(id = 2, name = "One Dark Window", genre = "Fantasy", startDate = "13.03.2024")
 
     @Before
     fun createDb() {
