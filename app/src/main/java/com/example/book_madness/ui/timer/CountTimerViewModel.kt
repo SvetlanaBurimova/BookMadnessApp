@@ -2,6 +2,7 @@ package com.example.book_madness.ui.timer
 
 import android.os.CountDownTimer
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.book_madness.data.ReminderRepository
@@ -15,7 +16,7 @@ class CountTimerViewModel(private val reminderRepository: ReminderRepository) : 
     private val _time = mutableStateOf(TIME_COUNTDOWN.toFormatTime())
     val time: MutableState<String> = _time
 
-    private val _progress = mutableStateOf(1.00F)
+    private val _progress = mutableFloatStateOf(1.00F)
     val progress: MutableState<Float> = _progress
 
     private val _isPlaying = mutableStateOf(false)
@@ -71,7 +72,7 @@ class CountTimerViewModel(private val reminderRepository: ReminderRepository) : 
     ) {
         _isPlaying.value = isPlaying
         _time.value = time
-        _progress.value = progress
+        _progress.floatValue = progress
         _celebrate.value = celebrate
     }
 

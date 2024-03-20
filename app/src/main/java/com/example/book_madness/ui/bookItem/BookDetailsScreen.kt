@@ -44,10 +44,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BookDetailsScreen(
-    modifier: Modifier = Modifier,
     navigateToEditBook: (Int) -> Unit,
     navigateBack: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val uiState = viewModel.uiState.collectAsState()
@@ -81,9 +81,9 @@ fun BookDetailsScreen(
 @Composable
 private fun BookDetailsBody(
     bookDetailsUiState: BookDetailsUiState,
-    modifier: Modifier = Modifier,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
 
@@ -233,9 +233,9 @@ private fun BookDetailsRow(
 
 @Composable
 private fun DeleteConfirmationDialog(
-    modifier: Modifier = Modifier,
     onDeleteConfirm: () -> Unit,
-    onDeleteCancel: () -> Unit
+    onDeleteCancel: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
         onDismissRequest = { /* Do nothing */ },

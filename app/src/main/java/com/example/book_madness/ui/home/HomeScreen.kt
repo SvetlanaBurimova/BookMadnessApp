@@ -66,10 +66,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
     navigateToBookEntry: () -> Unit,
     navigateToBookDetails: (Int) -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
@@ -110,9 +110,9 @@ fun HomeScreen(
 @Composable
 private fun HomeBody(
     bookList: List<Book>,
-    modifier: Modifier = Modifier,
     onBookClick: (Int) -> Unit,
     onDelete: (Book) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -150,9 +150,9 @@ fun HomeEmptyScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun BookList(
     bookList: List<Book>,
-    modifier: Modifier = Modifier,
     onDelete: (Book) -> Unit,
-    onItemClick: (Book) -> Unit
+    onItemClick: (Book) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
         items(items = bookList, key = { it.id }) { book ->
@@ -217,9 +217,9 @@ fun SwipeToDeleteContainer(
 }
 
 @Composable
-fun DeleteBackground() {
+fun DeleteBackground(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.CenterEnd

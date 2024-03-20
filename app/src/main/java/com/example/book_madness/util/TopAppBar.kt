@@ -174,7 +174,7 @@ private fun FilterBooksMenu(
 @Composable
 private fun TopAppBarDropdownMenu(
     iconContent: @Composable () -> Unit,
-    content: @Composable ColumnScope.(() -> Unit) -> Unit,
+    content: @Composable ColumnScope.(() -> Unit) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 

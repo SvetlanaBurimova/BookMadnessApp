@@ -63,8 +63,8 @@ import java.util.concurrent.TimeUnit
 
 @Composable
 fun CountDownTimerScreen(
-    modifier: Modifier = Modifier,
     bottomNavigationBar: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: CountTimerViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory),
 ) {
     val time by viewModel.time
@@ -100,9 +100,9 @@ fun CountDownBody(
     progress: Float,
     isPlaying: Boolean,
     celebrate: Boolean,
-    modifier: Modifier = Modifier,
     onScheduleReminder: (Reminder) -> Unit,
     optionSelected: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(modifier = Modifier) {
         if (celebrate)
@@ -146,7 +146,7 @@ fun CountDownBody(
 fun CountDownIndicator(
     progress: Float,
     time: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val size = 250
     val stroke = 18
@@ -188,7 +188,7 @@ fun CountDownIndicator(
 fun CircularProgressIndicatorBackGround(
     color: Color,
     stroke: Int,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val style = with(LocalDensity.current) { Stroke(stroke.dp.toPx()) }
     Canvas(
@@ -216,7 +216,7 @@ fun CircularProgressIndicatorBackGround(
 @Composable
 fun ReminderButton(
     onScheduleReminder: (Reminder) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var showReminderDialog by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
@@ -267,7 +267,7 @@ fun ReminderButton(
 fun ReminderDialogContent(
     onDialogDismiss: () -> Unit,
     onScheduleReminder: (Reminder) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val reminders = listOf(
         Reminder(R.string.five_seconds, FIVE_SECONDS, TimeUnit.SECONDS),
@@ -303,8 +303,8 @@ fun ReminderDialogContent(
 @Composable
 fun CountDownButton(
     isPlaying: Boolean,
-    modifier: Modifier = Modifier,
     optionSelected: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = Modifier.padding(top = dimensionResource(id = R.dimen.extra_large))

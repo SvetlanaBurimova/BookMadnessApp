@@ -12,8 +12,8 @@ import com.example.book_madness.R
 
 @Composable
 fun BookMadnessFloatingActionButton(
-    modifier: Modifier = Modifier,
-    navigateToBookEntry: () -> Unit
+    navigateToBookEntry: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     FloatingActionButton(
         onClick = { navigateToBookEntry() },

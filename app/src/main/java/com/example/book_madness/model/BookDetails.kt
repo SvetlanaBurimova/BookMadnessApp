@@ -12,15 +12,3 @@ data class BookDetails(
     val notes: String? = null
 )
 
-val ratingList = listOf(
-    "5",
-    "4.5",
-    "4",
-    "3.5",
-    "3",
-    "2.5",
-    "2",
-    "1.5",
-    "1",
-    "0.5"
-)

@@ -46,11 +46,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.model.BookDetails
-import com.example.book_madness.model.ratingList
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.util.ratingList
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
@@ -58,8 +58,8 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookEntryScreen(
-    modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: BookEntryViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -92,9 +92,9 @@ fun BookEntryScreen(
 @Composable
 fun BookEntryBody(
     bookUiState: BookUiState,
-    modifier: Modifier = Modifier,
     onBookValueChange: (BookDetails) -> Unit,
-    onSaveClick: () -> Unit
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.padding(dimensionResource(id = R.dimen.medium)),
@@ -119,8 +119,8 @@ fun BookEntryBody(
 @Composable
 fun BookInputForm(
     bookDetails: BookDetails,
-    modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit
+    onValueChange: (BookDetails) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -131,10 +131,10 @@ fun BookInputForm(
             value = bookDetails.name,
             onValueChange = { onValueChange(bookDetails.copy(name = it)) },
             keyboardOptions =
-                KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Sentences,
-                    imeAction = ImeAction.Next
-                ),
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Next
+            ),
             label = { Text(stringResource(R.string.book_name_required)) },
             modifier = modifier
         )
@@ -142,10 +142,10 @@ fun BookInputForm(
             value = bookDetails.genre,
             onValueChange = { onValueChange(bookDetails.copy(genre = it)) },
             keyboardOptions =
-                KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Sentences,
-                    imeAction = ImeAction.Next
-                ),
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Next
+            ),
             label = { Text(stringResource(R.string.book_genre_required)) },
             modifier = modifier
         )
@@ -243,9 +243,9 @@ fun CustomDatePicker(
     bookDetails: String,
     focusManager: FocusManager,
     @StringRes fieldNameRes: Int,
-    modifier: Modifier = Modifier,
     onClearButtonClick: () -> Unit,
-    onAccept: (Long?) -> Unit
+    onAccept: (Long?) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val isOpen = remember { mutableStateOf(false) }
 
@@ -317,8 +317,8 @@ private fun RatingDropdownMenu(
     bookDetails: BookDetails,
     ratingList: List<String>,
     focusManager: FocusManager,
-    modifier: Modifier = Modifier,
-    onValueChange: (BookDetails) -> Unit
+    onValueChange: (BookDetails) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -372,8 +372,8 @@ private fun RatingDropdownMenu(
 @Composable
 fun ClearIconButton(
     focusManager: FocusManager,
-    modifier: Modifier = Modifier,
-    onClearButtonClick: () -> Unit
+    onClearButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     IconButton(
         onClick = {

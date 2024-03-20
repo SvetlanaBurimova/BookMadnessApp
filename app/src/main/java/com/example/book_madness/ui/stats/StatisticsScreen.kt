@@ -34,9 +34,9 @@ import com.example.book_madness.util.BookMadnessTopAppBar
 
 @Composable
 fun StatisticsScreen(
-    modifier: Modifier = Modifier,
     navigateToBookEntry: () -> Unit,
     bottomNavigationBar: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: StatisticsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val statisticsUiState by viewModel.statisticsUiState.collectAsState()

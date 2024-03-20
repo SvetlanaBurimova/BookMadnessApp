@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BookEditScreen(
-    modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: BookEditViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
