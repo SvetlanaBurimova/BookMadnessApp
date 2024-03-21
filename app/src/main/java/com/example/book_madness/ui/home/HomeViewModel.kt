@@ -40,7 +40,7 @@ class HomeViewModel(
         initialValue = HomeUiState()
     )
 
-    suspend fun deleteItem(book: Book) {
+    suspend fun deleteBook(book: Book) {
         booksRepository.deleteBook(book)
     }
 }
