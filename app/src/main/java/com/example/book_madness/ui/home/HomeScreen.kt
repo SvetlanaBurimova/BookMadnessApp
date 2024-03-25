@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DismissDirection
@@ -25,7 +24,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
@@ -83,6 +81,9 @@ fun HomeScreen(
                 title = stringResource(BookMadnessTitlesResId.HOME_SCREEN),
                 canNavigateBack = false,
                 showFilterIcon = true,
+                showSearchButton = true,
+                searchQuery = viewModel.searchQuery,
+                onSearchDisplayChanged = { viewModel.onSearchQueryChange(it) },
                 onFilterAllBooks = { viewModel.filterBooks(ID) },
                 onFilterAllBooksByName = { viewModel.filterBooks(NAME) },
                 onFilterAllBooksByRating = { viewModel.filterBooks(RATING) },
@@ -102,8 +103,6 @@ fun HomeScreen(
                     viewModel.deleteBook(it)
                 }
             },
-            searchQuery = "",
-            onSearchQueryChange = {  },
             modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -111,14 +110,11 @@ fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeBody(
     bookList: List<Book>,
     onBookClick: (Int) -> Unit,
     onDelete: (Book) -> Unit,
-    searchQuery: String,
-    onSearchQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -127,16 +123,11 @@ private fun HomeBody(
         if (bookList.isEmpty()) {
             HomeEmptyScreen()
         } else {
-            BookSearchBar(
-                searchQuery = searchQuery,
-                onSearchQueryChange = onSearchQueryChange,
-                content = {
-                    BookList(
-                        bookList = bookList,
-                        onItemClick = { onBookClick(it.id) },
-                        onDelete = { onDelete(it) }
-                    )
-                }, modifier = modifier
+            BookList(
+                bookList = bookList,
+                onItemClick = { onBookClick(it.id) },
+                onDelete = { onDelete(it) },
+                modifier = modifier
             )
         }
     }
@@ -156,38 +147,6 @@ fun HomeEmptyScreen(modifier: Modifier = Modifier) {
         text = stringResource(R.string.no_books_description),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.titleLarge
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BookSearchBar(
-//    bookList: List<Book>,
-    searchQuery: String,
-    onSearchQueryChange: (String) -> Unit,
-    content: @Composable () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    SearchBar(
-        query = searchQuery,
-        onQueryChange = onSearchQueryChange,
-        onSearch = { },
-        placeholder = {
-            Text(text = "Search book")
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                tint = MaterialTheme.colorScheme.onSurface,
-                contentDescription = null
-            )
-        },
-        trailingIcon = {},
-        modifier = modifier.padding(horizontal = dimensionResource(id = R.dimen.small)),
-        content = { content() },
-        active = true,
-        onActiveChange = {},
-        tonalElevation = 0.dp
     )
 }
 
@@ -351,9 +310,7 @@ fun HomeScreenPreview() {
                 )
             ),
             onBookClick = { /* Do nothing */ },
-            onDelete = { /* Do nothing */ },
-            searchQuery = " ",
-            onSearchQueryChange = {  }
+            onDelete = { /* Do nothing */ }
         )
     }
 }
@@ -365,9 +322,7 @@ fun HomeScreenEmptyPreview() {
         HomeBody(
             bookList = emptyList(),
             onBookClick = { /* Do nothing */ },
-            onDelete = { /* Do nothing */ },
-            searchQuery = " ",
-            onSearchQueryChange = {  }
+            onDelete = { /* Do nothing */ }
         )
     }
 }
