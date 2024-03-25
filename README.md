@@ -12,6 +12,7 @@ The idea for this app came from my personal experience of maintaining a list of 
 ![image](https://github.com/SvetlanaBurimova/book_madness/assets/39984764/dfae5302-7757-49de-9eee-e54228ad0372)
 
 
+_This pet project serves as a testament to my dedication to learning and mastering key Android development technologies and dedication to creating user-centric and innovative solutions._
 
 
 
@@ -50,10 +51,5 @@ The idea for this app came from my personal experience of maintaining a list of 
 * **Offline Notifications:** Enhances user engagement and retention, even in offline scenarios.
   
 * **Database and Navigation UI Tests:** Implemented robust testing to ensure reliability and functionality.
-
-
-### This pet project serves as a testament to my dedication to learning and mastering key Android development technologies and dedication to creating user-centric and innovative solutions.
-
-
 
 
