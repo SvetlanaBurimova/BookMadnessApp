@@ -2,22 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="BookMadnessScreenNavigationTest">
-        <State />
-      </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="bookMadnessNavHost_clickBackOnBookEntryScreen_navigateToStartDestination()">
+      <entry key="filterBooksByTBR_displayEmptyScreen()">
         <State />
       </entry>
-      <entry key="bookMadnessNavHost_clickOnBook_navigateToBookDetailScreen()">
+      <entry key="filterBooksByYear2023_displayEmptyScreen()">
         <State />
       </entry>
-      <entry key="bookMadnessNavHost_clickOnEditButton_navigateToBookEditScreen()">
+      <entry key="filterBooksByYear2024_displayEmptyScreen()">
         <State />
       </entry>
-      <entry key="daoInsert_insertsBookIntoDB()">
+      <entry key="noBooks_EmptyScreenTextIsVisible()">
+        <State />
+      </entry>
+      <entry key="swipeToDelete_deletedBookIsNotDisplayed()">
         <State />
       </entry>
     </value>

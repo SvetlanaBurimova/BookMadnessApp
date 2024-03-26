@@ -1,4 +1,4 @@
-package com.example.book_madness
+package com.example.book_madness.data
 
 import android.content.Context
 import androidx.room.Room
@@ -7,8 +7,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.data.source.BookDao
 import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.fake.FakeDataSource.book1
-import com.example.book_madness.fake.FakeDataSource.book2
+import com.example.book_madness.fake.FakeDataSource.bookOne
+import com.example.book_madness.fake.FakeDataSource.bookTwo
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -48,7 +48,7 @@ class BookDaoTest {
     fun daoInsert_insertsBookIntoDB() = runBlocking {
         addOneItemToDb()
         val allItems = bookDao.getAllBooks().first()
-        assertEquals(allItems[0], book1)
+        assertEquals(allItems[0], bookOne)
     }
 
     @Test
@@ -56,8 +56,8 @@ class BookDaoTest {
     fun daoGetAllBooks_returnsAllBooksFromDB() = runBlocking {
         addTwoItemsToDb()
         val allItems = bookDao.getAllBooks().first()
-        assertEquals(allItems[0], book1)
-        assertEquals(allItems[1], book2)
+        assertEquals(allItems[0], bookOne)
+        assertEquals(allItems[1], bookTwo)
     }
 
     @Test
@@ -65,15 +65,15 @@ class BookDaoTest {
     fun daoGetBook_returnsBookFromDB() = runBlocking {
         addOneItemToDb()
         val item = bookDao.getBookById(1)
-        assertEquals(item.first(), book1)
+        assertEquals(item.first(), bookOne)
     }
 
     @Test
     @Throws(Exception::class)
     fun daoDeleteBooks_deletesAllBooksFromDB() = runBlocking {
         addTwoItemsToDb()
-        bookDao.delete(book1)
-        bookDao.delete(book2)
+        bookDao.delete(bookOne)
+        bookDao.delete(bookTwo)
         val allItems = bookDao.getAllBooks().first()
         assertTrue(allItems.isEmpty())
     }
@@ -123,11 +123,11 @@ class BookDaoTest {
     }
 
     private suspend fun addOneItemToDb() {
-        bookDao.insert(book1)
+        bookDao.insert(bookOne)
     }
 
     private suspend fun addTwoItemsToDb() {
-        bookDao.insert(book1)
-        bookDao.insert(book2)
+        bookDao.insert(bookOne)
+        bookDao.insert(bookTwo)
     }
 }

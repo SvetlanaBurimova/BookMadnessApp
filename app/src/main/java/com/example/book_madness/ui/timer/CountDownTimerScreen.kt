@@ -75,7 +75,7 @@ fun CountDownTimerScreen(
     Scaffold(
         topBar = {
             BookMadnessTopAppBar(
-                title = stringResource(BookMadnessTitlesResId.COUNT_DOWN_TIMER_SCREEN),
+                title = stringResource(BookMadnessTitlesResId.TIMER_SCREEN),
                 canNavigateBack = false
             )
         },
@@ -113,12 +113,12 @@ fun CountDownBody(
             verticalArrangement = Arrangement.SpaceAround
         ) {
             Text(
-                text = stringResource(id = R.string.timer_title),
+                text = stringResource(id = R.string.reading_time_title),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineLarge
             )
             Text(
-                text = stringResource(id = R.string.enjoy),
+                text = stringResource(id = R.string.enjoy_title),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineMedium
             )
@@ -270,16 +270,16 @@ fun ReminderDialogContent(
     modifier: Modifier = Modifier
 ) {
     val reminders = listOf(
-        Reminder(R.string.five_seconds, FIVE_SECONDS, TimeUnit.SECONDS),
-        Reminder(R.string.one_day, ONE_DAY, TimeUnit.DAYS),
-        Reminder(R.string.one_week, SEVEN_DAYS, TimeUnit.DAYS),
-        Reminder(R.string.one_month, THIRTY_DAYS, TimeUnit.DAYS)
+        Reminder(R.string.five_seconds_button, FIVE_SECONDS, TimeUnit.SECONDS),
+        Reminder(R.string.one_day_button, ONE_DAY, TimeUnit.DAYS),
+        Reminder(R.string.one_week_button, SEVEN_DAYS, TimeUnit.DAYS),
+        Reminder(R.string.one_month_button, THIRTY_DAYS, TimeUnit.DAYS)
     )
 
     AlertDialog(
         onDismissRequest = { onDialogDismiss() },
         confirmButton = {},
-        title = { Text(stringResource(R.string.remind_me)) },
+        title = { Text(stringResource(R.string.remind_me_title)) },
         text = {
             Column {
                 reminders.forEach {

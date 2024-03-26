@@ -15,12 +15,12 @@ object BookMadnessScreenRoutes {
 }
 
 object BookMadnessTitlesResId {
-    val HOME_SCREEN = R.string.book_list
+    val HOME_SCREEN = R.string.home_screen_title
     val BOOK_DETAIL_SCREEN = R.string.book_detail_title
     val BOOK_ADD_SCREEN = R.string.book_entry_title
-    val BOOK_EDIT_SCREEN = R.string.edit_book
-    val STATISTICS_SCREEN = R.string.book_stats
-    val COUNT_DOWN_TIMER_SCREEN = R.string.book_count_down_timer
+    val BOOK_EDIT_SCREEN = R.string.edit_book_title
+    val STATISTICS_SCREEN = R.string.book_stats_title
+    val TIMER_SCREEN = R.string.timer_screen_title
 }
 
 object BookMadnessDestinationsArgs {

@@ -272,10 +272,10 @@ private fun BookItem(
             }
 
             if (book.startDate != null) {
-                ReadingDate(R.string.start_date, book.startDate)
+                ReadingDate(R.string.start_screen_start_date_field, book.startDate)
             }
             if (book.finishDate != null) {
-                ReadingDate(R.string.finish_date, book.finishDate)
+                ReadingDate(R.string.start_screen_finish_date_field, book.finishDate)
             }
         }
     }

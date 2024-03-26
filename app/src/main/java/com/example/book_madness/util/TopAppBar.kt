@@ -132,12 +132,12 @@ fun ShareButton(
         iconContent = {
             Icon(
                 imageVector = Icons.Default.Share,
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.share_icon_button)
             )
         }
     ) { closeMenu ->
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.share)) },
+            text = { Text(text = stringResource(id = R.string.share_button)) },
             onClick = {
                 ContextCompat.startActivity(context, shareIntent, null)
                 closeMenu()
@@ -198,7 +198,7 @@ fun ExpandedSearchView(
             value = searchQuery,
             onValueChange = { onSearchDisplayChanged(it) },
             modifier = Modifier.focusRequester(textFieldFocusRequester),
-            label = { Text(text = stringResource(id = R.string.search)) },
+            label = { Text(text = stringResource(id = R.string.search_field_label)) },
             trailingIcon = {
                 if (searchQuery.isNotEmpty()) {
                     IconButton(
@@ -230,32 +230,32 @@ private fun DropdownBookFilters(
         iconContent = {
             Icon(
                 painter = painterResource(id = R.drawable.filter_list),
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.filter_button)
             )
         }
     ) { closeMenu ->
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.filter_all_books)) },
+            text = { Text(text = stringResource(id = R.string.all_books_filter_button)) },
             onClick = { onFilterAllBooks(); closeMenu() }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.filter_books_by_name)) },
+            text = { Text(text = stringResource(id = R.string.books_by_name_filter_button)) },
             onClick = { onFilterAllBooksByName(); closeMenu() }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.filter_books_by_rating)) },
+            text = { Text(text = stringResource(id = R.string.books_by_rating_filter_button)) },
             onClick = { onFilterAllBooksByRating(); closeMenu() }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.tbr)) },
+            text = { Text(text = stringResource(id = R.string.tbr_filter_button)) },
             onClick = { onFilterAllBooksByTBR(); closeMenu() }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.filter_books_by_year_2023)) },
+            text = { Text(text = stringResource(id = R.string.books_by_year_2023_filter_button)) },
             onClick = { onFilterAllBooksByYear2023(); closeMenu() }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.filter_books_by_year_2024)) },
+            text = { Text(text = stringResource(id = R.string.books_by_year_2024_filter_button)) },
             onClick = { onFilterAllBooksByYear2024(); closeMenu() }
         )
     }
@@ -285,7 +285,7 @@ private fun TopAppBarDropdownMenu(
 fun BackArrowIcon() {
     Icon(
         imageVector = Icons.Default.ArrowBack,
-        contentDescription = null
+        contentDescription = stringResource(id = R.string.back_button)
     )
 }
 
@@ -293,7 +293,7 @@ fun BackArrowIcon() {
 fun SearchIcon() {
     Icon(
         imageVector = Icons.Default.Search,
-        contentDescription = null
+        contentDescription = stringResource(id = R.string.search_icon)
     )
 }
 

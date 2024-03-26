@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import com.example.book_madness.R
 
 @Composable
@@ -16,7 +17,7 @@ fun BookMadnessRatingIcon(
 ) {
     Icon(
         painter = icon,
-        contentDescription = null,
+        contentDescription = stringResource(id = R.string.rating_icon),
         tint = MaterialTheme.colorScheme.primary,
         modifier = modifier.size(dimensionResource(id = R.dimen.extra_large))
     )

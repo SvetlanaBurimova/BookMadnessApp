@@ -21,7 +21,7 @@ fun BookMadnessFloatingActionButton(
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.book_entry_title),
+            contentDescription = stringResource(R.string.floating_book_entry_button),
             modifier = modifier
         )
     }
