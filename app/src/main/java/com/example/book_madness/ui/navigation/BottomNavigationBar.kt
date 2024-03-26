@@ -30,7 +30,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         ),
         BottomNavigationItem(
             route = BookMadnessScreenRoutes.COUNT_DOWN_TIMER_SCREEN,
-            titleRes = BookMadnessTitlesResId.COUNT_DOWN_TIMER_SCREEN,
+            titleRes = BookMadnessTitlesResId.TIMER_SCREEN,
             unselectedIcon = R.drawable.outline_time,
             selectedIcon = R.drawable.time
         )

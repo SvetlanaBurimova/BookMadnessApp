@@ -108,7 +108,7 @@ private fun BookDetailsBody(
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.small
         ) {
-            Text(stringResource(R.string.edit_book))
+            Text(stringResource(R.string.edit_book_title))
         }
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true },
@@ -117,7 +117,7 @@ private fun BookDetailsBody(
                 .fillMaxWidth()
                 .padding(bottom = dimensionResource(id = R.dimen.medium))
         ) {
-            Text(stringResource(R.string.delete))
+            Text(stringResource(R.string.delete_button))
         }
         if (deleteConfirmationRequired) {
             DeleteConfirmationDialog(
@@ -149,45 +149,45 @@ fun BookDetails(
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium))
         ) {
             BookDetailsRow(
-                labelResID = R.string.book_name,
+                labelResID = R.string.book_name_field,
                 bookDetail = book.name
             )
             Row {
-                Text(text = stringResource(R.string.book_rating))
+                Text(text = stringResource(R.string.book_rating_field))
                 Spacer(modifier = Modifier.weight(1f))
 
                 BookDetailsRatingIcons(book.rating ?: "0")
             }
 
             BookDetailsRow(
-                labelResID = R.string.book_genre,
+                labelResID = R.string.book_genre_field,
                 bookDetail = book.genre
             )
 
             BookDetailsRow(
-                labelResID = R.string.book_paper_format,
+                labelResID = R.string.book_paper_format_box,
                 bookDetail = if (book.paper) {
-                    stringResource(id = R.string.yes)
-                } else stringResource(id = R.string.no)
+                    stringResource(id = R.string.yes_button)
+                } else stringResource(id = R.string.no_button)
             )
 
             BookDetailsRow(
-                labelResID = R.string.book_details_start_date,
+                labelResID = R.string.book_details_start_date_button,
                 bookDetail = book.startDate ?: ""
             )
 
             BookDetailsRow(
-                labelResID = R.string.book_details_finish_date,
+                labelResID = R.string.book_details_finish_date_button,
                 bookDetail = book.finishDate ?: ""
             )
 
             BookDetailsRow(
-                labelResID = R.string.book_author,
+                labelResID = R.string.book_author_field,
                 bookDetail = book.author ?: ""
             )
 
             BookDetailsRow(
-                labelResID = R.string.book_notes,
+                labelResID = R.string.book_notes_field,
                 bookDetail = book.notes ?: ""
             )
         }
@@ -239,17 +239,17 @@ private fun DeleteConfirmationDialog(
 ) {
     AlertDialog(
         onDismissRequest = { /* Do nothing */ },
-        title = { Text(stringResource(R.string.attention)) },
-        text = { Text(stringResource(R.string.delete_question)) },
+        title = { Text(stringResource(R.string.attention_title)) },
+        text = { Text(stringResource(R.string.delete_question_description)) },
         modifier = modifier,
         dismissButton = {
             TextButton(onClick = onDeleteCancel) {
-                Text(text = stringResource(R.string.no))
+                Text(text = stringResource(R.string.no_button))
             }
         },
         confirmButton = {
             TextButton(onClick = onDeleteConfirm) {
-                Text(text = stringResource(R.string.yes))
+                Text(text = stringResource(R.string.yes_button))
             }
         }
     )

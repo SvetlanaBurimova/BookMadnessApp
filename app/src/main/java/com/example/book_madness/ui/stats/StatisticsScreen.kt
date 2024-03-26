@@ -70,11 +70,11 @@ private fun StatisticBody(
     ) {
         BookImage()
         BooksAmountByCategory(
-            categoryTitleResId = R.string.tbr_category,
+            categoryTitleResId = R.string.tbr_books_category_label,
             booksAmount = bookListWithRating.tbrBooks ?: 0
         )
         BooksAmountByCategory(
-            categoryTitleResId = R.string.completed_category,
+            categoryTitleResId = R.string.completed_books_category_label,
             booksAmount = bookListWithRating.allCompletedBooks ?: 0
         )
     }
@@ -83,8 +83,8 @@ private fun StatisticBody(
 @Composable
 fun BookImage(modifier: Modifier = Modifier) {
     Image(
-        painter = painterResource(id = R.drawable.book_image),
-        contentDescription = stringResource(id = R.string.book_image),
+        painter = painterResource(id = R.drawable.statistic_screen_book_image),
+        contentDescription = stringResource(id = R.string.statistic_screen_book_image),
         contentScale = ContentScale.FillBounds,
         modifier = modifier
             .padding(dimensionResource(id = R.dimen.small))

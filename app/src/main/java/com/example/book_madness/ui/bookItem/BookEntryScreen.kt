@@ -111,7 +111,7 @@ fun BookEntryBody(
             shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = stringResource(R.string.save_action))
+            Text(text = stringResource(R.string.save_button))
         }
     }
 }
@@ -135,7 +135,7 @@ fun BookInputForm(
                 capitalization = KeyboardCapitalization.Sentences,
                 imeAction = ImeAction.Next
             ),
-            label = { Text(stringResource(R.string.book_name_required)) },
+            label = { Text(stringResource(R.string.book_name_required_field)) },
             modifier = modifier
         )
         OutlinedTextField(
@@ -146,7 +146,7 @@ fun BookInputForm(
                 capitalization = KeyboardCapitalization.Sentences,
                 imeAction = ImeAction.Next
             ),
-            label = { Text(stringResource(R.string.book_genre_required)) },
+            label = { Text(stringResource(R.string.book_genre_required_field)) },
             modifier = modifier
         )
         RatingDropdownMenu(
@@ -156,7 +156,7 @@ fun BookInputForm(
             focusManager = focusManager
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.book_paper_format))
+            Text(stringResource(R.string.book_paper_format_box))
             Checkbox(
                 checked = bookDetails.paper,
                 onCheckedChange = {
@@ -168,7 +168,7 @@ fun BookInputForm(
         CustomDatePicker(
             bookDetails = bookDetails.startDate ?: "",
             focusManager = focusManager,
-            fieldNameRes = R.string.book_details_start_date,
+            fieldNameRes = R.string.book_details_start_date_button,
             modifier = modifier,
             onClearButtonClick = { onValueChange(bookDetails.copy(startDate = null)) },
             onAccept = {
@@ -188,7 +188,7 @@ fun BookInputForm(
         CustomDatePicker(
             bookDetails = bookDetails.finishDate ?: "",
             focusManager = focusManager,
-            fieldNameRes = R.string.book_details_finish_date,
+            fieldNameRes = R.string.book_details_finish_date_button,
             modifier = modifier,
             onClearButtonClick = { onValueChange(bookDetails.copy(finishDate = null)) },
             onAccept = {
@@ -213,7 +213,7 @@ fun BookInputForm(
                 capitalization = KeyboardCapitalization.Sentences,
                 imeAction = ImeAction.Next
             ),
-            label = { Text(stringResource(R.string.book_author)) },
+            label = { Text(stringResource(R.string.book_author_field)) },
             modifier = modifier
         )
         OutlinedTextField(
@@ -227,12 +227,12 @@ fun BookInputForm(
             keyboardActions = KeyboardActions(
                 onDone = { focusManager.clearFocus() }
             ),
-            label = { Text(stringResource(R.string.book_notes)) },
+            label = { Text(stringResource(R.string.book_notes_field)) },
             singleLine = false,
             modifier = modifier
         )
         Text(
-            text = stringResource(R.string.required_fields),
+            text = stringResource(R.string.required_fields_label),
             modifier = Modifier.padding(start = dimensionResource(id = R.dimen.medium))
         )
     }
@@ -298,12 +298,12 @@ fun CustomDatePickerDialog(
         onDismissRequest = { /* Do nothing */ },
         confirmButton = {
             Button(onClick = { onAccept(state.selectedDateMillis) }) {
-                Text(stringResource(id = R.string.accept))
+                Text(stringResource(id = R.string.accept_button))
             }
         },
         dismissButton = {
             Button(onClick = onCancel) {
-                Text(stringResource(id = R.string.cancel))
+                Text(stringResource(id = R.string.cancel_button))
             }
         }
     ) {
@@ -339,7 +339,7 @@ private fun RatingDropdownMenu(
                 readOnly = true,
                 value = bookDetails.rating ?: "",
                 onValueChange = { /* Do nothing */ },
-                label = { Text(stringResource(R.string.book_rating)) },
+                label = { Text(stringResource(R.string.book_rating_field)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
             )
             ExposedDropdownMenu(

@@ -12,7 +12,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.fake.FakeDataSource.book1
+import com.example.book_madness.fake.FakeDataSource.bookOne
 import com.example.book_madness.ui.navigation.BookMadnessDestinations
 import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes
 import kotlinx.coroutines.test.runTest
@@ -21,10 +21,7 @@ import org.junit.Test
 
 class BookMadnessScreenNavigationTest {
 
-    /**
-     * Note: To access to an empty activity, the code uses ComponentActivity instead of
-     * MainActivity.
-     */
+    //To access to an empty activity, the code uses ComponentActivity instead of MainActivity.
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -108,7 +105,7 @@ class BookMadnessScreenNavigationTest {
     @Test
     fun bookMadnessNavHost_clickOnStatsBottomButton_verifyStatsScreen() {
         setupBookMadnessNavHost()
-        composeTestRule.onNodeWithStringId(R.string.book_stats).performClick()
+        composeTestRule.onNodeWithStringId(R.string.book_stats_title).performClick()
 
         navController.assertCurrentRouteName(BookMadnessScreenRoutes.STATISTICS_SCREEN)
     }
@@ -116,7 +113,7 @@ class BookMadnessScreenNavigationTest {
     @Test
     fun bookMadnessNavHost_clickOnTimerBottomButton_verifyTimerScreen() {
         setupBookMadnessNavHost()
-        composeTestRule.onNodeWithStringId(R.string.book_count_down_timer).performClick()
+        composeTestRule.onNodeWithStringId(R.string.timer_screen_title).performClick()
 
         navController.assertCurrentRouteName(BookMadnessScreenRoutes.COUNT_DOWN_TIMER_SCREEN)
     }
@@ -141,25 +138,25 @@ class BookMadnessScreenNavigationTest {
     }
 
     private fun performNavigateUp() {
-        val backButtonText = composeTestRule.activity.getString(R.string.back_button)
-        composeTestRule.onNodeWithContentDescription(backButtonText).performClick()
+        val backButtonDescription = composeTestRule.activity.getString(R.string.back_button)
+        composeTestRule.onNodeWithContentDescription(backButtonDescription).performClick()
     }
 
     private fun navigateToBookEntryScreen() {
-        val floatingButtonText = composeTestRule.activity.getString(R.string.book_entry_title)
-        composeTestRule.onNodeWithContentDescription(floatingButtonText).performClick()
+        val floatingButtonDescription = composeTestRule.activity.getString(R.string.floating_book_entry_button)
+        composeTestRule.onNodeWithContentDescription(floatingButtonDescription).performClick()
     }
 
     private fun navigateToBookDetailScreen() {
-        composeTestRule.onNodeWithText(book1.name).performClick()
+        composeTestRule.onNodeWithText(bookOne.name).performClick()
     }
 
     private fun navigateToBookEditScreen() {
         navigateToBookDetailScreen()
-        composeTestRule.onNodeWithStringId(R.string.edit_book).performClick()
+        composeTestRule.onNodeWithStringId(R.string.edit_book_title).performClick()
     }
 
     private suspend fun addBookOne() {
-        booksRepository.insertBook(book1)
+        booksRepository.insertBook(bookOne)
     }
 }
