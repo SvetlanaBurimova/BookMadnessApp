@@ -2,19 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="addBook_deleteBook()">
-        <State />
-      </entry>
-      <entry key="addTwoBooks_deleteOneBook()">
-        <State />
-      </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="editBook_displayUpdatedData()">
+      <entry key="bookMadnessNavHost_clickBackOnBookEntryScreen_navigateToStartDestination()">
         <State />
       </entry>
-      <entry key="editBook_displayUpdatedDataOnHomeScreen()">
+      <entry key="bookMadnessNavHost_verifyBackNavigationNotShownOnStartScreen()">
+        <State />
+      </entry>
+      <entry key="filterBooksByYear2023_displayEmptyScreen()">
+        <State />
+      </entry>
+      <entry key="searchInvalidBookName_displayEmptyScreen()">
+        <State />
+      </entry>
+      <entry key="searchValidBookName_displayBooks()">
         <State />
       </entry>
     </value>

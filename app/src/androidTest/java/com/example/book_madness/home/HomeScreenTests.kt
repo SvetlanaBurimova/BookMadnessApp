@@ -2,11 +2,8 @@ package com.example.book_madness.home
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Surface
-import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.hasSetTextAction
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -46,10 +43,10 @@ class HomeScreenTests {
         addThreeBooks()
         setContent()
 
-        val ratingIcon = composeTestRule.activity.getString(R.string.search_icon)
-        val bookTwoStartDate = composeTestRule.activity.getString(R.string.start_screen_start_date_field, bookTwo.startDate!!)
-        val bookTwoFinishDate = composeTestRule.activity.getString(R.string.start_screen_finish_date_field, bookTwo.finishDate)
-        val bookThreeStartDate = composeTestRule.activity.getString(R.string.start_screen_start_date_field, bookThree.startDate!!)
+        val ratingIcon = activity.getString(R.string.search_icon)
+        val bookTwoStartDate = activity.getString(R.string.start_screen_start_date_field, bookTwo.startDate!!)
+        val bookTwoFinishDate = activity.getString(R.string.start_screen_finish_date_field, bookTwo.finishDate)
+        val bookThreeStartDate = activity.getString(R.string.start_screen_start_date_field, bookThree.startDate!!)
 
         composeTestRule.onNodeWithContentDescription(ratingIcon).assertIsDisplayed()
 
@@ -84,10 +81,10 @@ class HomeScreenTests {
         addThreeBooks()
         setContent()
 
-        val searchButton = composeTestRule.activity.getString(R.string.search_icon)
+        val searchButton = activity.getString(R.string.search_icon)
 
         composeTestRule.onNodeWithContentDescription(searchButton).performClick()
-        findTextField(R.string.search_field_label).performTextInput("wi")
+        composeTestRule.onNodeWithStringId(R.string.search_field_label).performTextInput("wi")
 
         composeTestRule.onNodeWithText(bookOne.name).assertIsDisplayed()
         composeTestRule.onNodeWithText(bookTwo.name).assertIsDisplayed()
@@ -98,10 +95,10 @@ class HomeScreenTests {
         addThreeBooks()
         setContent()
 
-        val searchButton = composeTestRule.activity.getString(R.string.search_icon)
+        val searchButton = activity.getString(R.string.search_icon)
 
         composeTestRule.onNodeWithContentDescription(searchButton).performClick()
-        findTextField(R.string.search_field_label).performTextInput("Wombat")
+        composeTestRule.onNodeWithStringId(R.string.search_field_label).performTextInput("Wombat")
 
         composeTestRule.onNodeWithStringId(R.string.no_books_description).assertIsDisplayed()
     }
@@ -111,11 +108,10 @@ class HomeScreenTests {
         addThreeBooks()
         setContent()
 
-        val filterButton = composeTestRule.activity.getString(R.string.filter_button)
-        val filterByYear2023 = composeTestRule.activity.getString(R.string.books_by_year_2023_filter_button)
+        val filterButton = activity.getString(R.string.filter_button)
 
         composeTestRule.onNodeWithContentDescription(filterButton).performClick()
-        composeTestRule.onNodeWithText(filterByYear2023).performClick()
+        composeTestRule.onNodeWithStringId(R.string.books_by_year_2023_filter_button).performClick()
 
         composeTestRule.onNodeWithStringId(R.string.no_books_description).assertIsDisplayed()
     }
@@ -125,11 +121,10 @@ class HomeScreenTests {
         addThreeBooks()
         setContent()
 
-        val filterButton = composeTestRule.activity.getString(R.string.filter_button)
-        val filterByYear2024 = composeTestRule.activity.getString(R.string.books_by_year_2024_filter_button)
+        val filterButton = activity.getString(R.string.filter_button)
 
         composeTestRule.onNodeWithContentDescription(filterButton).performClick()
-        composeTestRule.onNodeWithText(filterByYear2024).performClick()
+        composeTestRule.onNodeWithStringId(R.string.books_by_year_2024_filter_button).performClick()
 
         composeTestRule.onNodeWithText(bookOne.name).assertIsNotDisplayed()
         composeTestRule.onNodeWithText(bookTwo.name).assertIsDisplayed()
@@ -141,11 +136,10 @@ class HomeScreenTests {
         addThreeBooks()
         setContent()
 
-        val filterButton = composeTestRule.activity.getString(R.string.filter_button)
-        val filterByTBR = composeTestRule.activity.getString(R.string.tbr_filter_button)
+        val filterButton = activity.getString(R.string.filter_button)
 
         composeTestRule.onNodeWithContentDescription(filterButton).performClick()
-        composeTestRule.onNodeWithText(filterByTBR).performClick()
+        composeTestRule.onNodeWithStringId(R.string.tbr_filter_button).performClick()
 
         composeTestRule.onNodeWithText(bookOne.name).assertIsDisplayed()
         composeTestRule.onNodeWithText(bookTwo.name).assertIsNotDisplayed()
@@ -156,8 +150,8 @@ class HomeScreenTests {
     fun noBooks_SearchAndFilterButtonsAreVisible() {
         setContent()
 
-        val filterButton = composeTestRule.activity.getString(R.string.filter_button)
-        val searchButton = composeTestRule.activity.getString(R.string.search_icon)
+        val filterButton = activity.getString(R.string.filter_button)
+        val searchButton = activity.getString(R.string.search_icon)
 
         composeTestRule.onNodeWithContentDescription(filterButton).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription(searchButton).assertIsDisplayed()
@@ -168,12 +162,6 @@ class HomeScreenTests {
         setContent()
 
         composeTestRule.onNodeWithStringId(R.string.no_books_description).assertIsDisplayed()
-    }
-
-    private fun findTextField(text: Int): SemanticsNodeInteraction {
-        return composeTestRule.onNode(
-            hasSetTextAction() and hasText(activity.getString(text))
-        )
     }
 
     private fun setContent() {

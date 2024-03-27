@@ -167,7 +167,7 @@ class BooksTests {
     }
 
     private fun performNavigateUp() {
-        val backButtonDescription = composeTestRule.activity.getString(R.string.back_button)
+        val backButtonDescription = activity.getString(R.string.back_button)
         composeTestRule.onNodeWithContentDescription(backButtonDescription).performClick()
     }
 }

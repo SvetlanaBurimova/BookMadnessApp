@@ -24,6 +24,7 @@ class BookMadnessScreenNavigationTest {
     //To access to an empty activity, the code uses ComponentActivity instead of MainActivity.
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+    private val activity get() = composeTestRule.activity
 
     private lateinit var navController: TestNavHostController
     private lateinit var booksRepository: BooksRepository
@@ -38,7 +39,7 @@ class BookMadnessScreenNavigationTest {
     @Test
     fun bookMadnessNavHost_verifyBackNavigationNotShownOnStartScreen() {
         setupBookMadnessNavHost()
-        val backButtonText = composeTestRule.activity.getString(R.string.back_button)
+        val backButtonText = activity.getString(R.string.back_button)
 
         composeTestRule.onNodeWithContentDescription(backButtonText).assertDoesNotExist()
     }
@@ -138,12 +139,12 @@ class BookMadnessScreenNavigationTest {
     }
 
     private fun performNavigateUp() {
-        val backButton = composeTestRule.activity.getString(R.string.back_button)
+        val backButton = activity.getString(R.string.back_button)
         composeTestRule.onNodeWithContentDescription(backButton).performClick()
     }
 
     private fun navigateToBookEntryScreen() {
-        val floatingButton = composeTestRule.activity.getString(R.string.floating_book_entry_button)
+        val floatingButton = activity.getString(R.string.floating_book_entry_button)
         composeTestRule.onNodeWithContentDescription(floatingButton).performClick()
     }
 
