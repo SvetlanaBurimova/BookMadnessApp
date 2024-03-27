@@ -138,13 +138,13 @@ class BookMadnessScreenNavigationTest {
     }
 
     private fun performNavigateUp() {
-        val backButtonDescription = composeTestRule.activity.getString(R.string.back_button)
-        composeTestRule.onNodeWithContentDescription(backButtonDescription).performClick()
+        val backButton = composeTestRule.activity.getString(R.string.back_button)
+        composeTestRule.onNodeWithContentDescription(backButton).performClick()
     }
 
     private fun navigateToBookEntryScreen() {
-        val floatingButtonDescription = composeTestRule.activity.getString(R.string.floating_book_entry_button)
-        composeTestRule.onNodeWithContentDescription(floatingButtonDescription).performClick()
+        val floatingButton = composeTestRule.activity.getString(R.string.floating_book_entry_button)
+        composeTestRule.onNodeWithContentDescription(floatingButton).performClick()
     }
 
     private fun navigateToBookDetailScreen() {
@@ -153,7 +153,7 @@ class BookMadnessScreenNavigationTest {
 
     private fun navigateToBookEditScreen() {
         navigateToBookDetailScreen()
-        composeTestRule.onNodeWithStringId(R.string.edit_book_title).performClick()
+        composeTestRule.onNodeWithStringId(R.string.edit_book_button).performClick()
     }
 
     private suspend fun addBookOne() {

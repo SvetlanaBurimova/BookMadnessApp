@@ -39,8 +39,8 @@ fun BookEditScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.saveBook()
-                    navigateBack()
                 }
+                navigateBack()
             },
             modifier = modifier
                 .padding(innerPadding)

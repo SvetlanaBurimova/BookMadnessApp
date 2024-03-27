@@ -2,22 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="addBook_deleteBook()">
+        <State />
+      </entry>
+      <entry key="addTwoBooks_deleteOneBook()">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="filterBooksByTBR_displayEmptyScreen()">
+      <entry key="editBook_displayUpdatedData()">
         <State />
       </entry>
-      <entry key="filterBooksByYear2023_displayEmptyScreen()">
-        <State />
-      </entry>
-      <entry key="filterBooksByYear2024_displayEmptyScreen()">
-        <State />
-      </entry>
-      <entry key="noBooks_EmptyScreenTextIsVisible()">
-        <State />
-      </entry>
-      <entry key="swipeToDelete_deletedBookIsNotDisplayed()">
+      <entry key="editBook_displayUpdatedDataOnHomeScreen()">
         <State />
       </entry>
     </value>

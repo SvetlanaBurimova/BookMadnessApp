@@ -40,6 +40,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,8 +80,8 @@ fun BookEntryScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.saveBook()
-                    navigateBack()
                 }
+                navigateBack()
             },
             modifier = modifier
                 .padding(innerPadding)
@@ -162,7 +164,8 @@ fun BookInputForm(
                 onCheckedChange = {
                     onValueChange(bookDetails.copy(paper = it))
                     focusManager.clearFocus()
-                }
+                },
+                modifier = Modifier.semantics { contentDescription = "Rating checkbox" }
             )
         }
         CustomDatePicker(
@@ -364,7 +367,8 @@ private fun RatingDropdownMenu(
         }
         ClearIconButton(
             focusManager = focusManager,
-            onClearButtonClick = { onValueChange(bookDetails.copy(rating = null)) }
+            onClearButtonClick = { onValueChange(bookDetails.copy(rating = null)) },
+            modifier = Modifier.semantics { contentDescription = "Clear rating button" }
         )
     }
 }
@@ -383,7 +387,7 @@ fun ClearIconButton(
     ) {
         Icon(
             painterResource(id = R.drawable.clear), contentDescription = null,
-            modifier = modifier.size(dimensionResource(id = R.dimen.extra_large)),
+            modifier = modifier.size(dimensionResource(id = R.dimen.extra_large))
         )
     }
 }

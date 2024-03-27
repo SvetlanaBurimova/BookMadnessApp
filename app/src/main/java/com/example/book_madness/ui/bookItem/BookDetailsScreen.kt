@@ -29,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -70,8 +72,8 @@ fun BookDetailsScreen(
             onDelete = {
                 coroutineScope.launch {
                     viewModel.deleteBook()
-                    navigateBack()
                 }
+                navigateBack()
             },
             modifier = modifier.padding(innerPadding)
         )
@@ -108,7 +110,7 @@ private fun BookDetailsBody(
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.small
         ) {
-            Text(stringResource(R.string.edit_book_title))
+            Text(stringResource(R.string.edit_book_button))
         }
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true },
@@ -200,11 +202,20 @@ fun BookDetailsRatingIcons(rating: String) {
 
     for (star in 1..5) {
         if (bookRating >= 1.0) {
-            BookMadnessRatingIcon(painterResource(id = R.drawable.round_star))
+            BookMadnessRatingIcon(
+                icon = painterResource(id = R.drawable.round_star),
+                modifier = Modifier.semantics { contentDescription = "Full star" }
+            )
         } else if (bookRating >= 0.5) {
-            BookMadnessRatingIcon(painterResource(id = R.drawable.round_star_half))
+            BookMadnessRatingIcon(
+                icon = painterResource(id = R.drawable.round_star_half),
+                modifier = Modifier.semantics { contentDescription = "Half star" }
+            )
         } else {
-            BookMadnessRatingIcon(painterResource(id = R.drawable.round_star_border))
+            BookMadnessRatingIcon(
+                icon = painterResource(id = R.drawable.round_star_border),
+                modifier = Modifier.semantics { contentDescription = "Empty star" }
+            )
         }
         bookRating--
     }
