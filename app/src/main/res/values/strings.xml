@@ -28,8 +28,8 @@
     <string name="back_button">Back button</string>
     <string name="delete_button">Delete</string>
     <string name="delete_question_description">Are you sure you want to delete this book?</string>
+    <string name="edit_book_button">Edit Book</string>
     <string name="edit_book_title">Edit Book</string>
-<!--    <string name="book">Book</string>-->
     <string name="book_detail_title">Book Details</string>
     <string name="no_button">No</string>
     <string name="yes_button">Yes</string>
