@@ -2,22 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="allFieldsAreDisplayed()">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="bookMadnessNavHost_clickBackOnBookEntryScreen_navigateToStartDestination()">
+      <entry key="emptyRequiredFields_saveButtonIsNotClickable()">
         <State />
       </entry>
-      <entry key="bookMadnessNavHost_verifyBackNavigationNotShownOnStartScreen()">
+      <entry key="emptyRequiredFields_saveButtonIsNotEnabled()">
         <State />
       </entry>
-      <entry key="filterBooksByYear2023_displayEmptyScreen()">
-        <State />
-      </entry>
-      <entry key="searchInvalidBookName_displayEmptyScreen()">
-        <State />
-      </entry>
-      <entry key="searchValidBookName_displayBooks()">
+      <entry key="enterDataIntoRequiredFields_saveButtonIsEnabled()">
         <State />
       </entry>
     </value>

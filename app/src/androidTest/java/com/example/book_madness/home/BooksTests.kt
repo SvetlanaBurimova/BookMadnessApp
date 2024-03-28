@@ -14,6 +14,7 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.BookMadnessApp
 import com.example.book_madness.R
 import com.example.book_madness.data.BooksRepository
@@ -26,7 +27,9 @@ import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class BooksTests {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

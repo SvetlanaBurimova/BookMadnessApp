@@ -12,6 +12,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.R
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
@@ -26,7 +27,9 @@ import com.example.book_madness.ui.theme.AppTheme
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class HomeScreenTests {
 
     @get:Rule
