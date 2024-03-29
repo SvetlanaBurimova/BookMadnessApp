@@ -2,21 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="allFieldsAreDisplayed()">
-        <State />
-      </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="emptyRequiredFields_saveButtonIsNotClickable()">
+      <entry key="displayBookStats_whenRepositoryEmpty()">
         <State />
       </entry>
-      <entry key="emptyRequiredFields_saveButtonIsNotEnabled()">
+      <entry key="displayBookStats_whenRepositoryHasData()">
         <State />
       </entry>
-      <entry key="enterDataIntoRequiredFields_saveButtonIsEnabled()">
-        <State />
-      </entry>
+      <entry />
     </value>
   </component>
 </project>
