@@ -18,14 +18,12 @@ import com.example.book_madness.onNodeWithStringId
 import com.example.book_madness.ui.stats.StatisticsScreen
 import com.example.book_madness.ui.stats.StatisticsViewModel
 import com.example.book_madness.ui.theme.AppTheme
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@ExperimentalCoroutinesApi
 class StatisticsScreenTest {
 
     @get:Rule
