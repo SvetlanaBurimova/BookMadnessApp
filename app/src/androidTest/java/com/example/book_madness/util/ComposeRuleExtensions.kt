@@ -1,4 +1,4 @@
-package com.example.book_madness
+package com.example.book_madness.util
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes

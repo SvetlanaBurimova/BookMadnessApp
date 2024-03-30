@@ -1,4 +1,4 @@
-package com.example.book_madness
+package com.example.book_madness.util
 
 import androidx.navigation.NavController
 import org.junit.Assert.assertEquals

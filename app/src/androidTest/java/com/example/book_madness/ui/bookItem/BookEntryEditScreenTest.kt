@@ -1,4 +1,4 @@
-package com.example.book_madness.addEdit
+package com.example.book_madness.ui.bookItem
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Surface
@@ -13,9 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.R
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.onNodeWithStringId
-import com.example.book_madness.ui.bookItem.BookEntryScreen
-import com.example.book_madness.ui.bookItem.BookEntryViewModel
+import com.example.book_madness.util.onNodeWithStringId
 import com.example.book_madness.ui.theme.AppTheme
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -24,7 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class AddEditBookScreenTest {
+class BookEntryEditScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 

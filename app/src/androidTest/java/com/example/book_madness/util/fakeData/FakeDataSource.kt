@@ -1,4 +1,4 @@
-package com.example.book_madness.fake
+package com.example.book_madness.util.fakeData
 
 import com.example.book_madness.data.source.Book
 

@@ -1,4 +1,4 @@
-package com.example.book_madness.home
+package com.example.book_madness.ui.home
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Surface
@@ -16,13 +16,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.R
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.fake.FakeDataSource.bookList
-import com.example.book_madness.fake.FakeDataSource.bookOne
-import com.example.book_madness.fake.FakeDataSource.bookThree
-import com.example.book_madness.fake.FakeDataSource.bookTwo
-import com.example.book_madness.onNodeWithStringId
-import com.example.book_madness.ui.home.HomeScreen
-import com.example.book_madness.ui.home.HomeViewModel
+import com.example.book_madness.util.fakeData.FakeDataSource.bookList
+import com.example.book_madness.util.fakeData.FakeDataSource.bookOne
+import com.example.book_madness.util.fakeData.FakeDataSource.bookThree
+import com.example.book_madness.util.fakeData.FakeDataSource.bookTwo
+import com.example.book_madness.util.onNodeWithStringId
 import com.example.book_madness.ui.theme.AppTheme
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule

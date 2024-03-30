@@ -1,4 +1,4 @@
-package com.example.book_madness
+package com.example.book_madness.ui.navigation
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalContext
@@ -10,12 +10,14 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.book_madness.BookMadnessApp
+import com.example.book_madness.R
+import com.example.book_madness.util.assertCurrentRouteName
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.fake.FakeDataSource.bookOne
-import com.example.book_madness.ui.navigation.BookMadnessDestinations
-import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes
+import com.example.book_madness.util.fakeData.FakeDataSource.bookOne
+import com.example.book_madness.util.onNodeWithStringId
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test

@@ -1,4 +1,4 @@
-package com.example.book_madness.statistics
+package com.example.book_madness.ui.stats
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Surface
@@ -13,10 +13,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.R
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.fake.FakeDataSource.bookList
-import com.example.book_madness.onNodeWithStringId
-import com.example.book_madness.ui.stats.StatisticsScreen
-import com.example.book_madness.ui.stats.StatisticsViewModel
+import com.example.book_madness.util.fakeData.FakeDataSource.bookList
+import com.example.book_madness.util.onNodeWithStringId
 import com.example.book_madness.ui.theme.AppTheme
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule

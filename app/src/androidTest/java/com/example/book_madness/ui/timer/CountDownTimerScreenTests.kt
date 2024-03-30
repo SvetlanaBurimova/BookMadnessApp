@@ -1,4 +1,4 @@
-package com.example.book_madness.timer
+package com.example.book_madness.ui.timer
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Surface
@@ -11,10 +11,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.R
 import com.example.book_madness.data.WorkManagerRepository
-import com.example.book_madness.onNodeWithStringId
+import com.example.book_madness.util.onNodeWithStringId
 import com.example.book_madness.ui.theme.AppTheme
-import com.example.book_madness.ui.timer.CountDownTimerScreen
-import com.example.book_madness.ui.timer.CountTimerViewModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -22,7 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class TimerScreenTests {
+class CountDownTimerScreenTests {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

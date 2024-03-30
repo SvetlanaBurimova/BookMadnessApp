@@ -1,14 +1,11 @@
-package com.example.book_madness.data
+package com.example.book_madness.data.source
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.book_madness.data.source.Book
-import com.example.book_madness.data.source.BookDao
-import com.example.book_madness.data.source.BookDatabase
-import com.example.book_madness.fake.FakeDataSource.bookOne
-import com.example.book_madness.fake.FakeDataSource.bookTwo
+import com.example.book_madness.util.fakeData.FakeDataSource.bookOne
+import com.example.book_madness.util.fakeData.FakeDataSource.bookTwo
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
