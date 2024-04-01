@@ -27,9 +27,11 @@ jobs:
       run: ./gradlew assembleDebug assembleAndroidTest
 
     - name: Start emulator
+      id: start_emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 33
+        target: google_apis
         arch: x86
         avd-name: test
         emulator-options: '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim'
@@ -48,8 +50,15 @@ jobs:
     - name: Run UI tests
       run: ./gradlew connectedDebugAndroidTest
 
+    - name: Terminate emulator
+      if: steps.start_emulator.outputs.emulator-id != ''
+      run: |
+        emulator_id=$(echo "${{ steps.start_emulator.outputs.emulator-id }}" | cut -d' ' -f2)
+        adb -s "${emulator_id}" emu kill
+
     - name: Archive test reports
       uses: actions/upload-artifact@v2
       with:
         name: test-reports
         path: app/build/reports
+
