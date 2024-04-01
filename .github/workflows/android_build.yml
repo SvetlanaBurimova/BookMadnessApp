@@ -6,59 +6,37 @@ on:
       - main
 
 jobs:
-  build:
-
+  connected-tests:
     runs-on: macos-latest
-
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+          cache: 'gradle'
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew assembleDebug assembleAndroidTest
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug assembleAndroidTest
+        
+      - name: Run connected tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          script: ./gradlew connectedCheck
 
-    - name: Start emulator
-      id: start_emulator
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 33
-        target: google_apis
-        arch: x86
-        avd-name: test
-        emulator-options: '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim'
-        force-avd-creation: true
-        emulator-boot-timeout: 600
-
-    - name: Wait for emulator to start
-      run: |
-        emulator_id=$(echo "${{ steps.start_emulator.outputs.emulator-id }}" | cut -d' ' -f2)
-        boot_completed=""
-        until [[ "${boot_completed}" == *"stopped"* ]]; do
-          boot_completed=$(adb -s "${emulator_id}" shell getprop sys.boot_completed)
-          sleep 2
-        done
-
-    - name: Run UI tests
-      run: ./gradlew connectedDebugAndroidTest
-
-    - name: Terminate emulator
-      if: steps.start_emulator.outputs.emulator-id != ''
-      run: |
-        emulator_id=$(echo "${{ steps.start_emulator.outputs.emulator-id }}" | cut -d' ' -f2)
-        adb -s "${emulator_id}" emu kill
-
-    - name: Archive test reports
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-reports
-        path: app/build/reports
+      - name: Archive test reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: app/build/reports
 
