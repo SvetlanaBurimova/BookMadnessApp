@@ -165,7 +165,7 @@ fun BookInputForm(
                     onValueChange(bookDetails.copy(paper = it))
                     focusManager.clearFocus()
                 },
-                modifier = Modifier.semantics { contentDescription = "Rating checkbox" }
+                modifier = Modifier.semantics { contentDescription = "Paper format checkbox" }
             )
         }
         CustomDatePicker(

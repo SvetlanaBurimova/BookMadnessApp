@@ -46,6 +46,7 @@ class StatisticsScreenTest {
 
     @Test
     fun displayBookStats_whenRepositoryEmpty() = runTest {
+        setUpBooksRepository()
         setContent()
 
         composeTestRule.onNodeWithStringId(R.string.tbr_books_category_label).assertIsDisplayed()

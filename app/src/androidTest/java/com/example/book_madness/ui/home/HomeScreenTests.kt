@@ -39,6 +39,7 @@ class HomeScreenTests {
 
     @Test
     fun displayBooks_whenRepositoryHasData() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -153,6 +154,7 @@ class HomeScreenTests {
 
     @Test
     fun noBooks_SearchAndFilterButtonsAreVisible() {
+        setUpBooksRepository()
         setContent()
 
         val filterButton = activity.getString(R.string.filter_button)
