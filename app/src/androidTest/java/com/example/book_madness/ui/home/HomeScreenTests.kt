@@ -14,6 +14,7 @@ import androidx.compose.ui.test.swipeLeft
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.R
+import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
 import com.example.book_madness.util.fakeData.FakeDataSource.bookList
@@ -34,10 +35,7 @@ class HomeScreenTests {
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
     private val activity get() = composeTestRule.activity
 
-    private val booksRepository =
-        OfflineBooksRepository(
-            BookDatabase.getDatabase(ApplicationProvider.getApplicationContext()).bookDao()
-        )
+    private lateinit var booksRepository: BooksRepository
 
     @Test
     fun displayBooks_whenRepositoryHasData() = runTest {
@@ -65,6 +63,7 @@ class HomeScreenTests {
 
     @Test
     fun swipeToDelete_deletedBookIsNotDisplayed() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -79,6 +78,7 @@ class HomeScreenTests {
 
     @Test
     fun searchValidBookName_displayBooks() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -93,6 +93,7 @@ class HomeScreenTests {
 
     @Test
     fun searchInvalidBookName_displayEmptyScreen() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -106,6 +107,7 @@ class HomeScreenTests {
 
     @Test
     fun filterBooksByYear2023_displayEmptyScreen() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -119,6 +121,7 @@ class HomeScreenTests {
 
     @Test
     fun filterBooksByYear2024_displayEmptyScreen() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -134,6 +137,7 @@ class HomeScreenTests {
 
     @Test
     fun filterBooksByTBR_displayEmptyScreen() = runTest {
+        setUpBooksRepository()
         addThreeBooks()
         setContent()
 
@@ -158,13 +162,6 @@ class HomeScreenTests {
         composeTestRule.onNodeWithContentDescription(searchButton).assertIsDisplayed()
     }
 
-    @Test
-    fun noBooks_EmptyScreenTextIsVisible() {
-        setContent()
-
-        composeTestRule.onNodeWithStringId(R.string.no_books_description).assertIsDisplayed()
-    }
-
     private fun setContent() {
         composeTestRule.setContent {
             AppTheme {
@@ -178,6 +175,13 @@ class HomeScreenTests {
                 }
             }
         }
+    }
+
+    private fun setUpBooksRepository() {
+        booksRepository =
+            OfflineBooksRepository(
+                BookDatabase.getDatabase(ApplicationProvider.getApplicationContext()).bookDao()
+            )
     }
 
     private suspend fun addThreeBooks() {

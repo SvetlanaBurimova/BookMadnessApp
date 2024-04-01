@@ -66,13 +66,11 @@ class BookEntryEditScreenTest {
 
         composeTestRule.onNodeWithStringId(R.string.book_genre_required_field).performTextInput(bookTestGenre)
         composeTestRule.onNodeWithStringId(R.string.book_name_required_field).performTextInput(bookTestName)
-
-
         composeTestRule.onNodeWithStringId(R.string.save_button).assertIsEnabled()
     }
 
     @Test
-    fun allFieldsAreDisplayed() = runTest {
+    fun allFieldsAreDisplayed() {
         composeTestRule.onNodeWithStringId(R.string.book_name_required_field).assertIsDisplayed()
         composeTestRule.onNodeWithStringId(R.string.book_genre_required_field).assertIsDisplayed()
         composeTestRule.onNodeWithStringId(R.string.book_rating_field).assertIsDisplayed()

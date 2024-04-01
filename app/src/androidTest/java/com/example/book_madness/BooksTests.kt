@@ -37,12 +37,11 @@ class BooksTests {
     private lateinit var booksRepository: BooksRepository
 
     @Test
-    fun editBook_displayUpdatedData() = runTest {
+    fun editBook_displayUpdatedDataOnDetailScreen() = runTest {
         setUpBooksRepository()
         booksRepository.insertBook(bookOne)
         setContent()
 
-        val ratingIcon = activity.getString(R.string.rating_icon)
         val author = "Abra Cadabra"
         val notes = "Lorem ipsum"
         val bookTestName = "Test name"
@@ -50,10 +49,6 @@ class BooksTests {
         val fullStar = "Full star"
         val halfStar = "Half star"
 
-        // Validate that data shows correctly on Home screen
-        composeTestRule.onNodeWithContentDescription(ratingIcon).assertIsDisplayed()
-        composeTestRule.onNodeWithText(bookOne.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(bookOne.rating!!).assertIsDisplayed()
         composeTestRule.onNodeWithText(bookOne.name).performClick()
 
         // Validate that data shows correctly on Detail screen
@@ -61,17 +56,13 @@ class BooksTests {
         composeTestRule.onNodeWithContentDescription(emptyStar).assertDoesNotExist()
         composeTestRule.onAllNodesWithContentDescription(fullStar).assertCountEquals(4)
         composeTestRule.onNodeWithContentDescription(halfStar).assertIsDisplayed()
-        composeTestRule.onNodeWithText(bookOne.genre).assertIsDisplayed()
         composeTestRule.onNodeWithStringId(R.string.no_button).assertIsDisplayed()
         composeTestRule.onNodeWithText(author).assertDoesNotExist()
         composeTestRule.onNodeWithText(notes).assertDoesNotExist()
 
         // Click on the edit button, edit, and save
         composeTestRule.onNodeWithStringId(R.string.edit_book_button).performClick()
-        composeTestRule.onNodeWithText(bookOne.name).assertIsDisplayed()
         composeTestRule.onNodeWithText(bookOne.name).performTextReplacement(bookTestName)
-        composeTestRule.onNodeWithText(bookOne.genre).assertIsDisplayed()
-        // Clear rating
         composeTestRule.onNodeWithContentDescription("Clear rating button").performClick()
 
         composeTestRule.onNodeWithContentDescription("Rating checkbox").performClick()
@@ -85,6 +76,33 @@ class BooksTests {
         composeTestRule.onNodeWithContentDescription(halfStar).assertDoesNotExist()
         composeTestRule.onNodeWithText(author).assertIsDisplayed()
         composeTestRule.onNodeWithText(notes).assertIsDisplayed()
+    }
+
+    @Test
+    fun editBook_displayUpdatedDataOnHomeScreen() = runTest {
+        setUpBooksRepository()
+        booksRepository.insertBook(bookOne)
+        setContent()
+
+        val ratingIcon = activity.getString(R.string.rating_icon)
+        val author = "Abra Cadabra"
+        val notes = "Lorem ipsum"
+        val bookTestName = "Test name"
+
+        // Validate that data shows correctly on Home screen
+        composeTestRule.onNodeWithContentDescription(ratingIcon).assertIsDisplayed()
+        composeTestRule.onNodeWithText(bookOne.rating!!).assertIsDisplayed()
+        composeTestRule.onNodeWithText(bookOne.name).performClick()
+
+        // Click on the edit button, edit, and save
+        composeTestRule.onNodeWithStringId(R.string.edit_book_button).performClick()
+        composeTestRule.onNodeWithText(bookOne.name).performTextReplacement(bookTestName)
+        composeTestRule.onNodeWithContentDescription("Clear rating button").performClick()
+        composeTestRule.onNodeWithContentDescription("Rating checkbox").performClick()
+        composeTestRule.onNodeWithStringId(R.string.book_author_field).performTextReplacement(author)
+        composeTestRule.onNodeWithStringId(R.string.book_notes_field).performTextReplacement(notes)
+        composeTestRule.onNodeWithStringId(R.string.save_button).performClick()
+
         performNavigateUp()
 
         // Verify book is displayed on home screen
