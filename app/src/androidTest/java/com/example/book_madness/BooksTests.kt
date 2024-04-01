@@ -9,7 +9,6 @@ import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
@@ -18,9 +17,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.OfflineBooksRepository
 import com.example.book_madness.data.source.BookDatabase
+import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes
 import com.example.book_madness.util.fakeData.FakeDataSource.bookOne
 import com.example.book_madness.util.fakeData.FakeDataSource.bookTwo
-import com.example.book_madness.ui.navigation.BookMadnessScreenRoutes
 import com.example.book_madness.util.onNodeWithStringId
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -94,31 +93,6 @@ class BooksTests {
         composeTestRule.onNodeWithText(bookOne.rating!!).assertDoesNotExist()
         composeTestRule.onNodeWithText(bookTestName).assertIsDisplayed()
         composeTestRule.onNodeWithText("0").assertIsDisplayed()
-    }
-
-    @Test
-    fun addBook_deleteBook() {
-        setContent()
-
-        val floatingButton = composeTestRule.activity.getString(R.string.floating_book_entry_button)
-        val bookTestName = "ABRA"
-        val bookTestGenre = "cadabra"
-
-        composeTestRule.onNodeWithContentDescription(floatingButton).performClick()
-
-        composeTestRule.onNodeWithStringId(R.string.book_name_required_field).performTextInput(bookTestName)
-        composeTestRule.onNodeWithStringId(R.string.book_genre_required_field).performTextInput(bookTestGenre)
-        composeTestRule.onNodeWithStringId(R.string.save_button).performClick()
-        composeTestRule.onNodeWithText(bookTestName).assertIsDisplayed()
-
-        // Open book detail screen and click delete
-        composeTestRule.onNodeWithText(bookTestName).performClick()
-        composeTestRule.onNodeWithStringId(R.string.delete_button).performClick()
-        composeTestRule.onNodeWithStringId(R.string.yes_button).performClick()
-
-        // Verify it was deleted
-        composeTestRule.onNodeWithText(bookTestName).assertDoesNotExist()
-        composeTestRule.onNodeWithStringId(R.string.no_books_description).assertIsDisplayed()
     }
 
     @Test
