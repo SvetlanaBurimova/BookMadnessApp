@@ -8,7 +8,7 @@ on:
 jobs:
   connected-tests:
     runs-on: macos-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -25,18 +25,30 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew assembleDebug assembleAndroidTest
-        
-      - name: Run connected tests
+
+      - name: Start emulator
+        id: start_emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 33
           target: google_apis
           arch: x86_64
           script: ./gradlew connectedCheck
+          emulator-options: '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim'
+          force-avd-creation: true
+          emulator-boot-timeout: 600
+
+      - name: Wait for emulator to start
+        run: |
+          emulator_id=$(echo "${{ steps.start_emulator.outputs.emulator-id }}" | cut -d' ' -f2)
+          boot_completed=""
+          until [[ "${boot_completed}" == *"stopped"* ]]; do
+            boot_completed=$(adb -s "${emulator_id}" shell getprop sys.boot_completed)
+            sleep 2
+          done
 
       - name: Archive test reports
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
           path: app/build/reports
-
