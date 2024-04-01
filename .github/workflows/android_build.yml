@@ -30,10 +30,17 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 33
-        script: |
-          # Wait for emulator to be ready
-          adb wait-for-device
-          adb shell input keyevent 82 &
+        arch: x86
+        avd-name: test
+        emulator-options: '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim'
+        force-avd-creation: true
+        emulator-boot-timeout: 600
 
     - name: Run UI tests
       run: ./gradlew connectedDebugAndroidTest
+
+    - name: Archive test reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-reports
+        path: app/build/reports
