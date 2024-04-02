@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -275,7 +275,7 @@ private fun TopAppBarDropdownMenu(
 @Composable
 fun BackArrowIcon() {
     Icon(
-        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+        imageVector = Icons.Filled.ArrowBack,
         contentDescription = stringResource(id = R.string.back_button)
     )
 }
