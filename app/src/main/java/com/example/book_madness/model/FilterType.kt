@@ -8,3 +8,12 @@ enum class FilterType {
     YEAR_2023,
     YEAR_2024
 }
+
+val filterOptions = listOf(
+    FilterType.ID,
+    FilterType.NAME,
+    FilterType.RATING,
+    FilterType.TBR,
+    FilterType.YEAR_2023,
+    FilterType.YEAR_2024
+)

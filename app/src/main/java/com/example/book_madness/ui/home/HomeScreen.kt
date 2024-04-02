@@ -49,6 +49,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.model.FilterType
 import com.example.book_madness.model.FilterType.ID
 import com.example.book_madness.model.FilterType.NAME
 import com.example.book_madness.model.FilterType.RATING
@@ -74,6 +75,12 @@ fun HomeScreen(
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val (currentFilter, setCurrentFilter) = remember { mutableStateOf(ID) }
+
+    val onFilterSelected: (FilterType) -> Unit = { filter ->
+        setCurrentFilter(filter)
+        handleFilterSelection(filter, viewModel)
+    }
 
     Scaffold(
         topBar = {
@@ -84,12 +91,8 @@ fun HomeScreen(
                 showSearchButton = true,
                 searchQuery = viewModel.searchQuery,
                 onSearchDisplayChanged = { viewModel.onSearchQueryChange(it) },
-                onFilterAllBooks = { viewModel.filterBooks(ID) },
-                onFilterAllBooksByName = { viewModel.filterBooks(NAME) },
-                onFilterAllBooksByRating = { viewModel.filterBooks(RATING) },
-                onFilterAllBooksByTBR = { viewModel.filterBooks(TBR) },
-                onFilterAllBooksByYear2023 = { viewModel.filterBooks(YEAR_2023) },
-                onFilterAllBooksByYear2024 = { viewModel.filterBooks(YEAR_2024) }
+                currentFilter = currentFilter,
+                onFilterSelected = onFilterSelected
             )
         },
         floatingActionButton = { BookMadnessFloatingActionButton(navigateToBookEntry = navigateToBookEntry) },
@@ -312,6 +315,17 @@ fun HomeScreenPreview() {
             onBookClick = { /* Do nothing */ },
             onDelete = { /* Do nothing */ }
         )
+    }
+}
+
+fun handleFilterSelection(filter: FilterType, viewModel: HomeViewModel) {
+    when (filter) {
+        ID -> viewModel.filterBooks(ID)
+        NAME -> viewModel.filterBooks(NAME)
+        RATING -> viewModel.filterBooks(RATING)
+        TBR -> viewModel.filterBooks(TBR)
+        YEAR_2023 -> viewModel.filterBooks(YEAR_2023)
+        YEAR_2024 -> viewModel.filterBooks(YEAR_2024)
     }
 }
 
