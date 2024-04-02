@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
@@ -40,8 +42,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.book_madness.R
+import com.example.book_madness.model.FilterType
+import com.example.book_madness.model.filterOptions
 import com.example.book_madness.ui.bookItem.BookDetailsUiState
 import com.example.book_madness.ui.theme.AppTheme
 
@@ -56,12 +61,8 @@ fun BookMadnessTopAppBar(
     showShareButton: Boolean = false,
     showSearchButton: Boolean = false,
     expandedInitially: Boolean = false,
-    onFilterAllBooks: () -> Unit = {},
-    onFilterAllBooksByName: () -> Unit = {},
-    onFilterAllBooksByRating: () -> Unit = {},
-    onFilterAllBooksByTBR: () -> Unit = {},
-    onFilterAllBooksByYear2023: () -> Unit = {},
-    onFilterAllBooksByYear2024: () -> Unit = {},
+    currentFilter: FilterType = FilterType.ID,
+    onFilterSelected: (FilterType) -> Unit = {},
     onSearchDisplayChanged: (String) -> Unit = {},
     navigateUp: () -> Unit = {},
     bookDetailsUiState: BookDetailsUiState = BookDetailsUiState(),
@@ -85,12 +86,8 @@ fun BookMadnessTopAppBar(
                 )
             if (showFilterIcon)
                 DropdownBookFilters(
-                    onFilterAllBooks,
-                    onFilterAllBooksByName,
-                    onFilterAllBooksByRating,
-                    onFilterAllBooksByTBR,
-                    onFilterAllBooksByYear2023,
-                    onFilterAllBooksByYear2024
+                    currentFilter = currentFilter,
+                    onFilterSelected = { filter -> onFilterSelected(filter) }
                 )
             if (showShareButton)
                 ShareButton(
@@ -219,12 +216,8 @@ fun ExpandedSearchView(
 
 @Composable
 private fun DropdownBookFilters(
-    onFilterAllBooks: () -> Unit,
-    onFilterAllBooksByName: () -> Unit,
-    onFilterAllBooksByRating: () -> Unit,
-    onFilterAllBooksByTBR: () -> Unit,
-    onFilterAllBooksByYear2023: () -> Unit,
-    onFilterAllBooksByYear2024: () -> Unit
+    currentFilter: FilterType,
+    onFilterSelected: (FilterType) -> Unit
 ) {
     TopAppBarDropdownMenu(
         iconContent = {
@@ -234,30 +227,28 @@ private fun DropdownBookFilters(
             )
         }
     ) { closeMenu ->
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.all_books_filter_button)) },
-            onClick = { onFilterAllBooks(); closeMenu() }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.books_by_name_filter_button)) },
-            onClick = { onFilterAllBooksByName(); closeMenu() }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.books_by_rating_filter_button)) },
-            onClick = { onFilterAllBooksByRating(); closeMenu() }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.tbr_filter_button)) },
-            onClick = { onFilterAllBooksByTBR(); closeMenu() }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.books_by_year_2023_filter_button)) },
-            onClick = { onFilterAllBooksByYear2023(); closeMenu() }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(id = R.string.books_by_year_2024_filter_button)) },
-            onClick = { onFilterAllBooksByYear2024(); closeMenu() }
-        )
+        filterOptions.forEach { filter ->
+            DropdownMenuItem(
+                text = {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = stringResource(filter.getFilterButtonStringResourceId()))
+                        if (currentFilter == filter) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp).padding(start = 8.dp)
+                            )
+                        }
+                    } },
+                onClick = {
+                    onFilterSelected(filter)
+                    closeMenu()
+                }
+            )
+        }
     }
 }
 
@@ -284,7 +275,7 @@ private fun TopAppBarDropdownMenu(
 @Composable
 fun BackArrowIcon() {
     Icon(
-        imageVector = Icons.Default.ArrowBack,
+        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
         contentDescription = stringResource(id = R.string.back_button)
     )
 }
