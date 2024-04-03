@@ -84,6 +84,9 @@ dependencies {
     //Permission
     implementation("com.google.accompanist:accompanist-permissions:0.28.0")
 
+    //Preferences DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     // Testing
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")

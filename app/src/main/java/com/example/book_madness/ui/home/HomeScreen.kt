@@ -37,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -62,6 +63,8 @@ import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.util.BookMadnessFloatingActionButton
 import com.example.book_madness.util.BookMadnessRatingIcon
 import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.util.DataStoreUtils.saveSelectedFilter
+import com.example.book_madness.util.DataStoreUtils.selectedFilterFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -73,13 +76,19 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
-    val homeUiState by viewModel.homeUiState.collectAsState()
+    val context = LocalContext.current
+    val selectedFilterFlow = context.selectedFilterFlow
     val coroutineScope = rememberCoroutineScope()
-    val (currentFilter, setCurrentFilter) = remember { mutableStateOf(ID) }
+    val selectedFilter by selectedFilterFlow.collectAsState(initial = ID)
+    val homeUiState by viewModel.homeUiState.collectAsState()
 
-    val onFilterSelected: (FilterType) -> Unit = { filter ->
-        setCurrentFilter(filter)
-        handleFilterSelection(filter, viewModel)
+    val (currentFilter, setCurrentFilter) = remember { mutableStateOf(selectedFilter) }
+
+    LaunchedEffect(selectedFilterFlow) {
+        selectedFilterFlow.collect { selectedFilter ->
+            setCurrentFilter(selectedFilter ?: ID)
+            handleFilterSelection(selectedFilter ?: ID, viewModel)
+        }
     }
 
     Scaffold(
@@ -91,8 +100,15 @@ fun HomeScreen(
                 showSearchButton = true,
                 searchQuery = viewModel.searchQuery,
                 onSearchDisplayChanged = { viewModel.onSearchQueryChange(it) },
-                currentFilter = currentFilter,
-                onFilterSelected = onFilterSelected
+                currentFilter = currentFilter!!,
+                onFilterSelected = { filter ->
+                    // Update the book list based on the selected filter
+                    handleFilterSelection(filter, viewModel)
+                    // Save the selected filter to data store
+                    coroutineScope.launch {
+                        saveSelectedFilter(context, filter)
+                    }
+                }
             )
         },
         floatingActionButton = { BookMadnessFloatingActionButton(navigateToBookEntry = navigateToBookEntry) },
@@ -318,17 +334,6 @@ fun HomeScreenPreview() {
     }
 }
 
-fun handleFilterSelection(filter: FilterType, viewModel: HomeViewModel) {
-    when (filter) {
-        ID -> viewModel.filterBooks(ID)
-        NAME -> viewModel.filterBooks(NAME)
-        RATING -> viewModel.filterBooks(RATING)
-        TBR -> viewModel.filterBooks(TBR)
-        YEAR_2023 -> viewModel.filterBooks(YEAR_2023)
-        YEAR_2024 -> viewModel.filterBooks(YEAR_2024)
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenEmptyPreview() {
@@ -338,5 +343,16 @@ fun HomeScreenEmptyPreview() {
             onBookClick = { /* Do nothing */ },
             onDelete = { /* Do nothing */ }
         )
+    }
+}
+
+fun handleFilterSelection(filter: FilterType, viewModel: HomeViewModel) {
+    when (filter) {
+        ID -> viewModel.filterBooks(ID)
+        NAME -> viewModel.filterBooks(NAME)
+        RATING -> viewModel.filterBooks(RATING)
+        TBR -> viewModel.filterBooks(TBR)
+        YEAR_2023 -> viewModel.filterBooks(YEAR_2023)
+        YEAR_2024 -> viewModel.filterBooks(YEAR_2024)
     }
 }

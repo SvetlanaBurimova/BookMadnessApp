@@ -85,10 +85,10 @@ fun BookMadnessTopAppBar(
                     modifier = modifier.weight(1f)
                 )
             if (showFilterIcon)
-                DropdownBookFilters(
-                    currentFilter = currentFilter,
-                    onFilterSelected = { filter -> onFilterSelected(filter) }
-                )
+                    DropdownBookFilters(
+                        currentFilter = currentFilter,
+                        onFilterSelected = { filter -> onFilterSelected(filter) }
+                    )
             if (showShareButton)
                 ShareButton(
                     bookDetailsUiState,
