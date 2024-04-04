@@ -6,11 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.book_madness.model.BookDetails
 import com.example.book_madness.data.BooksRepository
+import com.example.book_madness.model.BookDetails
+import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
 import com.example.book_madness.util.toBook
 import com.example.book_madness.util.toBookUiState
-import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
