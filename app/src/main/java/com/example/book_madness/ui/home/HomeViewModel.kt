@@ -27,7 +27,8 @@ class HomeViewModel(
     var searchQuery by mutableStateOf("")
         private set
 
-    private var filterType = MutableStateFlow(FilterType.ID)
+    var filterType = MutableStateFlow(FilterType.ID)
+        private set
 
     fun filterBooks(filter: FilterType) {
         filterType.value = filter
