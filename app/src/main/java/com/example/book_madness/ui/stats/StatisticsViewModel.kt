@@ -5,10 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.source.Book
 import com.example.book_madness.model.StatisticDetails
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 data class StatisticsUiState(
     val statisticDetails: StatisticDetails = StatisticDetails()
@@ -18,31 +17,24 @@ class StatisticsViewModel(
     booksRepository: BooksRepository
 ) : ViewModel() {
 
-    val statisticsUiState: StateFlow<StatisticsUiState> =
-        booksRepository.getAllBooksStream()
-            .map {
-                StatisticsUiState(
-                    statisticDetails = getBooksWithRating(it)
-                )
+    val statisticsUiState: StateFlow<StatisticsUiState> = MutableStateFlow(StatisticsUiState())
+
+    init {
+        viewModelScope.launch {
+            booksRepository.getAllBooksStream().collect { books ->
+                val statisticDetails = getStatisticDetails(books)
+                (statisticsUiState as MutableStateFlow).value = StatisticsUiState(statisticDetails)
             }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = StatisticsUiState()
-            )
+        }
+    }
 
-     private fun getBooksWithRating(tasks: List<Book>): StatisticDetails {
-         return if (tasks.isEmpty()) {
-             StatisticDetails()
-         } else {
-             StatisticDetails(
-                 tbrBooks =  tasks.count { it.rating == null },
-                 allCompletedBooks = tasks.count { it.rating != null }
-             )
-         }
-     }
+    private fun getStatisticDetails(books: List<Book>): StatisticDetails {
+        val tbrBooks = books.count { it.rating == null }
+        val allCompletedBooks = books.size - tbrBooks
+        return StatisticDetails(allCompletedBooks, tbrBooks)
+    }
 
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
+    fun getStatisticsUiState(): StatisticsUiState {
+        return statisticsUiState.value
     }
 }
