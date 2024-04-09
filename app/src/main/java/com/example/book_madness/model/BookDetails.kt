@@ -11,4 +11,3 @@ data class BookDetails(
     val author: String? = null,
     val notes: String? = null
 )
-
