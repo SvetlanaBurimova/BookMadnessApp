@@ -14,7 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
-import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.ui.BookMadnessTopAppBar
 import kotlinx.coroutines.launch
 
 @Composable

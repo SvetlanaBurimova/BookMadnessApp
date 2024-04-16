@@ -60,9 +60,9 @@ import com.example.book_madness.model.FilterType.YEAR_2024
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
-import com.example.book_madness.util.BookMadnessFloatingActionButton
-import com.example.book_madness.util.BookMadnessRatingIcon
-import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.ui.BookMadnessFloatingActionButton
+import com.example.book_madness.ui.BookMadnessRatingIcon
+import com.example.book_madness.ui.BookMadnessTopAppBar
 import com.example.book_madness.util.DataStoreUtils.saveSelectedFilter
 import com.example.book_madness.util.DataStoreUtils.selectedFilterFlow
 import kotlinx.coroutines.delay

@@ -1,4 +1,4 @@
-package com.example.book_madness.util
+package com.example.book_madness.ui
 
 import android.content.Context
 import android.content.Intent
@@ -49,6 +49,8 @@ import com.example.book_madness.model.FilterType
 import com.example.book_madness.model.filterOptions
 import com.example.book_madness.ui.bookItem.BookDetailsUiState
 import com.example.book_madness.ui.theme.AppTheme
+import com.example.book_madness.util.getFilterButtonStringResourceId
+import com.example.book_madness.util.toBook
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

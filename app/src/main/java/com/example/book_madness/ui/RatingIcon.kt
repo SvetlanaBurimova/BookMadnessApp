@@ -1,4 +1,4 @@
-package com.example.book_madness.util
+package com.example.book_madness.ui
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon

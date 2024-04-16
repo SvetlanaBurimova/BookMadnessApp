@@ -51,7 +51,7 @@ import com.example.book_madness.model.BookDetails
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
-import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.ui.BookMadnessTopAppBar
 import com.example.book_madness.util.ratingList
 import kotlinx.coroutines.launch
 import java.time.Instant

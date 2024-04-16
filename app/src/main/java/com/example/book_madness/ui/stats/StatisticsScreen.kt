@@ -29,8 +29,8 @@ import com.example.book_madness.R
 import com.example.book_madness.model.StatisticDetails
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
-import com.example.book_madness.util.BookMadnessFloatingActionButton
-import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.ui.BookMadnessFloatingActionButton
+import com.example.book_madness.ui.BookMadnessTopAppBar
 
 @Composable
 fun StatisticsScreen(

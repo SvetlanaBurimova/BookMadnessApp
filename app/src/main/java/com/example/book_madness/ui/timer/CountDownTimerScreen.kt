@@ -52,7 +52,7 @@ import com.example.book_madness.R
 import com.example.book_madness.model.Reminder
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
-import com.example.book_madness.util.BookMadnessTopAppBar
+import com.example.book_madness.ui.BookMadnessTopAppBar
 import com.example.book_madness.util.FIVE_SECONDS
 import com.example.book_madness.util.ONE_DAY
 import com.example.book_madness.util.SEVEN_DAYS
