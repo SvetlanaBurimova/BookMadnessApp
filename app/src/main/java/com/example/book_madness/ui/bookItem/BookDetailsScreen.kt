@@ -52,7 +52,7 @@ fun BookDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: BookDetailsViewModel = viewModel(factory = AppViewModelFactoryProvider.Factory)
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
@@ -60,15 +60,15 @@ fun BookDetailsScreen(
             BookMadnessTopAppBar(
                 title = stringResource(BookMadnessTitlesResId.BOOK_DETAIL_SCREEN),
                 showShareButton = true,
-                bookDetailsUiState = uiState.value,
+                bookDetailsUiState = uiState,
                 navigateUp = navigateBack
             )
         },
         bottomBar = { bottomNavigationBar() }
     ) { innerPadding ->
         BookDetailsBody(
-            bookDetailsUiState = uiState.value,
-            onEdit = { navigateToEditBook(uiState.value.bookDetails.id) },
+            bookDetailsUiState = uiState,
+            onEdit = { navigateToEditBook(uiState.bookDetails.id) },
             onDelete = {
                 coroutineScope.launch {
                     viewModel.deleteBook()
