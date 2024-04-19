@@ -1,7 +1,7 @@
 package com.example.book_madness.ui.home
 
 import com.example.book_madness.data.BooksRepository
-import com.example.book_madness.model.FilterType
+import com.example.book_madness.model.util.FilterType
 import com.example.book_madness.util.fakeData.FakeDataSource.bookOne
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

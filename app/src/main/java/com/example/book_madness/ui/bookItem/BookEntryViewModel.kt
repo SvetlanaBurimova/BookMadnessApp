@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.book_madness.model.BookDetails
 import com.example.book_madness.data.BooksRepository
-import com.example.book_madness.util.toBook
+import com.example.book_madness.model.util.toBook
 
 data class BookUiState(
     val bookDetails: BookDetails = BookDetails(),

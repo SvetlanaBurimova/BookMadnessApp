@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.model.BookDetails
-import com.example.book_madness.util.toBook
-import com.example.book_madness.util.toBookDetails
+import com.example.book_madness.model.util.toBook
+import com.example.book_madness.model.util.toBookDetails
 import com.example.book_madness.ui.navigation.BookMadnessDestinationsArgs
 import com.example.book_madness.util.WhileUiSubscribed
 import kotlinx.coroutines.flow.StateFlow

@@ -45,12 +45,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.book_madness.R
-import com.example.book_madness.model.FilterType
-import com.example.book_madness.model.filterOptions
+import com.example.book_madness.model.util.FilterType
+import com.example.book_madness.model.util.filterOptions
+import com.example.book_madness.model.util.getFilterButtonStringResourceId
+import com.example.book_madness.model.util.toBook
 import com.example.book_madness.ui.bookItem.BookDetailsUiState
 import com.example.book_madness.ui.theme.AppTheme
-import com.example.book_madness.util.getFilterButtonStringResourceId
-import com.example.book_madness.util.toBook
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

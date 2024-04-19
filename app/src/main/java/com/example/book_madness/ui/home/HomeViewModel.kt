@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.book_madness.data.BooksRepository
 import com.example.book_madness.data.source.Book
-import com.example.book_madness.model.FilterType
+import com.example.book_madness.model.util.FilterType
 import com.example.book_madness.util.WhileUiSubscribed
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

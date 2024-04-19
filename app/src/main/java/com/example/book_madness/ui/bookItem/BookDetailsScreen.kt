@@ -36,12 +36,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.book_madness.R
 import com.example.book_madness.data.source.Book
+import com.example.book_madness.model.util.toBook
 import com.example.book_madness.ui.AppViewModelFactoryProvider
 import com.example.book_madness.ui.navigation.BookMadnessTitlesResId
 import com.example.book_madness.ui.theme.AppTheme
 import com.example.book_madness.ui.BookMadnessRatingIcon
 import com.example.book_madness.ui.BookMadnessTopAppBar
-import com.example.book_madness.util.toBook
 import kotlinx.coroutines.launch
 
 @Composable
