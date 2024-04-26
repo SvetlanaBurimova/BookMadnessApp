@@ -109,13 +109,19 @@ fun ShareButton(
     context: Context,
 ) {
     val shareBookName =
-        "Book details: \nName: ${bookDetailsUiState.bookDetails.toBook().name}"
+        stringResource(
+            id = R.string.share_book_name,
+            bookDetailsUiState.bookDetails.toBook().name
+        )
 
     val shareBookRating =
         if (bookDetailsUiState.bookDetails.toBook().rating != null) {
-            "\nMy rating for it: ${bookDetailsUiState.bookDetails.toBook().rating}"
+            stringResource(
+                id = R.string.book_rating_description,
+                bookDetailsUiState.bookDetails.toBook().rating!!
+            )
         } else {
-            "\nNo rating yet"
+            stringResource(id = R.string.no_book_rating_description)
         }
 
     val sendIntent = Intent(Intent.ACTION_SEND).apply {
@@ -241,7 +247,9 @@ private fun DropdownBookFilters(
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp).padding(start = 8.dp)
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .padding(start = 8.dp)
                             )
                         }
                     } },

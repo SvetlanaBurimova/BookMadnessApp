@@ -75,4 +75,7 @@
     <string name="search_field_label">Search book by name</string>
     <string name="search_icon">Search icon</string>
     <string name="reminder_animated_progress">Reminder animated progress</string>
+    <string name="share_book_name">Book details:\nName:  %s</string>
+    <string name="book_rating_description">\nMy rating for it:  %s</string>
+    <string name="no_book_rating_description">\nNo rating yet</string>
 </resources>
