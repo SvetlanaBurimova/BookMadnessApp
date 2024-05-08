@@ -3,8 +3,6 @@
 As an beginner Android developer, I embarked on a personal project to create a Book Management App, demonstrating my skills and passion for Android development. 
 The idea for this app came from my personal experience of maintaining a list of books I read, along with ratings, in a physical notebook. Recognizing the need for a more convenient and accessible solution, I decided to provide an app for managing reading material seamlessly.
 
-**Note: This app is still in progress**
-
 ## Screenshots:
 
 ![image](https://github.com/SvetlanaBurimova/book_madness/assets/39984764/792b0ca6-580b-484e-98d9-d8c1e9d2bdf8)
